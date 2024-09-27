@@ -1,9 +1,6 @@
 <!doctype html>
 <html lang="en">
 
-
-<!-- Mirrored from themesbrand.com/skote/layouts/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 14 Mar 2022 04:28:56 GMT -->
-
 <head>
 
     <meta charset="utf-8" />
@@ -44,7 +41,7 @@
                             <div class="row mb-4">
                                 <label for="horizontal-email-input" class="col-sm-3 col-form-label">Email</label>
                                 <div class="col-sm-9">
-                                    <input type="email" class="form-control" id="horizontal-email-input" placeholder="Enter Your Email ID">
+                                    <input type="email" class="form-control" id="horizontal-email-input" placeholder="Enter Your Email">
                                 </div>
                             </div>
                             <div class="row mb-4">

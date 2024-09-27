@@ -1,9 +1,6 @@
 <!doctype html>
 <html lang="en">
 
-
-<!-- Mirrored from themesbrand.com/skote/layouts/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 14 Mar 2022 04:28:56 GMT -->
-
 <head>
 
     <meta charset="utf-8" />
@@ -14,11 +11,11 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/CI-logo.png">
 
-    <!-- Bootstrap Css -->
+    <!-- Bootstrap-->
     <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
-    <!-- Icons Css -->
+    <!-- Icons-->
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <!-- App Css-->
+    <!-- App-->
     <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
 </head>
@@ -62,7 +59,19 @@
                         </div>
                     </form>
 
-                </div>
+                    <!-- User Actions -->
+                    <div class="user-actions">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+
+                                <ul class=>
+                                    <li><a href="{{ route('login') }}"><i class="bx bx-log-in"></i> Login</a></li>
+                                    <li><a href="/register" class="dropdown-item"><i class="bx bx-user-plus"></i> Register</a></li>
+                                </ul>
+
+                            </li>
+                        </ul>
+                    </div>
 
 
         </header>
@@ -110,7 +119,7 @@
 
 
         </div>
-        <!-- end main content-->
+
 
     </div>
 
