@@ -20,8 +20,11 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            Dashboard
         </h2>
+        <h1>
+            Test page
+        </h1>
     </x-slot>
 
     <div class="py-12">
@@ -32,46 +35,9 @@
             <!-- Begin page -->
             <div id="layout-wrapper">
 
-                <!-- ========== Left Sidebar Start ========== -->
-                <div class="vertical-menu">
-
-                    <div data-simplebar class="h-100">
-
-                        <!--- Sidemenu -->
-                        <div id="sidebar-menu">
-                            <!-- Left Menu Start -->
-                            <ul class="metismenu list-unstyled" id="side-menu">
-                                <li class="menu-title" key="t-menu">Menu</li>
-
-                                <li>
-                                    <a href="javascript: void(0);" class="waves-effect">
-                                        <i class="bx bx-home-circle"></i><span class="badge rounded-pill bg-info float-end">04</span>
-                                        <span key="t-dashboards">Dashboard</span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="javascript: void(0);" class="waves-effect">
-                                        <i class="bx bx-list-check"></i><span class="badge rounded-pill bg-info float-end">04</span>
-                                        <span key="t-dashboards">Complaints</span>
-                                    </a>
-                                    <ul class="sub-menu" aria-expanded="false">
-                                        <li><a href="index.html" key="t-default">New</a></li>
-                                        <li><a href="dashboard-saas.html" key="t-saas">On going</a></li>
-                                        <li><a href="dashboard-crypto.html" key="t-crypto">Completed</a></li>
-                                    </ul>
-                                </li>
-
-                            </ul>
-                        </div>
-                        <!-- Sidebar links and lists -->
-                    </div>
-                </div>
-                <!-- Left Sidebar End -->
-
 
                 <div class="main-content">
-
+                    <h1>Main content area</h1>
 
                 </div>
 
