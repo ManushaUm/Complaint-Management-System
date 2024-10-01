@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\NewComplaintController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,6 +15,8 @@ Route::get('/dashboard', function () {
 Route::get('/lodgenew', function () {
     return view('newcomplaint');
 })->middleware(['auth', 'verified'])->name('newcomplaint');
+
+Route::post('/complaints', [NewComplaintController::class, 'store'])->name('complaints.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

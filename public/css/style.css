@@ -11,6 +11,7 @@ body {
     font-family: 'Rubik', sans-serif;
     overflow-x: hidden !important;
     position: relative;
+    
 }
 
 a,
@@ -65,11 +66,11 @@ b {
 }
 
 ::-moz-selection {
-  background-color: #2e3138;
+  background-color: #ffffff;
   color: #fff; }
 
 ::selection {
-  background-color: #2e3138;
+  background-color: #fbfbfb;
   color: #fff; }
 
 
