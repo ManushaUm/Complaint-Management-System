@@ -12,9 +12,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/lodgenew', function () {
-    return view('newcomplaint');
-})->middleware(['auth', 'verified'])->name('newcomplaint');
+// Route::get('/lodgenew', function () {
+//     return view('newcomplaint');
+// })->middleware(['auth', 'verified'])->name('newcomplaint');
+
+Route::get('/lodgenew', [NewComplaintController::class, 'lodgeNew'])->name('newcomplaint');
 
 Route::post('/complaints', [NewComplaintController::class, 'store'])->name('complaints.store');
 
