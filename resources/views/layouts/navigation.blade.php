@@ -15,6 +15,17 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+<<<<<<< Updated upstream
+=======
+
+                    <x-nav-link :href="route('newcomplaint')" :active="request()->routeIs('lodgenew')">
+                        {{ __('New Complaint') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('complaint')" :active="request()->routeIs('complaint')">
+                        {{ __('Complaint Status') }}
+                    </x-nav-link>
+>>>>>>> Stashed changes
                 </div>
             </div>
 
