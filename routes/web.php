@@ -21,6 +21,18 @@ Route::get('/complaint', function () {
     return view('complaint');
 })->middleware(['auth', 'verified'])->name('complaint');
 
+Route::get('/viewcomplaints', function () {
+    return view('viewcomplaint');
+})->middleware(['auth', 'verified'])->name('viewcomplaint');
+
+Route::get('/searchcomplaints', function () {
+    return view('searchcomplaints');
+})->middleware(['auth', 'verified'])->name('searchcomplaints');
+
+Route::get('/users', function () {
+    return view('useraccess');
+})->middleware(['auth', 'verified'])->name('users');
+
 Route::post('/complaintsave', [complaintcontroller::class , 'store'])->name('complaintstatus.store');
 
 
