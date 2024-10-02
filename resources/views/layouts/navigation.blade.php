@@ -16,9 +16,25 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('newcomplaint')" :active="request()->routeIs('lodgenew')">
+                    <x-nav-link :href="route('newcomplaint')" :active="request()->routeIs('newcomplaint')">
                         {{ __('New Complaint') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('viewcomplaint')" :active="request()->routeIs('viewcomplaint')">
+                        {{ __('View Complaints') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('searchcomplaints')" :active="request()->routeIs('searchcomplaints')">
+                        {{ __('Search Complaints') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
+                        {{ __('User managemenent') }}
+                    </x-nav-link>
+
+
+
+
                 </div>
             </div>
 
