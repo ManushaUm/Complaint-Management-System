@@ -15,6 +15,7 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+<<<<<<< HEAD
 
                     <x-nav-link :href="route('newcomplaint')" :active="request()->routeIs('newcomplaint')">
                         {{ __('New Complaint') }}
@@ -35,6 +36,19 @@
 
 
 
+=======
+<<<<<<< Updated upstream
+=======
+
+                    <x-nav-link :href="route('newcomplaint')" :active="request()->routeIs('lodgenew')">
+                        {{ __('New Complaint') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('complaint')" :active="request()->routeIs('complaint')">
+                        {{ __('Complaint Status') }}
+                    </x-nav-link>
+>>>>>>> Stashed changes
+>>>>>>> eeb2205 (Update navigation.blade.php)
                 </div>
             </div>
 
