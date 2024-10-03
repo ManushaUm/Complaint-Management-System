@@ -12,16 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('complaint_status', function (Blueprint $table) {
-            $table->id();
             $table->string('category');
             $table->string('subcategory');
-            $table->string('loction');
-            $table->string('branch');
+            $table->string('location')->nullable();;
+            $table->string('branch')->nullable();;
             $table->string('resperson');
-            $table->string('altperson');
-            $table->string('pred');
+            $table->string('altperson')->nullable();;
+            $table->string('pred')->nullable();;
             $table->string('description');
-            $table->timestamps();
         });
     }
 
