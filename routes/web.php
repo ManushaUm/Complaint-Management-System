@@ -13,13 +13,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/lodgenew', function () {
-    return view('newcomplaint');
-})->middleware(['auth', 'verified'])->name('newcomplaint');
 
-Route::get('/complaint', function () {
-    return view('complaint');
-})->middleware(['auth', 'verified'])->name('complaint');
+Route::get('/lodgenew', [NewComplaintController::class, 'lodgeNew'])->name('newcomplaint');
+
+Route::post('/complaints', [NewComplaintController::class, 'store'])->name('complaints.store');
+
+//Route::get('/viewcomplaints')->name('viewcomplaint');
 
 Route::get('/viewcomplaints', function () {
     return view('viewcomplaint');
@@ -33,13 +32,20 @@ Route::get('/users', function () {
     return view('useraccess');
 })->middleware(['auth', 'verified'])->name('users');
 
-Route::post('/complaintsave', [complaintcontroller::class , 'store'])->name('complaintstatus.store');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/complaint', function () {
+    return view('complaint');
+})->middleware(['auth', 'verified'])->name('complaint');
+
+//Route::get('/complaintdropdown', [complaintcontroller::class , 'typeview'])->name('complaintstatus.typeview');
+
+Route::post('/complaintsave', [complaintcontroller::class , 'store'])->name('complaintstatus.store');
+
 
 require __DIR__ . '/auth.php';
