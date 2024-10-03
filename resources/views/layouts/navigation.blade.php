@@ -15,8 +15,6 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
                     <x-nav-link :href="route('newcomplaint')" :active="request()->routeIs('newcomplaint')">
                         {{ __('New Complaint') }}
@@ -34,27 +32,9 @@
                         {{ __('User managemenent') }}
                     </x-nav-link>
 
-
-
-
-=======
-=======
->>>>>>> 8b5c6d40a3df1671837d35cc7269561f527a27ef
-<<<<<<< Updated upstream
-=======
-
-                    <x-nav-link :href="route('newcomplaint')" :active="request()->routeIs('lodgenew')">
-                        {{ __('New Complaint') }}
-                    </x-nav-link>
-
                     <x-nav-link :href="route('complaint')" :active="request()->routeIs('complaint')">
-                        {{ __('Complaint Status') }}
+                        {{ __('Assigining Complaint') }}
                     </x-nav-link>
->>>>>>> Stashed changes
-<<<<<<< HEAD
->>>>>>> eeb2205 (Update navigation.blade.php)
-=======
->>>>>>> 8b5c6d40a3df1671837d35cc7269561f527a27ef
                 </div>
             </div>
 
@@ -127,7 +107,6 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
                     <x-responsive-nav-link :href="route('logout')"
                         onclick="event.preventDefault();
                                         this.closest('form').submit();">
