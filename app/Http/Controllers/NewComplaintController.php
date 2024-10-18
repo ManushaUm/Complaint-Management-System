@@ -83,4 +83,11 @@ class NewComplaintController extends Controller
             return redirect()->back()->with('error', 'Error logged');
         }
     }
+
+    public function viewcomplaint()
+    {
+        $complaints = DB::table('new_complaints')->get();
+        //dd($complaints);
+        return view('viewcomplaint', ['complaints' => $complaints]);
+    }
 }
