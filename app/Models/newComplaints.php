@@ -32,4 +32,12 @@ class newComplaints extends Model
             ->get();
         return $data;
     }
+
+    public function getTableData()
+    {
+        $Tabledata = DB::table('new_complaints')
+            ->select('*')
+            ->get();
+        return $Tabledata;
+    }
 }

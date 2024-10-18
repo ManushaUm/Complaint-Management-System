@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewComplaintController;
+use App\Http\Controllers\TableViewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\complaintcontroller;
 
@@ -16,13 +17,16 @@ Route::get('/dashboard', function () {
 
 Route::get('/lodgenew', [NewComplaintController::class, 'lodgeNew'])->name('newcomplaint');
 
-Route::post('/complaints', [NewComplaintController::class, 'store'])->name('complaints.store');
+Route::post('/viewcomplaints', [NewComplaintController::class, 'store'])->name('complaints.store');
 
-//Route::get('/viewcomplaints')->name('viewcomplaint');
+
 
 Route::get('/viewcomplaints', function () {
     return view('viewcomplaint');
 })->middleware(['auth', 'verified'])->name('viewcomplaint');
+
+Route::get('/viewcomplaint', [NewComplaintController::class, 'viewcomplaint'])->name('viewcomplaint');
+
 
 Route::get('/searchcomplaints', function () {
     return view('searchcomplaints');
