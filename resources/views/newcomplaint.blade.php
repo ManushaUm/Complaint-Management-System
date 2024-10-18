@@ -4,7 +4,6 @@
         <meta charset="utf-8" />
         <title>CI Lanka - Complaint Management System</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
         <meta content="Themesbrand" name="author" />
         <!-- App favicon -->
@@ -106,29 +105,11 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-<<<<<<< Updated upstream
                                             <label for="policy-number-input" class="col-md-2 col-form-label">Vehicle / Policy number</label>
                                             <div class="col-md-7">
                                                 <input class="form-control" type="text" value="" placeholder="Enter the Insurence policy number"
                                                     id="policy-number-input">
-=======
-                                            <label for="policy-number" class="col-md-2 col-form-label">Vehicle / Policy number</label>
-                                            <div class="col-md-5">
-                                                <input class="form-control" type="text" value="" placeholder="Enter the Insurence policy number"
-                                                    id="policy_number" name="policy_number">
-                                                @if ($errors->has('policy_number'))
-                                                <span class="text-red-500 text-sm">{{ $errors->first('policy_number') }}</span>
-                                                @endif
->>>>>>> Stashed changes
                                             </div>
-                                            
-                                            <div class="col-md-1">
-                                                <button type="button" class="btn btn-light" id="verify-policy-btn">Verify</button>
-                                            </div>
-
-                                        </div>
-                                        <div id="policy-verification-message" class="mt-6">
-                                       
                                         </div>
 
 
@@ -181,18 +162,9 @@
                         </div>
                     </form>
 
-<<<<<<< Updated upstream
 
 
 
-=======
-                    
-                  
->>>>>>> Stashed changes
         </body>
     </div>
-    @vite(['resources/js/app.js', 'resources/js/verifyPolicy.js'])
-
-
-
 </x-app-layout>
