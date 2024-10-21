@@ -50,5 +50,11 @@ class complaintcontroller extends Controller
         return $category;
     }
 
+    public function subcategory(Request $request){
+        $category = $request->category;
+        $subcategory = DB::table('complaint_subtype')->where('category', $category)->get();
+        return $subcategory;
+    }
+
     
 }
