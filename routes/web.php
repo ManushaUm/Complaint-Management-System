@@ -17,6 +17,7 @@ Route::get('/lodgenew', function () {
 })->middleware(['auth', 'verified'])->name('newcomplaint');
 
 Route::post('/complaints', [NewComplaintController::class, 'store'])->name('complaints.store');
+Route::post('/verify-user', [NewComplaintController::class, 'verifyUser'])->name('verify.user');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

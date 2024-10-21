@@ -5,9 +5,29 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\newComplaints;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class NewComplaintController extends Controller
 {
+    public function verifyUser(Request $request)
+    {
+    // Validate that the policy_number field exists
+    $request->validate([
+        'user_id' => 'required|string|max:255',
+    ]);
+
+    // Check if the policy number exists in the 'userinfo' table
+    $userExists = DB::table('user_info')
+        ->where('user_id', $request->user_id)
+        ->exists();
+
+    // Return the response as JSON to be handled by the AJAX call
+    return response()->json([
+        'exists' => $userExists,
+    ]);
+    }
+    
+    
     public function store(Request $request)
     {
         // Incoming data validation

@@ -6,6 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
         <meta content="Themesbrand" name="author" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        
+
         <!-- App favicon -->
         <link rel="shortcut icon" href="assets/images/CI-logo.png">
 
@@ -17,6 +21,7 @@
         <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
     </head>
+   
 
 
     <x-slot name="header">
@@ -65,11 +70,27 @@
                                                 </select>
                                             </div>
 
+                                           
+
                                             <label for="relation-input" class="col-md-1 col-form-label">Relation</label>
                                             <div class="col-md-4">
                                                 <input class="form-control" type="text" placeholder="If No, enter the relation" id="relation-input">
                                             </div>
                                         </div>
+
+                                        <div class="mb-3 row">
+                                                <label for="userid-input" class="col-md-2 col-form-label">User ID</label>
+                                                <div class="col-md-5">
+                                                    <input class="form-control" type="text" name="user_id" placeholder="Enter User ID" id="user_id" required>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button class="btn btn-primary" type="button" id="verify-userid-btn">Verify</button>
+                                                </div>
+                                                <div class="col-md-3" id="verification-message"></div>
+                                                
+                                            </div>
+                                           
+
                                         <div class="mb-3 row">
                                             <label for="address-input" class="col-md-2 col-form-label">Address</label>
                                             <div class="col-md-7">
@@ -160,11 +181,15 @@
 
 
                         </div>
+                        
                     </form>
+                </div>
+            </div>
 
+            <script src="{{ asset('js/verify.js') }}"></script>
 
-
-
-        </body>
+        </body>     
+       
     </div>
+    
 </x-app-layout>
