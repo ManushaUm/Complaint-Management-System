@@ -24,6 +24,12 @@ Route::get('/viewcomplaints', function () {
     return view('viewcomplaint');
 })->middleware(['auth', 'verified'])->name('viewcomplaint');
 
+<<<<<<< Updated upstream
+=======
+//Route::get('/viewcomplaint', [NewComplaintController::class, 'viewcomplaint'])->name('viewcomplaint');
+
+
+>>>>>>> Stashed changes
 Route::get('/searchcomplaints', function () {
     return view('searchcomplaints');
 })->middleware(['auth', 'verified'])->name('searchcomplaints');
