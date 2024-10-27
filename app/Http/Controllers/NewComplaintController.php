@@ -69,7 +69,8 @@ class NewComplaintController extends Controller
             'attachment' => $request->file('attachment') ? $request->file('attachment')->store('attachments') : null,
             'notify_customer' => $notifyCustomer
         ]);
-
+        
+        
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Complaint successfully logged');
     }
