@@ -16,8 +16,24 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('newcomplaint')" :active="request()->routeIs('lodgenew')">
+                    <x-nav-link :href="route('newcomplaint')" :active="request()->routeIs('newcomplaint')">
                         {{ __('New Complaint') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('viewcomplaint')" :active="request()->routeIs('viewcomplaint')">
+                        {{ __('View Complaints') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('searchcomplaints')" :active="request()->routeIs('searchcomplaints')">
+                        {{ __('Search Complaints') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
+                        {{ __('User managemenent') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('complaint')" :active="request()->routeIs('complaint')">
+                        {{ __('Assigining Complaint') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -91,7 +107,6 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
                     <x-responsive-nav-link :href="route('logout')"
                         onclick="event.preventDefault();
                                         this.closest('form').submit();">

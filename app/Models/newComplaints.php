@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class newComplaints extends Model
 {
@@ -21,6 +22,24 @@ class newComplaints extends Model
         'complaint_date',
         'complaint_detail',
         'attachment',
-        'notify_customer'
+
     ];
+
+    public function getComplaintType()
+    {
+        $data = DB::table('complaint_type')
+            ->select('*')
+            ->where('status', 1)
+            ->orderBy('complaint_type', 'ASC')
+            ->get();
+        return $data;
+    }
+
+    public function getTableData()
+    {
+        $Tabledata = DB::table('new_complaints')
+            ->select('*')
+            ->get();
+        return $Tabledata;
+    }
 }

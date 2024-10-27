@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('new-complaints', function (Blueprint $table) {
+        Schema::create('new_complaints', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->boolean('insured');
@@ -19,13 +19,11 @@ return new class extends Migration
             $table->string('address');
             $table->string('contact_no');
             $table->string('email');
-            $table->string('customer_type');
+            $table->string('customer_type')->nullable();
             $table->string('policy_number')->nullable();
             $table->date('complaint_date');
-            $table->text('complaint_detail');
+            $table->text('complaint_detail')->nullable();
             $table->string('attachment')->nullable();
-            $table->boolean('notify_customer')->default(false);
-            $table->timestamps();
         });
     }
 
