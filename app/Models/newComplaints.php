@@ -25,7 +25,7 @@ class newComplaints extends Model
 
     public function getComplaintType()
     {
-        $data = DB::table('complaint_type')
+        $data = DB::table('complaint_types')
             ->select('*')
             ->where('status', 1)
             ->orderBy('complaint_type', 'ASC')
