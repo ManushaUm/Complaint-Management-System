@@ -47,9 +47,9 @@ Route::get('/complaint', function () {
     return view('complaint');
 })->middleware(['auth', 'verified'])->name('complaint');
 
-//Route::get('/complaintdropdown', [complaintcontroller::class , 'typeview'])->name('complaintstatus.typeview');
+Route::get('/complaintdropdown', [complaintcontroller::class, 'typeview'])->name('complaintstatus.typeview');
 
-Route::post('/complaintsave', [complaintcontroller::class , 'store'])->name('complaintstatus.store');
+Route::post('/complaintsave', [complaintcontroller::class, 'store'])->name('complaintstatus.store');
 
 
 require __DIR__ . '/auth.php';

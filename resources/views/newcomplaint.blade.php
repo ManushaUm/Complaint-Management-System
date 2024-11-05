@@ -27,6 +27,8 @@
     </x-slot>
 
     <div class="py-12">
+        @auth
+        @if(Session('role')=='admin')
 
         <body data-sidebar="light">
 
@@ -192,5 +194,7 @@
 
 
         </body>
+        @endif
+        @endauth
     </div>
 </x-app-layout>
