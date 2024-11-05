@@ -67,7 +67,7 @@
                                                                         <td>{{ $complaint->address }}</td>
                                                                         <td>{{ $complaint->contact_no }}</td>
                                                                         <td>{{ $complaint->email }}</td>
-                                                                        <td>{{ $complaint->complaint_type }}</td>
+                                                                        <td>{{ $complaint->customer_type }}</td>
                                                                         <td>{{ $complaint->policy_number }}</td>
                                                                         <td>{{ $complaint->complaint_date }}</td>
                                                                         <td>{{ $complaint->complaint_detail }}</td>

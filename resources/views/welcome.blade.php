@@ -39,8 +39,8 @@
                         <p class="padding-t-15 home-desc mx-auto">Centralized system for customer complaint management.</p>
 
                         <p class=" margin-t-30 mb-5">
-                            <a href="{{route('admin.register')}}" target="_blank" class="btn btn-custom waves-effect waves-light"><i class="mdi mdi-cart mr-2"></i> Admin Login</a>
-                            <a href="{{route('register')}}" target="_blank" class="btn btn-custom waves-effect waves-light"><i class="mdi mdi-cart mr-2"></i> User login</a>
+                            <a href="{{route('register')}}" target="_blank" class="btn btn-custom waves-effect waves-light"><i class="mdi mdi-cart mr-2"></i> Sign Up</a>
+                            <a href="{{route('login')}}" target="_blank" class="btn btn-custom waves-effect waves-light"><i class="mdi mdi-cart mr-2"></i> Sign In</a>
 
                         </p>
                     </div>

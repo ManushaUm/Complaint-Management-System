@@ -68,7 +68,7 @@ class NewComplaintController extends Controller
             'address' => $request->address,
             'contact_no' => $request->contact_no,
             'email' => $request->email,
-            'complaint_type' => $request->customer_type,
+            'customer_type' => $request->customer_type,
             'policy_number' => $request->policy_number,
             'complaint_date' => $request->complaint_date,
             'complaint_detail' => $request->complaint_detail,
