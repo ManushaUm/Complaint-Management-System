@@ -40,12 +40,4 @@ class newComplaints extends Model
             ->get();
         return $Tabledata;
     }
-
-    public function getAssingedData()
-    {
-        $assignedData = DB::table('as_complaints')
-            ->select('*')
-            ->get();
-        return $assignedData;
-    }
 }

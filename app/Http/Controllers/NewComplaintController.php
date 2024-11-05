@@ -84,15 +84,10 @@ class NewComplaintController extends Controller
         }
     }
 
-
     public function viewcomplaint()
     {
         $complaints = DB::table('new_complaints')->get();
-        $assignedComplaints = DB::table('as_complaints')->get();
-        // dd($assignedComplaints);
-        return view('viewcomplaint', [
-            'complaints' => $complaints,
-            'assignedComplaints' => $assignedComplaints
-        ]);
+        //dd($complaints);
+        return view('viewcomplaint', ['complaints' => $complaints]);
     }
 }
