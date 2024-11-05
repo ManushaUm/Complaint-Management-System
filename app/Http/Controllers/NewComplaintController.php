@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Departments;
 use Illuminate\Http\Request;
 use App\Models\newComplaints;
 use Illuminate\Support\Facades\Log;
@@ -90,16 +89,10 @@ class NewComplaintController extends Controller
     {
         $complaints = DB::table('new_complaints')->get();
         $assignedComplaints = DB::table('as_complaints')->get();
-
-        $departments = new Departments();
-        $getDepartmentName = $departments->getDepartment();
-
-
-        dd($getDepartmentName);
+        // dd($assignedComplaints);
         return view('viewcomplaint', [
             'complaints' => $complaints,
-            'assignedComplaints' => $assignedComplaints,
-            'departments' => $getDepartmentName
+            'assignedComplaints' => $assignedComplaints
         ]);
     }
 }
