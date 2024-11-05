@@ -136,7 +136,9 @@
                                                                                                     <label for="validationCustom03" class="form-label">Category</label>
                                                                                                     <select class="form-select" id="validationCustom03" required>
                                                                                                         <option selected disabled value="">Choose...</option>
-                                                                                                        <option>...</option>
+                                                                                                        @foreach($departmentNames as $department)
+                                                                                                        <option value="{{$department->id}}">{{$department->department_name}}</option>
+                                                                                                        @endforeach
                                                                                                     </select>
                                                                                                     <div class="invalid-feedback">
                                                                                                         Please select a valid Category.
@@ -162,7 +164,9 @@
                                                                                                     <label for="validationCustom05" class="form-label">Location</label>
                                                                                                     <select class="form-select" id="validationCustom03" required>
                                                                                                         <option selected disabled value="">Choose...</option>
-                                                                                                        <option>...</option>
+                                                                                                        @foreach($departmentNames as $department)
+                                                                                                        <option value="{{$department->id}}">{{$department->department_name}}</option>
+                                                                                                        @endforeach
                                                                                                     </select>
                                                                                                     <div class="invalid-feedback">
                                                                                                         Please provide a valid Location.

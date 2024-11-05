@@ -95,11 +95,11 @@ class NewComplaintController extends Controller
         $getDepartmentName = $departments->getDepartment();
 
 
-        dd($getDepartmentName);
+        //dd($getDepartmentName);
         return view('viewcomplaint', [
             'complaints' => $complaints,
             'assignedComplaints' => $assignedComplaints,
-            'departments' => $getDepartmentName
+            'departmentNames' => $getDepartmentName
         ]);
     }
 }
