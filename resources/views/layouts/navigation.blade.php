@@ -11,7 +11,10 @@
                 </div>
 
                 <!-- Navigation Links -->
+                @auth
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+
+                    @if(Session('role') == 'admin')
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
@@ -35,6 +38,32 @@
                     <x-nav-link :href="route('complaint')" :active="request()->routeIs('complaint')">
                         {{ __('Assigining Complaint') }}
                     </x-nav-link>
+
+                    @endif
+
+                    @if(Session('role') == 'member')
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard Member') }}
+                    </x-nav-link>
+
+
+
+                    <x-nav-link :href="route('viewcomplaint')" :active="request()->routeIs('viewcomplaint')">
+                        {{ __('View Complaints') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('searchcomplaints')" :active="request()->routeIs('searchcomplaints')">
+                        {{ __('Search Complaints') }}
+                    </x-nav-link>
+
+
+
+
+
+                    @endif
+
+
+
                 </div>
             </div>
 
@@ -103,7 +132,7 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
-
+                @endauth
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
