@@ -121,88 +121,97 @@
                                                                                 </tbody>
                                                                             </table>
                                                                         </div>
-                                                                        <div class="card">
-                                                                            <div class="card-body">
-                                                                                <h4 class="card-title">Assigining</h4>
 
-                                                                                <form class="needs-validation" novalidate>
-                                                                                    <div class="row">
+                                                                        <form>
+                                                                            <div class="card">
+                                                                                <div class="card-body">
+                                                                                    <h4 class="card-title">Assigining</h4>
 
-
-
+                                                                                    <form class="needs-validation" novalidate>
                                                                                         <div class="row">
-                                                                                            <div class="col-md-6">
-                                                                                                <div class="mb-3">
-                                                                                                    <label for="validationCustom03" class="form-label">Category</label>
-                                                                                                    <select class="form-select" id="validationCustom03" required>
-                                                                                                        <option selected disabled value="">Choose...</option>
-                                                                                                        @foreach($departmentNames as $department)
-                                                                                                        <option value="{{$department->id}}">{{$department->department_name}}</option>
-                                                                                                        @endforeach
-                                                                                                    </select>
-                                                                                                    <div class="invalid-feedback">
-                                                                                                        Please select a valid Category.
-                                                                                                    </div>
 
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-6">
-                                                                                                <div class="mb-3">
-                                                                                                    <label for="validationCustom04" class="form-label">Sub Category</label>
-                                                                                                    <select class="form-select" id="validationCustom03" required>
-                                                                                                        <option selected disabled value="">Choose...</option>
-                                                                                                        <option>...</option>
-                                                                                                    </select>
-                                                                                                    <div class="invalid-feedback">
-                                                                                                        Please provide a valid Sub category.
+
+
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-6">
+                                                                                                    <div class="mb-3">
+                                                                                                        <label for="validationCustom03" class="form-label">Category</label>
+                                                                                                        <select class="form-select" id="validationCustom03" required>
+                                                                                                            <option selected disabled value="">Choose...</option>
+                                                                                                            @foreach($departmentNames as $department)
+                                                                                                            <option value="{{$department->id}}">{{$department->department_name}}</option>
+                                                                                                            @endforeach
+                                                                                                        </select>
+                                                                                                        <div class="invalid-feedback">
+                                                                                                            Please select a valid Category.
+                                                                                                        </div>
+
                                                                                                     </div>
                                                                                                 </div>
-                                                                                            </div>
+                                                                                                <div class="col-md-6">
+                                                                                                    <div class="mb-3">
+                                                                                                        <label for="validationCustom04" class="form-label">Sub Category</label>
+                                                                                                        <select class="form-select" id="validationCustom03" required>
+                                                                                                            <option selected disabled value="">Choose...</option>
+                                                                                                            <option value="Category 1">Category 1</option>
+                                                                                                            <option value="Category 2">Category 2</option>
+                                                                                                            <option value="Category 3">Category 3 </option>
+                                                                                                        </select>
+                                                                                                        <div class="invalid-feedback">
+                                                                                                            Please provide a valid Sub category.
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
 
-                                                                                            <div class="col-md-6">
-                                                                                                <div class="mb-3">
-                                                                                                    <label for="validationCustom05" class="form-label">Location</label>
-                                                                                                    <select class="form-select" id="validationCustom03" required>
-                                                                                                        <option selected disabled value="">Choose...</option>
-                                                                                                        @foreach($departmentNames as $department)
-                                                                                                        <option value="{{$department->id}}">{{$department->department_name}}</option>
-                                                                                                        @endforeach
-                                                                                                    </select>
-                                                                                                    <div class="invalid-feedback">
-                                                                                                        Please provide a valid Location.
+                                                                                                <div class="col-md-6">
+                                                                                                    <div class="mb-3">
+                                                                                                        <label for="validationCustom05" class="form-label">Location</label>
+                                                                                                        <select class="form-select" id="validationCustom03" required>
+                                                                                                            <option selected disabled value="">Choose...</option>
+
+                                                                                                            <option value="Colombo">Colombo</option>
+                                                                                                            <option value="Ratnapura">Ratnapura</option>
+                                                                                                            <option value="Matara">Matara</option>
+                                                                                                            <option value="Kandy">Kandy</option>
+                                                                                                            <option value="Trincomalee">Trincomalee</option>
+
+                                                                                                        </select>
+                                                                                                        <div class="invalid-feedback">
+                                                                                                            Please provide a valid Location.
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-md-6">
+                                                                                                    <div class="mb-3">
+                                                                                                        <label for="validationCustom05" class="form-label">Branch</label>
+                                                                                                        <select class="form-select" id="validationCustom03" required>
+                                                                                                            <option selected disabled value="">Choose...</option>
+                                                                                                            <option>...</option>
+                                                                                                        </select>
+                                                                                                        <div class="invalid-feedback">
+                                                                                                            Please provide a valid Location.
+                                                                                                        </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="col-md-6">
-                                                                                                <div class="mb-3">
-                                                                                                    <label for="validationCustom05" class="form-label">Branch</label>
-                                                                                                    <select class="form-select" id="validationCustom03" required>
-                                                                                                        <option selected disabled value="">Choose...</option>
-                                                                                                        <option>...</option>
-                                                                                                    </select>
-                                                                                                    <div class="invalid-feedback">
-                                                                                                        Please provide a valid Location.
+                                                                                                <div class="mb-6">
+                                                                                                    <label for="validationCustom01" class="form-label">Notes</label>
+                                                                                                    <textarea type="text" class="form-control" id="validationCustom01"
+                                                                                                        placeholder="Add notes for review" value=""> </textarea>
+                                                                                                    <div class="valid-feedback">
+
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                        </div>
-                                                                                        <div class="col-md-6">
-                                                                                            <div class="mb-6">
-                                                                                                <label for="validationCustom01" class="form-label">Notes</label>
-                                                                                                <textarea type="text" class="form-control" id="validationCustom01"
-                                                                                                    placeholder="Add notes for review" value=""> </textarea>
-                                                                                                <div class="valid-feedback">
-
-                                                                                                </div>
+                                                                                            <div>
+                                                                                                <button class="btn btn-warning" type="submit">Assign</button>
                                                                                             </div>
-                                                                                        </div>
-                                                                                        <div>
-                                                                                            <button class="btn btn-warning" type="submit">Assign</button>
-                                                                                        </div>
 
-                                                                                </form>
+                                                                                    </form>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
+                                                                        </form>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
