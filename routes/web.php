@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\complaintcontroller;
 
 Route::get('/', function () {
-    return view('auth.register');
+    return view('welcome');
 });
 
 Route::get('/dashboard', function () {
@@ -34,8 +34,9 @@ Route::get('/viewcomplaints', function () {
     return view('viewcomplaint');
 })->middleware(['auth', 'verified'])->name('viewcomplaint');
 
-Route::get('/viewcomplaint', [NewComplaintController::class, 'viewcomplaint'])->name('viewcomplaint');
 
+
+Route::get('/viewcomplaint', [NewComplaintController::class, 'viewcomplaint'])->name('viewcomplaint');
 
 Route::get('/searchcomplaints', function () {
     return view('searchcomplaints');
@@ -56,9 +57,10 @@ Route::get('/complaint', function () {
     return view('complaint');
 })->middleware(['auth', 'verified'])->name('complaint');
 
-//Route::get('/complaintdropdown', [complaintcontroller::class , 'typeview'])->name('complaintstatus.typeview');
+Route::get('/complaintdropdown', [complaintcontroller::class, 'typeview'])->name('complaintstatus.typeview');
 
-Route::post('/complaintsave', [complaintcontroller::class , 'store'])->name('complaintstatus.store');
+Route::post('/complaintsave', [complaintcontroller::class, 'store'])->name('complaintstatus.store');
 
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/admin-auth.php';

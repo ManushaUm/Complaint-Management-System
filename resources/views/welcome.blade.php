@@ -2,95 +2,54 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8" />
-    <title>CI Lanka - Complaint Management System</title>
+    <title>CI - Lanka complaint managent potral</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Skote - Premium Multipurpose Admin Dashboard Template built with bootstrap v5.1.3. in HTML and Laravel 9.0 version" name="description" />
+    <meta name="keywords" content="Skote admin template, admin template, Responsive admin template, crm, cms, project management apps, bootstrap admin template" />
     <meta content="Themesbrand" name="author" />
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/CI-logo.png">
+    <link rel="shortcut icon" href="">
 
-    <!-- Bootstrap-->
-    <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
-    <!-- Icons-->
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <!-- App-->
-    <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Sarabun:400,500,600,700|Rubik:300,400,500" rel="stylesheet">
+
+    <!--Material Icon -->
+    <link rel="stylesheet" type="text/css" href="../../cdn.jsdelivr.net/npm/%40mdi/font%404.7.95/css/materialdesignicons.min.css" />
+    <!-- Bootstrap Css-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <!-- Custom Css -->
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" href="css/colors/red.css">
 
 </head>
 
-<body data-sidebar="dark">
 
+<body data-spy="scroll" data-target="#data-scroll" data-hijacking="on" data-animation="scaleDown">
 
-    <!-- Begin page -->
-    <div id="layout-wrapper">
+    <body data-sidebar="dark">
 
-        <header id="page-topbar">
-            <div class="navbar-header">
-                <div class="d-flex">
-                    <!-- LOGO -->
-                    <div class="navbar-brand-box">
-                        <a href="index.html" class="logo logo-dark">
-                            <span class="logo-sm">
-                                <img src="assets/images/CI-logo.png" alt="" height="22">
-                            </span>
-                            <span class="logo-lg">
-                                <img src="assets/images/CI-logo.png" alt="" height="17">
-                            </span>
-                        </a>
+        <!--START HOME-->
+        <section class="section bg-home home-half" id="home" data-image-src="images/bg-home.jpg">
+            <div class="bg-overlay"></div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 text-white text-center">
+                        <h4 class="home-small-title">Complaint Managemnt Potral</h4>
+                        <h1 class="home-title font-weight-light"><b>CI - Lanka </b></h1>
+                        <p class="padding-t-15 home-desc mx-auto">Centralized system for customer complaint management.</p>
 
-                        <a href="index.html" class="logo logo-light">
-                            <span>
-                                <h2>Logo space</h2>
-                            </span>
-                        </a>
+                        <p class=" margin-t-30 mb-5">
+                            <a href="{{route('register')}}" target="_blank" class="btn btn-custom waves-effect waves-light"><i class="mdi mdi-cart mr-2"></i> Sign Up</a>
+                            <a href="{{route('login')}}" target="_blank" class="btn btn-custom waves-effect waves-light"><i class="mdi mdi-cart mr-2"></i> Sign In</a>
+
+                        </p>
                     </div>
-
-                    <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
-                        <i class="fa fa-fw fa-bars"></i>
-                    </button>
-
-                    <!-- App Search-->
-                    <form class="app-search d-none d-lg-block">
-                        <div class="position-relative">
-                            <input type="text" class="form-control" placeholder="Search">
-                            <span class="bx bx-search-alt"></span>
-                        </div>
-                    </form>
-
-                    <!-- User Actions -->
-                    <div class="user-actions">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-
-                                <ul class=>
-                                    <li><a href="{{ route('login') }}"><i class="bx bx-log-in"></i> Login</a></li>
-                                    <li><a href="/register" class="dropdown-item"><i class="bx bx-user-plus"></i> Register</a></li>
-                                </ul>
-
-                            </li>
-                        </ul>
-                    </div>
+                </div>
+            </div>
+        </section>
+        <!--END HOME-->
 
 
-        </header>
-
-
-
-        <!-- Left Sidebar End -->
-
-
-        <div class="main-content">
-
-            <h1>Test</h1>
-        </div>
-
-
-    </div>
-
-
-
-</body>
+    </body>
 
 </html>

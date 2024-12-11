@@ -32,6 +32,8 @@
     </x-slot>
 
     <div class="py-12">
+        @auth
+        @if(Session('role')=='admin')
 
         <body data-sidebar="light">
 
@@ -215,8 +217,10 @@
 
             <script src="{{ asset('js/verify.js') }}"></script>
 
-        </body>     
-       
+
+        </body>
+        @endif
+        @endauth
     </div>
     
 </x-app-layout>
