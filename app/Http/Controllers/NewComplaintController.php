@@ -27,8 +27,6 @@ class NewComplaintController extends Controller
         //dd($request->input());
         // Validate the request
 
-
-
         $request->validate([
             'name' => 'required|string|max:255',
             'insured' => 'required|in:Yes,No',
@@ -46,21 +44,6 @@ class NewComplaintController extends Controller
 
         // Handle file upload
         $attachment = $request->file('attachment') ? $request->file('attachment')->store('attachments') : null;
-
-        // Create the new complaint
-        // newComplaints::create([
-        //     'name' => $request->name,
-        //     'insured' => $request->insured === 'Yes',
-        //     'relation' => $request->insured === 'No' ? $request->relation : null,
-        //     'address' => $request->address,
-        //     'contact_no' => $request->contact_no,
-        //     'email' => $request->email,
-        //     'complaint_type' => $request->complaint_type,
-        //     'policy_number' => $request->policy_number,
-        //     'complaint_date' => $request->complaint_date,
-        //     'complaint_detail' => $request->complaint_detail,
-        //     'attachment' => $attachment,
-        // ]);
 
         $data = array(
             'name' => $request->name,

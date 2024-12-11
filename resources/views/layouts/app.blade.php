@@ -18,6 +18,7 @@
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 ">
+
         @include('layouts.navigation')
 
         <!-- Page Heading -->
@@ -31,7 +32,11 @@
 
         <!-- Page Content -->
         <main>
+            @if ($slot -> isEmpty())
+            <p>Provide content for slot</p>
+            @else
             {{ $slot }}
+            @endif
         </main>
     </div>
 </body>

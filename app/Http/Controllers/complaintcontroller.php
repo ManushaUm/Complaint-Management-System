@@ -45,16 +45,9 @@ class complaintcontroller extends Controller
         }
     }
 
-    public function typeview(){
+    public function typeview()
+    {
         $category = DB::table('complaint_type')->get();
         return $category;
     }
-
-    public function subcategory(Request $request){
-        $category = $request->category;
-        $subcategory = DB::table('complaint_subtype')->where('category', $category)->get();
-        return $subcategory;
-    }
-
-    
 }
