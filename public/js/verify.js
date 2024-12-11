@@ -12,8 +12,10 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.exists) {
                     $('#verification-message').html('<div class="alert alert-success">User ID is valid!</div>');
+                    $('#submit-btn').prop('disabled', false); // Enable the submit button
                 } else {
                     $('#verification-message').html('<div class="alert alert-danger">User ID does not exist.</div>');
+                    $('#submit-btn').prop('disabled', true); // Ensure the submit button remains disabled
                 }
             },
             error: function() {

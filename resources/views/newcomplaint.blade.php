@@ -197,7 +197,7 @@
                                         <!--submit button layout-->
                                         <div class='col-sm-6'>
                                             <div>
-                                                <button type="submit" class="btn btn-primary w-md">Lodge</button>
+                                                <button type="submit" class="btn btn-primary w-md" id="submit-btn" disabled>Lodge</button>
                                             </div>
 
                                         </div>

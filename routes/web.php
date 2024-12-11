@@ -20,8 +20,15 @@ Route::post('/verify-user', [NewComplaintController::class, 'verifyUser'])->name
 Route::get('/lodgenew', [NewComplaintController::class, 'lodgeNew'])->name('newcomplaint');
 
 Route::post('/viewcomplaints', [NewComplaintController::class, 'store'])->name('complaints.store');
+Route::get('/searchcomplaint', [NewComplaintController::class, 'searchForm'])
+    ->middleware(['auth', 'verified'])
+    ->name('search.complaints.form');
 
+Route::post('/searchcomplaint', [NewComplaintController::class, 'search'])
+    ->middleware(['auth', 'verified'])
+    ->name('search.complaints');
 
+Route::get('/showComplaint/{policy_number}', [NewComplaintController::class, 'show'])->name('complaints.show');
 
 Route::get('/viewcomplaints', function () {
     return view('viewcomplaint');
