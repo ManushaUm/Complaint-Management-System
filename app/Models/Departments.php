@@ -25,4 +25,14 @@ class Departments extends Model
             ->get();
         return $departmentData;
     }
+
+    public function getDivision()
+    {
+        $divisionData = DB::table('divisions_table')
+            ->select('*')
+            ->where('status', 1)
+            ->orderBy('division_name', 'ASC')
+            ->get();
+        return $divisionData;
+    }
 }

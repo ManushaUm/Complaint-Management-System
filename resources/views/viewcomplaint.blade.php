@@ -89,7 +89,9 @@
                                                         <!-- end table-responsive -->
 
                                                         <!-- Transaction Modal -->
-                                                        <x-complaint-assign-modal :departmentNames="$departmentNames" />
+
+
+                                                        <x-complaint-assign-modal :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
 
                                                         <!-- end modal -->
 

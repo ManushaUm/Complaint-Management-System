@@ -62,9 +62,11 @@
                                                 <label for="validationCustom04" class="form-label">Sub Category</label>
                                                 <select class="form-select" id="validationCustom03" required>
                                                     <option selected disabled value="">Choose...</option>
-                                                    <option value="Category 1">Category 1</option>
-                                                    <option value="Category 2">Category 2</option>
-                                                    <option value="Category 3">Category 3 </option>
+
+                                                    @foreach($divisionNames as $division)
+
+                                                    <option value="{{$division->division_name}}">{{$division->division_name}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <div class="invalid-feedback">
                                                     Please provide a valid Sub category.
@@ -95,7 +97,12 @@
                                                 <label for="validationCustom05" class="form-label">Branch</label>
                                                 <select class="form-select" id="validationCustom03" required>
                                                     <option selected disabled value="">Choose...</option>
-                                                    <option>...</option>
+
+                                                    <option value="Colombo B">Colombo</option>
+                                                    <option value="Ratnapura B">Ratnapura</option>
+                                                    <option value="Matara B">Matara</option>
+                                                    <option value="Kandy B">Kandy</option>
+                                                    <option value="Trincomalee B">Trincomalee</option>
                                                 </select>
                                                 <div class="invalid-feedback">
                                                     Please provide a valid Location.

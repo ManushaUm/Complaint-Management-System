@@ -9,11 +9,13 @@ use Illuminate\View\Component;
 class ComplaintAssignModal extends Component
 {
     public $departmentNames;
+    public $divisionNames;
 
 
-    public function __construct($departmentNames)
+    public function __construct($departmentNames, $divisionNames)
     {
         $this->departmentNames = $departmentNames;
+        $this->divisionNames = $divisionNames;
     }
 
     /**
