@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class newComplaints extends Model
+class NewComplaint extends Model
 {
     protected $fillable = [
         'name',
@@ -20,18 +20,13 @@ class newComplaints extends Model
         'complaint_date',
         'complaint_detail',
         'attachment',
+        'complaint_status'
 
     ];
 
-    public function getComplaintType()
-    {
-        $data = DB::table('complaint_types')
-            ->select('*')
-            ->where('status', 1)
-            ->orderBy('complaint_type', 'ASC')
-            ->get();
-        return $data;
-    }
+    public $timestamps = false;
+
+
 
     public function getTableData()
     {
@@ -47,5 +42,20 @@ class newComplaints extends Model
             ->select('*')
             ->get();
         return $assignedData;
+    }
+
+    public function updateStatus($id)
+    {
+        $complaint = self::find($id);
+        if ($complaint) {
+            $complaint->complaint_status = 1;
+            $complaint->save();
+            return $complaint;
+        }
+        return false;
+        // $updateStatus = DB::table('new_complaints')
+        //     ->where('id', $id)
+        //     ->update(['complaint_status' => 1]);
+        // return $updateStatus;
     }
 }

@@ -27,6 +27,7 @@
 
     <div class="py-12">
 
+
         <body data-sidebar="dark">
             @auth
             <div id="layout-wrapper">

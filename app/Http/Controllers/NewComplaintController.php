@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\complaintType;
 use App\Models\Departments;
 use Illuminate\Http\Request;
-use App\Models\newComplaints;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
+
 
 class NewComplaintController extends Controller
 {
     public function lodgeNew()
     {
-        $newComplaint = new newComplaints();
+        $newComplaint = new complaintType();
         $getComplaintType = $newComplaint->getComplaintType();
         // dd($getComplaintType);
         return view('newcomplaint', ['complaintTypes' => $getComplaintType]);
