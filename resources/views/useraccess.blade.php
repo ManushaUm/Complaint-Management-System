@@ -30,68 +30,15 @@
         <body data-sidebar="dark">
 
 
-            <!-- Begin page -->
-            <div id="layout-wrapper">
 
 
-                <div class="main-content">
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title mb-4">Add new department</h4>
-
-                                    <form>
-                                        <div class="mb-3">
-                                            <label for="department-name" class="form-label">Department Name</label>
-                                            <input type="text" class="form-control" id="department-name" placeholder="Name of the Department">
-                                        </div>
-
-                                        <div class="row">
-
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label for="formrow-email-input" class="form-label">Head of Department</label>
-                                                    <input type="text" class="form-control" id="formrow-email-input" placeholder="Enter Your Email ID">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label for="formrow-password-input" class="form-label">Alter Person</label>
-                                                    <input type="text" class="form-control" id="formrow-password-input" placeholder="Enter Your Password">
-                                                </div>
-                                            </div>
-                                        </div>
+            <x-vertical-nav-tab :departmentNames="$departmentNames" :departments="$departments" />
 
 
-                                        <div class="mb-3">
-
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="gridCheck">
-                                                <label class="form-check-label" for="gridCheck">
-                                                    Check me out
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <button type="submit" class="btn btn-primary w-md">Add Department</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- end card body -->
-                            </div>
-                            <!-- end card -->
-                        </div>
-                        <!-- end col -->
-
-
-
-                    </div>
-                </div>
-            </div>
 
 
 
         </body>
     </div>
+
 </x-app-layout>

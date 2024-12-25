@@ -23,7 +23,19 @@
                             <tr>
                                 <td id="modalPolicyNumber"></td>
                                 <td><a href="" id="modalAttachment" target="_blank">View</a></td>
-                                <td id="modalComplaintStatus">modalComplaintStatus</td>
+                                <td id="modalComplaintStatus">
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const statusElement = document.getElementById('modalComplaintStatus');
+                                            const status = statusElement.textContent.trim();
+                                            if (status === '0') {
+                                                statusElement.textContent = 'Received';
+                                            } else if (status === '1') {
+                                                statusElement.textContent = 'Assigned';
+                                            }
+                                        });
+                                    </script>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

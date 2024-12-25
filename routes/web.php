@@ -4,11 +4,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewComplaintController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\complaintcontroller;
+use App\Http\Controllers\DepartmentController;
 
 //auth routes
-Route::get('/users', function () {
-    return view('useraccess');
-})->middleware(['auth', 'verified'])->name('users');
+Route::get('/users', [DepartmentController::class, 'index'])->middleware(['auth', 'verified'])->name('users');
 
 
 Route::middleware('auth')->group(function () {
@@ -44,6 +43,7 @@ Route::get('/lodgenew', [NewComplaintController::class, 'lodgeNew'])->name('newc
 //Viewc complaints
 Route::post('/viewcomplaints', [NewComplaintController::class, 'store'])->name('complaints.store');
 Route::get('/viewcomplaint', [NewComplaintController::class, 'viewcomplaint'])->name('viewcomplaint');
+//Route::get('/users', [NewComplaintController::class, 'viewcomplaint'])->name('users');
 Route::get('/complaintdropdown', [complaintcontroller::class, 'typeview'])->name('complaintstatus.typeview');
 Route::post('/complaintsave', [complaintcontroller::class, 'store'])->name('complaintstatus.store');
 

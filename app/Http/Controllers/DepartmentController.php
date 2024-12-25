@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Departments;
+
+
 
 class DepartmentController extends Controller
 {
@@ -12,6 +15,13 @@ class DepartmentController extends Controller
     public function index()
     {
         //
+        //dd('hello');
+        $departments = Departments::all();
+        //dd(compact('departments'));
+        $id = $departments->pluck('id');
+        $departmentNames = $departments->pluck('department_name');
+        //dd($id);
+        return view('useraccess', compact('departmentNames', 'departments'));
     }
 
     /**
@@ -33,9 +43,11 @@ class DepartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
         //
+
+
     }
 
     /**
