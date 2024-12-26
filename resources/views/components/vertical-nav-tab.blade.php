@@ -44,7 +44,7 @@
                                                             <tr>
                                                                 <td>Department Head</td>
                                                                 <td>
-                                                                    <a href="javascript: void(0);" id="inline-username-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-title="Enter username">{{$department->department_head }}</a>
+                                                                    <a href="javascript:void(0);" id="inline-username-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-title="Enter username" data-bs-toggle="modal" data-bs-target="#departmentDataModal" data-department='@json($department)'>{{$department->department_head }}</a>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -77,8 +77,10 @@
                     </div>
                 </div>
             </div>
+
             <!-- end card -->
         </div>
+        <x-department-data-modal />
 
 
 

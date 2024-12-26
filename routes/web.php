@@ -5,6 +5,7 @@ use App\Http\Controllers\NewComplaintController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\complaintcontroller;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\HRController;
 
 //auth routes
 Route::get('/users', [DepartmentController::class, 'index'])->middleware(['auth', 'verified'])->name('users');
@@ -49,6 +50,7 @@ Route::post('/complaintsave', [complaintcontroller::class, 'store'])->name('comp
 
 Route::post('/assign-complaint', [ComplaintController::class, 'assignComplaint'])->name('assign.complaint');
 
+Route::get('/hr', [HRController::class, 'index']);
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin-auth.php';
