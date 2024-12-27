@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('divisions_table', function (Blueprint $table) {
             $table->id();
             $table->string('division_name')->unique();
-            $table->unsignedBigInteger('department_id');
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
+            $table->string('division_code')->unique();
+            $table->string('department_code')->unique();
+            $table->foreign('department_code')->references('department_code')->on('departments')->onDelete('cascade');
             $table->string('division_head');
             $table->boolean('status');
             $table->timestamps();

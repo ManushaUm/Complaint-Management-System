@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('job_title')->nullable();
             $table->string('department', 255)->nullable();
             $table->string('division', 255)->nullable();
-            //$table->foreign('department')->references('department_name')->on('departments')->onDelete('no action');
-            //$table->foreign('division')->references('division_name')->on('divisions_table')->onDelete('no action');
+            $table->foreign('department')->references('department_code')->on('departments')->onDelete('no action');
+            $table->foreign('division')->references('division_code')->on('divisions_table')->onDelete('no action');
 
             $table->timestamps();
         });
