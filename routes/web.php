@@ -28,7 +28,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/viewcomplaints', function () {
     return view('viewcomplaint');
-})->middleware(['auth', 'verified'])->name('viewcomplaint');
+})->middleware(['auth', 'verified'])->name('viewcomplaints');
 
 Route::get('/searchcomplaints', function () {
     return view('searchcomplaints');
@@ -46,7 +46,7 @@ Route::post('/viewcomplaints', [NewComplaintController::class, 'store'])->name('
 Route::get('/viewcomplaint', [NewComplaintController::class, 'viewcomplaint'])->name('viewcomplaint');
 Route::get('/complaintdropdown', [complaintcontroller::class, 'typeview'])->name('complaintstatus.typeview');
 Route::post('/complaintsave', [complaintcontroller::class, 'store'])->name('complaintstatus.store');
-
+Route::get('/complaints/{id}/attachment', [NewComplaintController::class, 'getAttachment'])->name('complaints.attachment');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin-auth.php';
