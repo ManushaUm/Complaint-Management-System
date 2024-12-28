@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class newComplaints extends Model
 {
-    protected $fillable = [
+    public $fillable = [
         'name',
         'insured',
         'relation',
