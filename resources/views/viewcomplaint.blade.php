@@ -76,7 +76,8 @@
                                                                             <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light"
                                                                                 data-bs-toggle="modal"
                                                                                 data-bs-target="#transaction-detailModal"
-                                                                                data-complaint='@json($complaint)'>
+                                                                                data-complaint='@json($complaint)'
+                                                                                data-complaint-id="{{ $complaint->id }}">
                                                                                 View Details
                                                                             </button>
                                                                         </td>
