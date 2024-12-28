@@ -22,7 +22,7 @@
                         <tbody>
                             <tr>
                                 <td id="modalPolicyNumber"></td>
-                                <td><a href="" id="modalAttachment" target="_blank">View</a></td>
+                                <td><a href="" id="modalAttachment">View</a></td>
                                 <td id="modalStatus">
                                     <span class="badge badge-pill badge-soft-warning font-size-11">Received</span>
                                 </td>
@@ -140,15 +140,39 @@
     const transactionModal = document.getElementById('transaction-detailModal');
     transactionModal.addEventListener('show.bs.modal', function(event) {
         const button = event.relatedTarget; // Button that triggered the modal
-        const complaint = JSON.parse(button.getAttribute('data-complaint')); // Extract info from data-complaint attribute
+        const complaintId = button.getAttribute('data-complaint-id'); // Extract complaint ID from data attribute
+
+        console.log('Complaint ID:', complaintId); // Log the complaint ID for debugging
+
+        // Fetch complaint details
+        $.ajax({
+            url: `/complaints/${complaintId}/attachment`,
+            type: 'GET',
+            success: function(response) {
+                console.log('AJAX response:', response); // Debugging
+                if (response.attachment) {
+                    document.getElementById('modalAttachment').setAttribute('href', response.attachment);
+                    document.getElementById('modalAttachment').textContent = 'View Attachment';
+                } else {
+                    document.getElementById('modalAttachment').setAttribute('href', '#');
+                    document.getElementById('modalAttachment').textContent = 'No attachment available';
+                }
+            },
+            error: function(xhr) {
+                console.error('Error fetching attachment:', xhr); // Debugging
+                document.getElementById('modalAttachment').setAttribute('href', '#');
+                document.getElementById('modalAttachment').textContent = 'Error fetching attachment';
+            }
+        });
+
 
         // Update the modal's content
+        const complaint = JSON.parse(button.getAttribute('data-complaint'));
         document.getElementById('modalComplaintDate').textContent = complaint.complaint_date;
         document.getElementById('modalCustomerName').textContent = complaint.name;
         document.getElementById('modalCustomerContact').textContent = complaint.contact_no;
         document.getElementById('modalComplaintDetail').textContent = complaint.complaint_detail;
         document.getElementById('modalPolicyNumber').textContent = complaint.policy_number;
-        document.getElementById('modalAttachment').setAttribute('href', '/storage/' + complaint.attachment);
     });
 </script>
 <script src="assets/libs/jquery/jquery.min.js"></script>
