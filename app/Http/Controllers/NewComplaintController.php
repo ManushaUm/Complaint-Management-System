@@ -8,6 +8,7 @@ use App\Models\newComplaints;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class NewComplaintController extends Controller
 {
@@ -24,7 +25,7 @@ class NewComplaintController extends Controller
     public function store(Request $request)
     {
         //check the input
-        //dd($request->input());
+        //($request->input());
         // Validate the request
 
         $request->validate([
@@ -43,7 +44,7 @@ class NewComplaintController extends Controller
         ]);
 
         // Handle file upload
-        $attachment = $request->file('attachment') ? $request->file('attachment')->store('attachments') : null;
+        $attachment = $request->file('attachment') ? $request->file('attachment')->store('public/attachments') : null;
 
         $data = array(
             'name' => $request->name,
@@ -88,5 +89,25 @@ class NewComplaintController extends Controller
             'divisionNames' => $getDivisionName
 
         ]);
+    }
+    public function getAttachment($id)
+    {
+        Log::info('getAttachment called with ID: ' . $id);
+
+        $complaint = DB::table('new_complaints')->where('id', $id)->first();
+
+        if ($complaint && $complaint->attachment) {
+            Log::info('Attachment found: ' . $complaint->attachment);
+
+            // Use Storage::url to generate the correct URL
+            $attachmentUrl = Storage::url($complaint->attachment);
+
+            return response()->json([
+                'attachment' => $attachmentUrl
+            ]);
+        } else {
+            Log::error('Attachment not found for ID: ' . $id);
+            return response()->json(['error' => 'Attachment not found'], 404);
+        }
     }
 }
