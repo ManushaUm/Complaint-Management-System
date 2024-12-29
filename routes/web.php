@@ -9,6 +9,8 @@ use App\Http\Controllers\HRController;
 
 //auth routes
 Route::get('/users', [DepartmentController::class, 'index'])->middleware(['auth', 'verified'])->name('users');
+//add new department route
+Route::post('/departments/store', [DepartmentController::class, 'store'])->name('departments.store');
 
 
 Route::middleware('auth')->group(function () {

@@ -6,13 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Departments extends Model
+class Department extends Model
 {
+
     use HasFactory;
     protected $fillable = [
         'department_name',
+        'department_code',
         'department_head',
         'department_alter_head',
+
+
 
     ];
 

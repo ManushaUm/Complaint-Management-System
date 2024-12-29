@@ -79,18 +79,19 @@
                                         <div class="card">
                                             <div class="card-body">
                                                 <h4 class="card-title mb-4">Add new Department</h4>
-                                                <form class="outer-repeater">
+                                                <form class="outer-repeater" action="{{route('departments.store')}}" method="POST">
+                                                    @csrf
                                                     <div data-repeater-list="outer-group" class="outer">
                                                         <div data-repeater-item class="outer">
                                                             <div class="mb-3">
                                                                 <label for="deptName">Department Name</label>
-                                                                <input type="text" class="form-control" id="deptName"
+                                                                <input type="text" class="form-control" name="deptName" id="deptName"
                                                                     placeholder="Enter Department Name">
                                                             </div>
 
                                                             <div class="mb-3">
                                                                 <label for="deptCode">Department Code</label>
-                                                                <input type="text" class="form-control" id="deptCode"
+                                                                <input type="text" class="form-control" name="deptCode" id="deptCode"
                                                                     placeholder="Enter Department Code">
                                                             </div>
 
@@ -98,13 +99,13 @@
 
                                                             <div class="mb-3">
                                                                 <label for="deptHead">Department Head</label>
-                                                                <input type="text" class="form-control" id="deptHead"
+                                                                <input type="text" class="form-control" name="deptHead" id="deptHead"
                                                                     placeholder="Enter Department Head Id / Name">
                                                             </div>
 
                                                             <div class="mb-3">
                                                                 <label for="deptAltHead">Department Alter Head</label>
-                                                                <input type="text" class="form-control" id="deptAltHead"
+                                                                <input type="text" class="form-control" name="deptAltHead" id="deptAltHead"
                                                                     placeholder="Enter Department Head Id / Name">
                                                             </div>
 

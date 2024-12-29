@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('hr', function (Blueprint $table) {
             $table->id();
+            $table->string('emp_id')->unique();
             $table->string('full_name');
             $table->string('email')->unique();
             $table->enum('gender', ['male', 'female']);
