@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\complaintType;
-use App\Models\Departments;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -73,7 +73,7 @@ class NewComplaintController extends Controller
         $complaints = DB::table('new_complaints')->get();
         $assignedComplaints = DB::table('as_complaints')->get();
 
-        $departments = new Departments();
+        $departments = new Department();
         $getDepartmentName = $departments->getDepartment();
         $getDivisionName = $departments->getDivision();
 

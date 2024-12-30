@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->enum('gender', ['male', 'female']);
             $table->string('phone')->nullable();
-            $table->string('job_title')->nullable();
+            $table->string('job_title')->default('not assigned')->nullable();
             $table->string('department', 255)->nullable();
             $table->string('division', 255)->nullable();
             $table->foreign('department')->references('department_code')->on('departments')->onDelete('no action');

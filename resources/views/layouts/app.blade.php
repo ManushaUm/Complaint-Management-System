@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -40,6 +42,11 @@
             @endif
         </main>
     </div>
+
+    <!-- Include Plugins -->
+    <script src="assets/libs/select2/js/select2.min.js"></script>
+    <script src="assets/js/pages/form-advanced.init.js"></script>
+
 </body>
 
 </html>
