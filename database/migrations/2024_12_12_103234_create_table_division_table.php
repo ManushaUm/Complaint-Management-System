@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('division_name')->unique();
             $table->string('division_code')->unique();
             $table->string('department_code');
-            $table->foreign('department_code')->references('department_code')->on('departments')->onDelete('cascade');
+            //$table->foreign('department_code')->references('department_code')->on('departments')->onDelete('cascade');
             $table->string('division_head');
+            //$table->foreign('division_head')->references('emp_id')->on('hr')->onDelete('no action');
             $table->boolean('status');
             $table->timestamps();
         });

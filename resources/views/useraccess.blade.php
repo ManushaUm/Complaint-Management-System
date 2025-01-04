@@ -32,7 +32,7 @@
 
 
 
-            <x-vertical-nav-tab :departmentNames="$departmentNames" :departments="$departments" />
+            <x-vertical-nav-tab :departments="$departments" />
 
 
 

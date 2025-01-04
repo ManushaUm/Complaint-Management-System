@@ -8,7 +8,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\HRController;
 
 //auth routes
-Route::get('/users', [DepartmentController::class, 'index'])->middleware(['auth', 'verified'])->name('users');
+Route::get('/users', [DepartmentController::class, 'index2'])->middleware(['auth', 'verified'])->name('users');
 //add new department route
 Route::post('/departments/store', [DepartmentController::class, 'store'])->name('departments.store');
 
@@ -53,6 +53,7 @@ Route::post('/complaintsave', [complaintcontroller::class, 'store'])->name('comp
 Route::post('/assign-complaint', [ComplaintController::class, 'assignComplaint'])->name('assign.complaint');
 
 Route::get('/hr', [HRController::class, 'index']);
+Route::get('/employee/search', [HRController::class, 'searchEmp'])->name('employee.search');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin-auth.php';

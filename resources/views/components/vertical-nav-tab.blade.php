@@ -22,7 +22,7 @@
                     <div class="col-md-5">
                         <div class="tab-content text-muted mt-4 mt-md-0" id="v-pills-tabContent">
                             @foreach($departments as $department)
-                            <div class="tab-pane fade @if($loop->first) show active @endif" id="v-pills-{{ $loop->index }}" role="tabpanel" aria-labelledby="v-pills-{{ $loop->index }}-tab">
+                            <div class="tab-pane fade @if($loop->first) show active @endif" id="v-pills-{{ $loop->index}}" role="tabpanel">
 
 
                                 <form>
@@ -45,13 +45,13 @@
                                                                 <tr>
                                                                     <td>Department Head</td>
                                                                     <td>
-                                                                        <a href="javascript:void(0);" id="inline-username-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-title="Enter username" data-bs-toggle="modal" data-bs-target="#departmentDataModal" data-department='@json($department)'>{{$department->department_head }}</a>
+                                                                        <a href="javascript:void(0);" id="inline-username-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-title="Enter username" data-bs-toggle="modal" data-bs-target="#departmentDataModal" data-department='@json($department)'>{{$department->department_head_name }}</a>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Alter Head</td>
                                                                     <td>
-                                                                        <a href="javascript: void(0);" id="inline-firstname-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-placement="right" data-placeholder="Required" data-title="Enter your firstname">{{$department->department_alter_head }}</a>
+                                                                        <a href="javascript: void(0);" id="inline-firstname-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-placement="right" data-placeholder="Required" data-title="Enter your firstname">{{$department->department_alter_head_name }}</a>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -119,50 +119,51 @@
                                                 <h5 class="card-title mb-4">Update Heads</h5>
 
 
-                                                <form class="row row-cols-lg-auto g-3 align-items-center">
+                                                <form class="row row-cols-lg-auto g-3 align-items-center" id="employeeSearchForm>
 
-                                                    <div class="col-12">
-                                                        <label class="visually-hidden" for="positionSelect">Preference</label>
-                                                        <select class="form-select" id="positionSelect" name="positionSelect">
-                                                            <option selected>Choose...</option>
-                                                            <option value="deptHead">Department Head</option>
-                                                            <option value="deptAltHead">Department Alter Head</option>
+                                                    <div class=" col-12">
+                                                    <label class="visually-hidden" for="positionSelect">Preference</label>
+                                                    <select class="form-select" id="positionSelect" name="positionSelect">
+                                                        <option selected>Choose...</option>
+                                                        <option value="deptHead">Department Head</option>
+                                                        <option value="deptAltHead">Department Alter Head</option>
 
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="col-12">
-                                                        <label class="visually-hidden" for="empDetail">Username</label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-text"><i class="fas fa-search"></i></div>
-                                                            <input type="text" class="form-control" id="empDetail" name="empDetail" placeholder="Search for employee">
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="col-12">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="inlineFormCheck">
-                                                            <label class="form-check-label" for="inlineFormCheck">
-                                                                Check this!
-                                                            </label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-12">
-                                                        <button type="submit" class="btn btn-danger w-md">Update</button>
-                                                    </div>
-                                                </form>
-
+                                                    </select>
                                             </div>
-                                            <!-- end card body -->
+
+                                            <div class="col-12">
+                                                <label class="visually-hidden" for="empDetail">Username</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-text"><i class="fas fa-search"></i></div>
+                                                    <input type="text" class="form-control" id="empDetail" name="empDetail" placeholder="Search for employee">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-12">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="inlineFormCheck">
+                                                    <label class="form-check-label" for="inlineFormCheck">
+                                                        Check this!
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <button type="button" id="searchEmployeeBtn" class="btn btn-danger w-md">Searh Employee</button>
+                                            </div>
+
                                         </div>
-                                        <!-- end card -->
+                                        <!-- end card body -->
                                     </div>
-                                    <!-- end col -->
+                                    <!-- end card -->
+                                </div>
+                                <!-- end col -->
+                                <!-- Employee Data Display -->
+                                <div class="mt-4" id="employeeData">
+                                    <!-- Dynamic Employee Data will be loaded here -->
                                 </div>
                             </div>
-                            @endforeach
                             <!--Add department-->
                             <div class="tab-pane fade" id="v-pills-add-department" role="tabpanel" aria-labelledby="v-pills-add-department-tab">
 
@@ -235,52 +236,127 @@
                                 </div>
 
                             </div>
+                            @endforeach
                         </div>
+
+
                     </div>
                 </div>
             </div>
-
-            <!-- end card -->
         </div>
-        <x-department-data-modal />
 
+        <!-- end card -->
     </div>
+    <x-department-data-modal />
 
-    <!-- JAVASCRIPT -->
-    <script src="assets/libs/jquery/jquery.min.js"></script>
-    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/libs/metismenu/metisMenu.min.js"></script>
-    <script src="assets/libs/simplebar/simplebar.min.js"></script>
-    <script src="assets/libs/node-waves/waves.min.js"></script>
-    <!-- Plugins js -->
-    <script src="assets/libs/bootstrap-editable/js/index.js"></script>
-    <script src="assets/libs/moment/min/moment.min.js"></script>
-    <!-- Init js-->
-    <script src="assets/js/pages/form-xeditable.init.js"></script>
-    <script src="assets/js/app.js"></script>
+</div>
 
-    <!-- Sweet Alerts js -->
-    <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
-    <!-- Sweet alert init js-->
-    <script src="assets/js/pages/sweet-alerts.init.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#searchEmployeeBtn').on('click', function(e) {
+            e.preventDefault()
+            const empDetail = $('#empDetail').val()
 
-    <!-- form repeater js -->
-    <script src="assets/libs/jquery.repeater/jquery.repeater.min.js"></script>
+            if (!empDetail) {
+                alert('Please enter employee details')
+                return;
+            }
+            $.ajax({
+                url: '/employee/search',
+                type: 'GET',
+                data: {
+                    empDetail
+                },
+                success: function(response) {
+                    //alert('Employee found')
+                    $('#employeeData').html(`
+                                            <div class="card-body">
 
-    <script src="assets/js/pages/form-repeater.int.js"></script>
+                                                <h4 class="card-title">${response.full_name} Details</h4>
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-nowrap mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 50%;"></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Full Name</td>
+                                                                <td>
+                                                                    <a href="javascript:void(0);" id="emp_name">${response.full_name}</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Employee Id</td>
+                                                                <td>
+                                                                    <a href="javascript: void(0);" id="emp_id">${response.emp_id}</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Email</td>
+                                                                <td>
+                                                                    <a href="javascript: void(0);" id="emp_email">${response.email}</a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
 
-    <script src="assets/js/app.js"></script>
+                                            </div>
+`)
 
-    <script src="assets/libs/parsleyjs/parsley.min.js"></script>
-    <script src="assets/js/pages/form-validation.init.js"></script>
 
-    <script src="assets/libs/select2/js/select2.min.js"></script>
-    <script src="assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-    <script src="assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
-    <script src="assets/libs/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
-    <script src="assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
-    <script src="assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
-    <script src="assets/libs/%40chenfengyuan/datepicker/datepicker.min.js"></script>
+                    //end
+                },
+                error: function(error) {
+                    alert('Employee not found')
+                    //start
 
-    <!-- form advanced init -->
-    <script src="assets/js/pages/form-advanced.init.js"></script>
+                }
+            });
+
+        })
+    })
+</script>
+
+
+<!-- JAVASCRIPT -->
+<script src="assets/libs/jquery/jquery.min.js"></script>
+<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/libs/metismenu/metisMenu.min.js"></script>
+<script src="assets/libs/simplebar/simplebar.min.js"></script>
+<script src="assets/libs/node-waves/waves.min.js"></script>
+<!-- Plugins js -->
+<script src="assets/libs/bootstrap-editable/js/index.js"></script>
+<script src="assets/libs/moment/min/moment.min.js"></script>
+<!-- Init js-->
+<script src="assets/js/pages/form-xeditable.init.js"></script>
+<script src="assets/js/app.js"></script>
+
+<!-- Sweet Alerts js -->
+<script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
+<!-- Sweet alert init js-->
+<script src="assets/js/pages/sweet-alerts.init.js"></script>
+
+<!-- form repeater js -->
+<script src="assets/libs/jquery.repeater/jquery.repeater.min.js"></script>
+
+<script src="assets/js/pages/form-repeater.int.js"></script>
+
+<script src="assets/js/app.js"></script>
+
+<script src="assets/libs/parsleyjs/parsley.min.js"></script>
+<script src="assets/js/pages/form-validation.init.js"></script>
+
+<script src="assets/libs/select2/js/select2.min.js"></script>
+<script src="assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+<script src="assets/libs/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+<script src="assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+<script src="assets/libs/%40chenfengyuan/datepicker/datepicker.min.js"></script>
+
+<!-- form advanced init -->
+<script src="assets/js/pages/form-advanced.init.js"></script>
