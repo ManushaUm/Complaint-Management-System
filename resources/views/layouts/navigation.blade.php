@@ -32,7 +32,7 @@
                     </x-nav-link>
 
                     <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
-                        {{ __('User managemenent') }}
+                        {{ __('Department Management') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('complaint')" :active="request()->routeIs('complaint')">

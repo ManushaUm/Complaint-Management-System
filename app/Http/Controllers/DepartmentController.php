@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Department;
-use Illuminate\Container\Attributes\DB;
+use Illuminate\Support\Facades\DB;
 
 class DepartmentController extends Controller
 {
@@ -71,5 +71,36 @@ class DepartmentController extends Controller
 
 
         return redirect()->route('users')->with('success', 'Department created successfully.');
+    }
+
+    public function updateHead(Request $request)
+    {
+        $deptHeadDetail = $request->all();
+        //dd($request->all());
+        $deptCode = $deptHeadDetail['departmentSelect'];
+        $deptPos = $deptHeadDetail['positionSelect'];
+        $empDetail = $deptHeadDetail['empDetail'];
+
+        //check the department exists
+
+        $department = DB::table('departments')->where('department_code', $deptCode)->first();
+
+        if (!$department) {
+            return back()->withErrors(['error' => 'Department not found ']);
+        } else if ($deptPos == 'deptHead') {
+            //logic to update relevent dept Head
+            //dd('department head called successfully');
+            DB::table('departments')->where('department_code', $deptCode)->update(['department_head' => $empDetail]); //use toast to notify user here
+
+            return back()->with('success', 'department head updated successfully');
+        } else if ($deptPos == 'deptAltHead') {
+            //logic to update relevent dept alt Head
+            //dd('department alt head called successfully');
+            DB::table('departments')->where('department_code', $deptCode)->update(['department_alter_head' => $empDetail]);
+
+            return back()->with('success', 'department alternate head updated successfully'); //use toast to notify user here
+        }
+
+        //return redirect()->route('users');
     }
 }

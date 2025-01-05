@@ -11,6 +11,7 @@ use App\Http\Controllers\HRController;
 Route::get('/users', [DepartmentController::class, 'index2'])->middleware(['auth', 'verified'])->name('users');
 //add new department route
 Route::post('/departments/store', [DepartmentController::class, 'store'])->name('departments.store');
+Route::post('/departments/head', [DepartmentController::class, 'updateHead'])->name('departments.head');
 
 
 Route::middleware('auth')->group(function () {
@@ -54,6 +55,8 @@ Route::post('/assign-complaint', [ComplaintController::class, 'assignComplaint']
 
 Route::get('/hr', [HRController::class, 'index']);
 Route::get('/employee/search', [HRController::class, 'searchEmp'])->name('employee.search');
+
+
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin-auth.php';

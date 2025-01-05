@@ -1,325 +1,349 @@
-<div class="row">
+<div class="row" style="margin: 10px;">
 
-    <div>
-        <div class="card">
-            <div class="card-body">
+    <div class="col-md-8">
+        <!-- First column content here -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
 
-                <h4 class="card-title">Edit Department information</h4>
-                <p class="card-title-desc">Select the Relevant</p>
+                    <h4 class="card-title">Edit Department information</h4>
+                    <p class="card-title-desc">Select the Relevant</p>
 
-                <div class="row">
-                    <div class="col-md-2">
+                    <div class="row">
+                        <div class="col-md-2">
 
-                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            @foreach($departments as $department)
+                            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                @foreach($departments as $department)
 
-                            <a class="nav-link mb-2 @if($loop->first) active @endif" id="v-pills-{{ $loop->index }}-tab" data-bs-toggle="pill" href="#v-pills-{{ $loop->index }}" role="tab" aria-controls="v-pills-{{ $loop->index }}" aria-selected="@if($loop->first) true @else false @endif">{{$department->department_name }}</a>
-                            @endforeach
-                            <a class="nav-link" id="v-pills-add-department-tab" data-bs-toggle="pill" href="#v-pills-add-department" role="tab" aria-controls="v-pills-add-department" aria-selected="false">Add Department</a>
+                                <a class="nav-link mb-2 @if($loop->first) active @endif" id="v-pills-{{ $loop->index }}-tab" data-bs-toggle="pill" href="#v-pills-{{ $loop->index }}" role="tab" aria-controls="v-pills-{{ $loop->index }}" aria-selected="@if($loop->first) true @else false @endif">{{$department->department_name }}</a>
+                                @endforeach
+                                <a class="nav-link" id="v-pills-add-department-tab" data-bs-toggle="pill" href="#v-pills-add-department" role="tab" aria-controls="v-pills-add-department" aria-selected="false">Add Department</a>
 
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="tab-content text-muted mt-4 mt-md-0" id="v-pills-tabContent">
-                            @foreach($departments as $department)
-                            <div class="tab-pane fade @if($loop->first) show active @endif" id="v-pills-{{ $loop->index}}" role="tabpanel">
-
-
-                                <form>
-                                    @csrf
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-body">
-
-                                                    <h4 class="card-title">{{$department->department_name }} Details</h4>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-nowrap mb-0">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th style="width: 50%;"></th>
-                                                                    <th></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>Department Head</td>
-                                                                    <td>
-                                                                        <a href="javascript:void(0);" id="inline-username-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-title="Enter username" data-bs-toggle="modal" data-bs-target="#departmentDataModal" data-department='@json($department)'>{{$department->department_head_name }}</a>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Alter Head</td>
-                                                                    <td>
-                                                                        <a href="javascript: void(0);" id="inline-firstname-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-placement="right" data-placeholder="Required" data-title="Enter your firstname">{{$department->department_alter_head_name }}</a>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Divisions</td>
-                                                                    <td>
-                                                                        <a href="javascript: void(0);" id="inline-sex-{{ $loop->index }}" data-type="select" data-pk="{{ $loop->index }}" data-value="" data-title="Select sex"></a>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div> <!-- end col -->
-
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-body">
-
-                                                    <h4 class="card-title">{{$department->department_name }} Divisions</h4>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-nowrap mb-0">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th style="width: 50%;"></th>
-                                                                    <th></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>Department Head</td>
-                                                                    <td>
-                                                                        <a href="javascript:void(0);" id="inline-username-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-title="Enter username" data-bs-toggle="modal" data-bs-target="#departmentDataModal" data-department='@json($department)'>{{$department->department_head }}</a>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Alter Head</td>
-                                                                    <td>
-                                                                        <a href="javascript: void(0);" id="inline-firstname-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-placement="right" data-placeholder="Required" data-title="Enter your firstname">{{$department->department_alter_head }}</a>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Divisions</td>
-                                                                    <td>
-                                                                        <a href="javascript: void(0);" id="inline-sex-{{ $loop->index }}" data-type="select" data-pk="{{ $loop->index }}" data-value="" data-title="Select sex"></a>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div> <!-- end col -->
-                                    </div> <!-- end row -->
-
-                                </form>
-
-                                <!-- Edit information -->
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h5 class="card-title mb-4">Update Heads</h5>
-
-
-                                                <form class="row row-cols-lg-auto g-3 align-items-center" id="employeeSearchForm>
-
-                                                    <div class=" col-12">
-                                                    <label class="visually-hidden" for="positionSelect">Preference</label>
-                                                    <select class="form-select" id="positionSelect" name="positionSelect">
-                                                        <option selected>Choose...</option>
-                                                        <option value="deptHead">Department Head</option>
-                                                        <option value="deptAltHead">Department Alter Head</option>
-
-                                                    </select>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <label class="visually-hidden" for="empDetail">Username</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-text"><i class="fas fa-search"></i></div>
-                                                    <input type="text" class="form-control" id="empDetail" name="empDetail" placeholder="Search for employee">
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-12">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="inlineFormCheck">
-                                                    <label class="form-check-label" for="inlineFormCheck">
-                                                        Check this!
-                                                    </label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <button type="button" id="searchEmployeeBtn" class="btn btn-danger w-md">Searh Employee</button>
-                                            </div>
-
-                                        </div>
-                                        <!-- end card body -->
-                                    </div>
-                                    <!-- end card -->
-                                </div>
-                                <!-- end col -->
-                                <!-- Employee Data Display -->
-                                <div class="mt-4" id="employeeData">
-                                    <!-- Dynamic Employee Data will be loaded here -->
-                                </div>
                             </div>
-                            <!--Add department-->
-                            <div class="tab-pane fade" id="v-pills-add-department" role="tabpanel" aria-labelledby="v-pills-add-department-tab">
-
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h4 class="card-title mb-4">Add new Department</h4>
-                                                <form class="outer-repeater" action="{{route('departments.store')}}" method="POST">
-                                                    @csrf
-                                                    <div data-repeater-list="outer-group" class="outer">
-                                                        <div data-repeater-item class="outer">
-                                                            <div class="mb-3">
-                                                                <label for="deptName">Department Name</label>
-                                                                <input type="text" class="form-control" name="deptName" id="deptName"
-                                                                    placeholder="Enter Department Name">
-                                                            </div>
-
-                                                            <div class="mb-3">
-                                                                <label for="deptCode">Department Code</label>
-                                                                <input type="text" class="form-control" name="deptCode" id="deptCode"
-                                                                    placeholder="Enter Department Code">
-                                                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="tab-content text-muted mt-4 mt-md-0" id="v-pills-tabContent">
+                                @foreach($departments as $department)
+                                <div class="tab-pane fade @if($loop->first) show active @endif" id="v-pills-{{ $loop->index}}" role="tabpanel">
 
 
+                                    <form>
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="card">
+                                                    <div class="card-body">
 
-                                                            <div class="mb-3">
-                                                                <label for="deptHead">Department Head</label>
-                                                                <input type="text" class="form-control" name="deptHead" id="deptHead"
-                                                                    placeholder="Enter Department Head Id / Name">
-                                                            </div>
-
-                                                            <div class="mb-3">
-                                                                <label for="deptAltHead">Department Alter Head</label>
-                                                                <input type="text" class="form-control" name="deptAltHead" id="deptAltHead"
-                                                                    placeholder="Enter Department Head Id / Name">
-                                                            </div>
-
-                                                            <div class="inner-repeater mb-4">
-                                                                <div data-repeater-list="inner-group" class="inner mb-3">
-                                                                    <label>Sub Divisions :</label>
-                                                                    <div data-repeater-item class="inner mb-3 row">
-                                                                        <div class="col-md-10 col-8">
-                                                                            <input type="text" class="inner form-control" name=""
-                                                                                placeholder="Divisions of the department" />
-                                                                        </div>
-                                                                        <div class="col-md-2 col-4">
-                                                                            <div class="d-grid">
-                                                                                <input data-repeater-delete type="button"
-                                                                                    class="btn btn-warning inner" value="Delete" />
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                                <input data-repeater-create type="button"
-                                                                    class="btn btn-success inner" value="Add Division" />
-                                                            </div>
-
-
-
-
-                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                        <h4 class="card-title">{{$department->department_name }} Details</h4>
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-nowrap mb-0">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="width: 50%;"></th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Department Head</td>
+                                                                        <td>
+                                                                            <a href="javascript:void(0);" id="inline-username-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-title="Enter username" data-bs-toggle="modal" data-bs-target="#departmentDataModal" data-department='@json($department)'>{{$department->department_head_name }}</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Alter Head</td>
+                                                                        <td>
+                                                                            <a href="javascript: void(0);" id="inline-firstname-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-placement="right" data-placeholder="Required" data-title="Enter your firstname">{{$department->department_alter_head_name }}</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Divisions</td>
+                                                                        <td>
+                                                                            <a href="javascript: void(0);" id="inline-sex-{{ $loop->index }}" data-type="select" data-pk="{{ $loop->index }}" data-value="" data-title="Select sex"></a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
+
                                                     </div>
-                                                </form>
+                                                </div>
+                                            </div> <!-- end col -->
+
+                                            <div class="col-md-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+
+                                                        <h4 class="card-title">{{$department->department_name }} Divisions</h4>
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-nowrap mb-0">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="width: 50%;"></th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Department Head</td>
+                                                                        <td>
+                                                                            <a href="javascript:void(0);" id="inline-username-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-title="Enter username" data-bs-toggle="modal" data-bs-target="#departmentDataModal" data-department='@json($department)'>{{$department->department_head }}</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Alter Head</td>
+                                                                        <td>
+                                                                            <a href="javascript: void(0);" id="inline-firstname-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-placement="right" data-placeholder="Required" data-title="Enter your firstname">{{$department->department_alter_head }}</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Divisions</td>
+                                                                        <td>
+                                                                            <a href="javascript: void(0);" id="inline-sex-{{ $loop->index }}" data-type="select" data-pk="{{ $loop->index }}" data-value="" data-title="Select sex"></a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end col -->
+                                        </div> <!-- end row -->
+
+                                    </form>
+
+                                    <!-- Edit information -->
+
+                                </div>
+                                <!--Add department-->
+                                <div class="tab-pane fade" id="v-pills-add-department" role="tabpanel" aria-labelledby="v-pills-add-department-tab">
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h4 class="card-title mb-4">Add new Department</h4>
+                                                    <form class="outer-repeater" action="{{route('departments.store')}}" method="POST">
+                                                        @csrf
+                                                        <div data-repeater-list="outer-group" class="outer">
+                                                            <div data-repeater-item class="outer">
+                                                                <div class="mb-3">
+                                                                    <label for="deptName">Department Name</label>
+                                                                    <input type="text" class="form-control" name="deptName" id="deptName"
+                                                                        placeholder="Enter Department Name">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="deptCode">Department Code</label>
+                                                                    <input type="text" class="form-control" name="deptCode" id="deptCode"
+                                                                        placeholder="Enter Department Code">
+                                                                </div>
+
+
+
+                                                                <div class="mb-3">
+                                                                    <label for="deptHead">Department Head</label>
+                                                                    <input type="text" class="form-control" name="deptHead" id="deptHead"
+                                                                        placeholder="Enter Department Head Id / Name">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="deptAltHead">Department Alter Head</label>
+                                                                    <input type="text" class="form-control" name="deptAltHead" id="deptAltHead"
+                                                                        placeholder="Enter Department Head Id / Name">
+                                                                </div>
+
+                                                                <div class="inner-repeater mb-4">
+                                                                    <div data-repeater-list="inner-group" class="inner mb-3">
+                                                                        <label>Sub Divisions :</label>
+                                                                        <div data-repeater-item class="inner mb-3 row">
+                                                                            <div class="col-md-10 col-8">
+                                                                                <input type="text" class="inner form-control" name=""
+                                                                                    placeholder="Divisions of the department" />
+                                                                            </div>
+                                                                            <div class="col-md-2 col-4">
+                                                                                <div class="d-grid">
+                                                                                    <input data-repeater-delete type="button"
+                                                                                        class="btn btn-warning inner" value="Delete" />
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <input data-repeater-create type="button"
+                                                                        class="btn btn-success inner" value="Add Division" />
+                                                                </div>
+
+
+
+
+                                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
-
+                                @endforeach
                             </div>
-                            @endforeach
+
+
                         </div>
-
-
                     </div>
                 </div>
             </div>
+
+            <!-- end card -->
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <!-- Second column -->
+
+        <div class="col-12">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h5 class="card-title mb-4">Update Heads</h5>
+
+                            <form class="row row-cols-lg-auto g-3 align-items-center" id="employeeSearchForm" action="{{route('departments.head')}}" method="POST">
+                                @csrf
+                                <div class="col-4">
+                                    <label class="visually-hidden" for="departmentSelect">Preference</label>
+                                    <select class="form-select" id="departmentSelect" name="departmentSelect">
+                                        <option selected>Choose...</option>
+                                        @foreach($departments as $department)
+                                        <option value="{{$department->department_code}}">{{$department->department_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-4">
+                                    <label class="visually-hidden" for="positionSelect">Preference</label>
+                                    <select class="form-select" id="positionSelect" name="positionSelect">
+                                        <option selected>Choose...</option>
+                                        <option value="deptHead">Department Head</option>
+                                        <option value="deptAltHead">Department Alter Head</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="col-6">
+                                    <label class="visually-hidden" for="empDetail">Username</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="fas fa-search"></i></div>
+                                        <input type="text" class="form-control" id="empDetail" name="empDetail" placeholder="Search for employee">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-6">
+                                    <button type="button" id="searchEmployeeBtn" class="btn btn-danger w-md">Search Employee</button>
+                                    <input class="btn btn-warning" type="submit" value="Update">
+                                </div>
+                            </form>
+                            <!-- Employee Data Display -->
+                            <div class="mt-4" id="employeeData">
+                                <!-- Dynamic Employee Data will be loaded here -->
+                            </div>
+
+
+                        </div>
+
+                        <!-- end card body -->
+                    </div>
+
+                    <!-- end card -->
+
+                </div>
+
+                <!-- end col -->
+
+            </div>
         </div>
 
-        <!-- end card -->
+
     </div>
-    <x-department-data-modal />
+</div>
+
 
 </div>
+
+<x-department-data-modal />
+
+
 
 <script>
     $(document).ready(function() {
         $('#searchEmployeeBtn').on('click', function(e) {
-            e.preventDefault()
-            const empDetail = $('#empDetail').val()
+            e.preventDefault();
+            const empDetail = $('#empDetail').val();
 
             if (!empDetail) {
-                alert('Please enter employee details')
+                alert('Please enter employee details');
                 return;
             }
+
             $.ajax({
                 url: '/employee/search',
                 type: 'GET',
                 data: {
-                    empDetail
+                    empDetail: empDetail
                 },
                 success: function(response) {
-                    //alert('Employee found')
                     $('#employeeData').html(`
-                                            <div class="card-body">
-
-                                                <h4 class="card-title">${response.full_name} Details</h4>
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped table-nowrap mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="width: 50%;"></th>
-                                                                <th></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>Full Name</td>
-                                                                <td>
-                                                                    <a href="javascript:void(0);" id="emp_name">${response.full_name}</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Employee Id</td>
-                                                                <td>
-                                                                    <a href="javascript: void(0);" id="emp_id">${response.emp_id}</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Email</td>
-                                                                <td>
-                                                                    <a href="javascript: void(0);" id="emp_email">${response.email}</a>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-                                            </div>
-`)
-
-
-                    //end
+    <div class="card-body">
+        <h4 class="card-title">${response.full_name} Details</h4>
+        <div class="table-responsive">
+            <table class="table table-striped table-nowrap mb-0">
+                <thead>
+                    <tr>
+                        <th style="width: 50%;"></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Full Name</td>
+                        <td>
+                            <a href="javascript:void(0);" id="emp_name">${response.full_name}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Employee Id</td>
+                        <td>
+                            <a href="javascript: void(0);" id="emp_id">${response.emp_id}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>
+                            <a href="javascript: void(0);" id="emp_email">${response.email}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="margin: 10px">
+           
+        </div>
+    </div>
+    `);
                 },
                 error: function(error) {
-                    alert('Employee not found')
-                    //start
-
+                    alert('Employee not found');
                 }
             });
-
-        })
-    })
+        });
+    });
 </script>
+
 
 
 <!-- JAVASCRIPT -->

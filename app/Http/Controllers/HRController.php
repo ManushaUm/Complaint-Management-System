@@ -16,7 +16,7 @@ class HRController extends Controller
 
     public function searchEmployee(Request $request)
     {
-        //dd($request->all());
+        dd($request->all());
         $data = $request->all();
         //find id empDetail from HR model
         $employeeId = $data['empDetail'];
