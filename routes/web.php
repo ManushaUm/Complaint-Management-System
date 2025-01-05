@@ -5,13 +5,17 @@ use App\Http\Controllers\NewComplaintController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\complaintcontroller;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HRController;
 
 //auth routes
 Route::get('/users', [DepartmentController::class, 'index2'])->middleware(['auth', 'verified'])->name('users');
+//Route::get('/users', [DivisionController::class, 'index']);
+
 //add new department route
 Route::post('/departments/store', [DepartmentController::class, 'store'])->name('departments.store');
 Route::post('/departments/head', [DepartmentController::class, 'updateHead'])->name('departments.head');
+
 
 
 Route::middleware('auth')->group(function () {

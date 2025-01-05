@@ -24,6 +24,7 @@
                         <div class="col-md-10">
                             <div class="tab-content text-muted mt-4 mt-md-0" id="v-pills-tabContent">
                                 @foreach($departments as $department)
+
                                 <div class="tab-pane fade @if($loop->first) show active @endif" id="v-pills-{{ $loop->index}}" role="tabpanel">
 
 
@@ -57,9 +58,9 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>Divisions</td>
+                                                                        <td>Department Code</td>
                                                                         <td>
-                                                                            <a href="javascript: void(0);" id="inline-sex-{{ $loop->index }}" data-type="select" data-pk="{{ $loop->index }}" data-value="" data-title="Select sex"></a>
+                                                                            <a href="javascript: void(0);" id="inline-sex-{{ $loop->index }}" data-type="select" data-pk="{{ $loop->index }}" data-value="" data-title="Select sex">{{$department -> department_code}}</a>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -68,7 +69,10 @@
 
                                                     </div>
                                                 </div>
-                                            </div> <!-- end col -->
+                                            </div>
+                                            <!-- Divisions start -->
+
+
 
                                             <div class="col-md-6">
                                                 <div class="card">
@@ -79,29 +83,54 @@
                                                             <table class="table table-striped table-nowrap mb-0">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th style="width: 50%;"></th>
-                                                                        <th></th>
+                                                                        <th style="width: 50%;">Division Name</th>
+                                                                        <th>Division Code</th>
+                                                                        <th>Division Head</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
+
+                                                                    @foreach ($divisionsData as $divisionData)
+                                                                    @if ($department->department_code == $divisionData->department_code)
                                                                     <tr>
-                                                                        <td>Department Head</td>
+                                                                        <td><a href="javascript:void(0);" id="inline-username-{{ $loop->index }}"
+                                                                                data-type="text"
+                                                                                data-pk="{{ $loop->index }}"
+                                                                                data-title="Division_name"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#departmentDataModal"
+                                                                                data-department='@json($department)'>
+                                                                                {{ $divisionData->division_name }}
+                                                                            </a></td>
+
                                                                         <td>
-                                                                            <a href="javascript:void(0);" id="inline-username-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-title="Enter username" data-bs-toggle="modal" data-bs-target="#departmentDataModal" data-department='@json($department)'>{{$department->department_head }}</a>
+                                                                            <a href="javascript:void(0);" id="inline-username-{{ $loop->index }}"
+                                                                                data-type="text"
+                                                                                data-pk="{{ $loop->index }}"
+                                                                                data-title="Division_head"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#departmentDataModal"
+                                                                                data-department='@json($department)'>
+                                                                                {{ $divisionData->division_code }}
+                                                                            </a>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <a href="javascript:void(0);" id="inline-username-{{ $loop->index }}"
+                                                                                data-type="text"
+                                                                                data-pk="{{ $loop->index }}"
+                                                                                data-title="Division_head"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#departmentDataModal"
+                                                                                data-department='@json($department)'>
+                                                                                {{ $divisionData->div_head_name }}
+                                                                            </a>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
-                                                                        <td>Alter Head</td>
-                                                                        <td>
-                                                                            <a href="javascript: void(0);" id="inline-firstname-{{ $loop->index }}" data-type="text" data-pk="{{ $loop->index }}" data-placement="right" data-placeholder="Required" data-title="Enter your firstname">{{$department->department_alter_head }}</a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Divisions</td>
-                                                                        <td>
-                                                                            <a href="javascript: void(0);" id="inline-sex-{{ $loop->index }}" data-type="select" data-pk="{{ $loop->index }}" data-value="" data-title="Select sex"></a>
-                                                                        </td>
-                                                                    </tr>
+                                                                    @endif
+                                                                    @endforeach
+
+
                                                                 </tbody>
                                                             </table>
                                                         </div>

@@ -31,8 +31,7 @@
 
 
 
-
-            <x-vertical-nav-tab :departments="$departments" />
+            <x-vertical-nav-tab :departments="$departments" :divisionsData="$divisionsData" />
 
 
 

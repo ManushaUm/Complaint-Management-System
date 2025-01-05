@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Department;
+use App\Models\Division;
 use Illuminate\Support\Facades\DB;
 
 class DepartmentController extends Controller
@@ -26,6 +27,18 @@ class DepartmentController extends Controller
 
     public function index2()
     {
+        //$division = new Division();
+        //$divisionsData = $division->getDivisions();
+        $divisionsData = Division::select(
+            'divisions_table.division_name',
+            'divisions_table.division_code',
+            'divisions_table.department_code',
+            'divisions_table.division_head',
+            'hr_div_head.full_name as div_head_name'
+
+        )->leftJoin('hr as hr_div_head', 'divisions_table.division_head', '=', 'hr_div_head.emp_id')
+            ->get();
+
         $departments = Department::select(
             'departments.id',
             'departments.department_name',
@@ -37,7 +50,9 @@ class DepartmentController extends Controller
             ->leftJoin('hr as hr_alt_head', 'departments.department_alter_head', '=', 'hr_alt_head.emp_id')
             ->get();
 
-        return view('useraccess', compact('departments'));
+
+
+        return view('useraccess', compact('departments', 'divisionsData'));
     }
 
     /**

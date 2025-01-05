@@ -14,11 +14,13 @@ class VerticalNavTab extends Component
     public $departmentNames;
     public $departments;
     public $employee;
+    public $divisionsData;
 
-    public function __construct($departments)
+    public function __construct($departments, $divisionsData)
     {
         //$this->departmentNames = $departmentNames;
         $this->departments = $departments;
+        $this->divisionsData = $divisionsData;
         //$this->employee = $employee;
     }
     //
