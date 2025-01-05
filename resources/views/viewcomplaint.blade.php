@@ -61,7 +61,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     @foreach($complaints as $complaint)
-                                                                    <tr>
+                                                                    <tr class="complaint-row" data-complaint='@json($complaint)' data-complaint-id="{{ $complaint->id }}">
                                                                         <td>{{ $complaint->name }}</td>
 
                                                                         <td>{{ $complaint->contact_no }}</td>
@@ -109,6 +109,89 @@
                 @endif
 
             </div>
+            <!-- Modal -->
+            <div class="modal fade" id="transaction-detailModalsimple" tabindex="-1" aria-labelledby="transaction-detailModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="transaction-detailModalLabel">Complaint Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Name:</h6>
+                                        <p id="complaint-name"></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Contact No:</h6>
+                                        <p id="complaint-contact_no"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Email:</h6>
+                                        <p id="complaint-email"></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Customer Type:</h6>
+                                        <p id="complaint-customer_type"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Policy Number:</h6>
+                                        <p id="complaint-policy_number"></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Complaint Date:</h6>
+                                        <p id="complaint-complaint_date"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6>Complaint Detail:</h6>
+                                        <p id="complaint-complaint_detail"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var complaintRows = document.querySelectorAll('.complaint-row');
+                    var transactionDetailModal = document.getElementById('transaction-detailModalsimple');
+
+                    complaintRows.forEach(function(row) {
+                        row.addEventListener('click', function(event) {
+                            // Check if the click event originated from the "View Details" button
+                            if (event.target.tagName === 'BUTTON') {
+                                return;
+                            }
+
+                            var complaint = JSON.parse(row.getAttribute('data-complaint'));
+                            document.getElementById('complaint-name').innerText = complaint.name;
+                            document.getElementById('complaint-contact_no').innerText = complaint.contact_no;
+                            document.getElementById('complaint-email').innerText = complaint.email;
+                            document.getElementById('complaint-customer_type').innerText = complaint.customer_type;
+                            document.getElementById('complaint-policy_number').innerText = complaint.policy_number;
+                            document.getElementById('complaint-complaint_date').innerText = complaint.complaint_date;
+                            document.getElementById('complaint-complaint_detail').innerText = complaint.complaint_detail;
+                            var modalTitle = document.getElementById('transaction-detailModalLabel');
+                            modalTitle.innerText = 'Complaint Details (ID: ' + complaint.id + ')';
+                            var modal = new bootstrap.Modal(transactionDetailModal);
+                            modal.show();
+                        });
+                    });
+                });
+            </script>
+
             @endauth
 
         </body>
