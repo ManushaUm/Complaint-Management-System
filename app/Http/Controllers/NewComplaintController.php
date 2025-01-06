@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
+use Dompdf\Dompdf;
+
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class NewComplaintController extends Controller
 {
@@ -109,5 +114,16 @@ class NewComplaintController extends Controller
             Log::error('Attachment not found for ID: ' . $id);
             return response()->json(['error' => 'Attachment not found'], 404);
         }
+    }
+    public function downloadPdf($id)
+    {
+        $complaint = DB::table('new_complaints')->where('id', $id)->first();
+        if (!$complaint) {
+            return redirect()->back()->with('error', 'Complaint not found');
+        }
+
+
+        $pdf = Pdf::loadView('complaint.pdf', compact('complaint'));
+        return $pdf->download('complaint_' . $complaint->id . '.pdf');
     }
 }
