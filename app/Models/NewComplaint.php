@@ -20,7 +20,8 @@ class NewComplaint extends Model
         'complaint_date',
         'complaint_detail',
         'attachment',
-        'complaint_status'
+        'complaint_status',
+        'department',
 
     ];
 

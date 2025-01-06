@@ -454,6 +454,13 @@
                             <a href="javascript: void(0);" id="emp_email">${response.email}</a>
                         </td>
                     </tr>
+
+                    <tr>
+                        <td>Phone</td>
+                        <td>
+                            <a href="javascript: void(0);" id="emp_email">${response.phone}</a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

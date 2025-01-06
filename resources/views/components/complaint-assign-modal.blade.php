@@ -23,50 +23,32 @@
                             <tr>
                                 <td id="modalPolicyNumber"></td>
                                 <td><a href="" id="modalAttachment" target="_blank">View</a></td>
-                                <td id="modalComplaintStatus">
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            const statusElement = document.getElementById('modalComplaintStatus');
-                                            const status = statusElement.textContent.trim();
-                                            if (status === '0') {
-                                                statusElement.textContent = 'Received';
-                                            } else if (status === '1') {
-                                                statusElement.textContent = 'Assigned';
-                                            }
-                                        });
-                                    </script>
-                                </td>
+                                <td id="modalComplaintStatus"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Assigining</h4>
-
-                        <form class="needs-validation" novalidate action="{{route('assign.complaint')}}" method="POST">
+                        <h4 class="card-title">Assigning</h4>
+                        <form class="needs-validation" novalidate action="{{ route('assign.complaint') }}" method="POST">
                             @csrf
                             <input type="hidden" name="modalComplaintId" id="modalComplaintId" value="">
                             <div class="row">
-
-
-
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="validationCustom03" class="form-label">Category</label>
                                             <select class="form-select" id="dept_name" name="dept_id" required>
                                                 <option selected disabled>Choose...</option>
-                                                @foreach($departmentNames as $department)
-                                                <option value="{{$department->department_name}}">{{$department->department_name}}</option>
+                                                @foreach ($departmentNames as $department)
+                                                <option value="{{ $department->department_code }}">{{ $department->department_name }}</option>
                                                 @endforeach
                                             </select>
                                             <div class="invalid-feedback">
                                                 Please select a valid Category.
                                             </div>
-
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -74,10 +56,8 @@
                                             <label for="validationCustom04" class="form-label">Sub Category</label>
                                             <select class="form-select" id="div_name" name="div_name" required>
                                                 <option selected disabled>Choose...</option>
-
-                                                @foreach($divisionNames as $division)
-
-                                                <option value="{{$division->division_name}}">{{$division->division_name}}</option>
+                                                @foreach ($divisionNames as $division)
+                                                <option value="{{ $division->division_name }}">{{ $division->division_name }}</option>
                                                 @endforeach
                                             </select>
                                             <div class="invalid-feedback">
@@ -85,19 +65,16 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="validationCustom05" class="form-label">District</label>
                                             <select class="form-select" id="district" name="district" required>
                                                 <option selected disabled value="">Choose...</option>
-
                                                 <option value="Colombo">Colombo</option>
                                                 <option value="Ratnapura">Ratnapura</option>
                                                 <option value="Matara">Matara</option>
                                                 <option value="Kandy">Kandy</option>
                                                 <option value="Trincomalee">Trincomalee</option>
-
                                             </select>
                                             <div class="invalid-feedback">
                                                 Please provide a valid Location.
@@ -109,7 +86,6 @@
                                             <label for="validationCustom05" class="form-label">Branch</label>
                                             <select class="form-select" id="branch" name="branch" required>
                                                 <option selected disabled value="">Choose...</option>
-
                                                 <option value="Colombo B">Colombo</option>
                                                 <option value="Ratnapura B">Ratnapura</option>
                                                 <option value="Matara B">Matara</option>
@@ -125,21 +101,16 @@
                                 <div class="col-md-6">
                                     <div class="mb-6">
                                         <label for="validationCustom01" class="form-label">Notes</label>
-                                        <textarea type="text" class="form-control" id="notes" name="notes"
-                                            placeholder="Add notes for review" value=""> </textarea>
-                                        <div class="valid-feedback">
-
-                                        </div>
+                                        <textarea class="form-control" id="notes" name="notes" placeholder="Add notes for review"></textarea>
                                     </div>
                                 </div>
                                 <div>
                                     <button class="btn btn-warning" type="submit">Assign</button>
                                 </div>
-
+                            </div>
                         </form>
                     </div>
                 </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -151,33 +122,30 @@
 <script>
     const transactionModal = document.getElementById('transaction-detailModal');
     transactionModal.addEventListener('show.bs.modal', function(event) {
-        const button = event.relatedTarget; // Button for modal
+        const button = event.relatedTarget; // Button that triggered the modal
         const complaint = JSON.parse(button.getAttribute('data-complaint')); // Extract info from data-complaint attribute
 
-        // Update the modal's content
-
+        // Update modal content
         document.getElementById('modalComplaintDate').textContent = complaint.complaint_date;
         document.getElementById('modalCustomerName').textContent = complaint.name;
         document.getElementById('modalCustomerContact').textContent = complaint.contact_no;
         document.getElementById('modalComplaintDetail').textContent = complaint.complaint_detail;
         document.getElementById('modalPolicyNumber').textContent = complaint.policy_number;
         document.getElementById('modalAttachment').setAttribute('href', '/storage/' + complaint.attachment);
-        document.getElementById('modalComplaintStatus').textContent = complaint.complaint_status;
-        //Complaint ID
+
+        // Update status dynamically
+        const statusElement = document.getElementById('modalComplaintStatus');
+        const status = complaint.complaint_status;
+        if (status === 0) {
+            statusElement.textContent = 'Received';
+        } else if (status === 1) {
+            statusElement.textContent = 'Assigned';
+        }
+
+        // Set hidden complaint ID
         const complaintIdInput = document.getElementById('modalComplaintId');
-        if (complaintIdInput && complaint.id) {
-            complaintIdInput.value = complaint.id; // Assign the complaint ID
-        } else {
-            console.error("Complaint ID is missing or input field not found!");
+        if (complaintIdInput) {
+            complaintIdInput.value = complaint.id;
         }
     });
 </script>
-<script src="assets/libs/jquery/jquery.min.js"></script>
-<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/libs/metismenu/metisMenu.min.js"></script>
-<script src="assets/libs/simplebar/simplebar.min.js"></script>
-<script src="assets/libs/node-waves/waves.min.js"></script>
-<script src="assets/libs/parsleyjs/parsley.min.js"></script>
-<script src="assets/js/pages/form-validation.init.js"></script>
-
-<script src="assets/js/app.js"></script>

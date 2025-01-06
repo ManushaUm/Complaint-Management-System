@@ -57,18 +57,23 @@ class complaintcontroller extends Controller
         // Validate incoming request
         $request->validate([
             'modalComplaintId' => 'required|integer',
+            'dept_id' => 'required|string',
         ]);
 
         // Find the complaint by ID
-        $complaint = newComplaint::find($request->modalComplaintId);
+        $complaint = NewComplaint::find($request->modalComplaintId);
 
         // Check if complaint exists
         if (!$complaint) {
             return redirect()->back()->with('error', 'Complaint not found.');
         }
 
-        // Update the status
+        // Update the department and status
+        $complaint->department = $request->dept_id;
         $complaint->updateStatus($request->modalComplaintId);
+
+        // Save the changes
+        $complaint->save();
 
         // Redirect with success message
         return redirect()->back()->with('success', 'Complaint assigned successfully.');

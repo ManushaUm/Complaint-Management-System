@@ -19,7 +19,7 @@
 
 
     <x-slot name="header">
-
+        <x-user-profile />
 
     </x-slot>
     <main>
