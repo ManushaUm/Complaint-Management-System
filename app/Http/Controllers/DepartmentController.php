@@ -62,6 +62,7 @@ class DepartmentController extends Controller
     {
         //dd($request->all());
         $dept = $request->all();
+
         // $request->validate([
         //     'department_name' => 'required|string|max:255',
         //  ]);
@@ -71,6 +72,9 @@ class DepartmentController extends Controller
         $deptCode = $outerGroup['deptCode'];
         $deptHead = $outerGroup['deptHead'];
         $deptAltHead = $outerGroup['deptAltHead'];
+        $deptDivs = $outerGroup['inner-group'];
+        //dd($deptDivs);
+
 
 
         $department = new Department();
@@ -82,7 +86,15 @@ class DepartmentController extends Controller
         $department->save();
 
         //dd($department);
-
+        foreach ($deptDivs as $deptDiv) {
+            $division = new Division();
+            $division->division_name = $deptDiv['divisionName'];
+            $division->division_code = $deptCode;
+            $division->department_code = $deptDiv['divisionName'];
+            $division->division_head = $deptDiv['divisionHead'];
+            //dd($division);
+            $division->save();
+        }
 
 
         return redirect()->route('users')->with('success', 'Department created successfully.');

@@ -16,6 +16,8 @@ Route::get('/users', [DepartmentController::class, 'index2'])->middleware(['auth
 Route::post('/departments/store', [DepartmentController::class, 'store'])->name('departments.store');
 Route::post('/departments/head', [DepartmentController::class, 'updateHead'])->name('departments.head');
 
+Route::post('/division/store', [DivisionController::class, 'store'])->name('division.store');
+
 
 
 Route::middleware('auth')->group(function () {

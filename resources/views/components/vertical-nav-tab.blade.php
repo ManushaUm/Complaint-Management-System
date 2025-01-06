@@ -18,7 +18,7 @@
                                 <a class="nav-link mb-2 @if($loop->first) active @endif" id="v-pills-{{ $loop->index }}-tab" data-bs-toggle="pill" href="#v-pills-{{ $loop->index }}" role="tab" aria-controls="v-pills-{{ $loop->index }}" aria-selected="@if($loop->first) true @else false @endif">{{$department->department_name }}</a>
                                 @endforeach
                                 <a class="nav-link" id="v-pills-add-department-tab" data-bs-toggle="pill" href="#v-pills-add-department" role="tab" aria-controls="v-pills-add-department" aria-selected="false">Add Department</a>
-
+                                <a class="nav-link" id="v-pills-add-division-tab" data-bs-toggle="pill" href="#v-pills-add-division" role="tab" aria-controls="v-pills-add-division" aria-selected="false">Add Divisions</a>
                             </div>
                         </div>
                         <div class="col-md-10">
@@ -146,71 +146,169 @@
 
                                 </div>
                                 <!--Add department-->
-                                <div class="tab-pane fade" id="v-pills-add-department" role="tabpanel" aria-labelledby="v-pills-add-department-tab">
+                                <div class="tab-pane fade" id="v-pills-add-department" role="tabpanel" aria-labelledby="v-pills-add-department-tab" style="margin-left: 160px;">
 
-                                    <div class="row">
-                                        <div class="col-lg-12">
+                                    <div>
+                                        <div class="col-lg-10">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <h4 class="card-title mb-4">Add new Department</h4>
-                                                    <form class="outer-repeater" action="{{route('departments.store')}}" method="POST">
+                                                    <h4 class="card-title mb-4">New Department Details</h4>
+                                                    <form class="outer-repeater needs-validation" action="{{route('departments.store')}}" method="POST" novalidate>
                                                         @csrf
                                                         <div data-repeater-list="outer-group" class="outer">
                                                             <div data-repeater-item class="outer">
                                                                 <div class="mb-3">
                                                                     <label for="deptName">Department Name</label>
                                                                     <input type="text" class="form-control" name="deptName" id="deptName"
-                                                                        placeholder="Enter Department Name">
+                                                                        placeholder="Enter Department Name" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please enter a department name.
+                                                                    </div>
                                                                 </div>
 
                                                                 <div class="mb-3">
                                                                     <label for="deptCode">Department Code</label>
                                                                     <input type="text" class="form-control" name="deptCode" id="deptCode"
-                                                                        placeholder="Enter Department Code">
+                                                                        placeholder="Enter Department Code" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please enter a department code.
+                                                                    </div>
                                                                 </div>
-
-
 
                                                                 <div class="mb-3">
                                                                     <label for="deptHead">Department Head</label>
                                                                     <input type="text" class="form-control" name="deptHead" id="deptHead"
-                                                                        placeholder="Enter Department Head Id / Name">
+                                                                        placeholder="Enter Department Head Id / Name" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please enter a department head ID or name.
+                                                                    </div>
                                                                 </div>
 
                                                                 <div class="mb-3">
                                                                     <label for="deptAltHead">Department Alter Head</label>
                                                                     <input type="text" class="form-control" name="deptAltHead" id="deptAltHead"
-                                                                        placeholder="Enter Department Head Id / Name">
-                                                                </div>
-
-                                                                <div class="inner-repeater mb-4">
-                                                                    <div data-repeater-list="inner-group" class="inner mb-3">
-                                                                        <label>Sub Divisions :</label>
-                                                                        <div data-repeater-item class="inner mb-3 row">
-                                                                            <div class="col-md-10 col-8">
-                                                                                <input type="text" class="inner form-control" name=""
-                                                                                    placeholder="Divisions of the department" />
-                                                                            </div>
-                                                                            <div class="col-md-2 col-4">
-                                                                                <div class="d-grid">
-                                                                                    <input data-repeater-delete type="button"
-                                                                                        class="btn btn-warning inner" value="Delete" />
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </div>
+                                                                        placeholder="Enter Department Alter Head Id / Name" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please enter a department alter head ID or name.
                                                                     </div>
-                                                                    <input data-repeater-create type="button"
-                                                                        class="btn btn-success inner" value="Add Division" />
                                                                 </div>
-
-
-
-
                                                                 <button type="submit" class="btn btn-primary">Submit</button>
                                                             </div>
                                                         </div>
                                                     </form>
+
+                                                    <script>
+                                                        (function() {
+                                                            'use strict';
+                                                            window.addEventListener('load', function() {
+                                                                var forms = document.getElementsByClassName('needs-validation');
+                                                                Array.prototype.filter.call(forms, function(form) {
+                                                                    form.addEventListener('submit', function(event) {
+                                                                        if (form.checkValidity() === false) {
+                                                                            event.preventDefault();
+                                                                            event.stopPropagation();
+                                                                        }
+                                                                        form.classList.add('was-validated');
+                                                                    }, false);
+                                                                });
+                                                            }, false);
+                                                        })();
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!--Add divisions-->
+                                <div class="tab-pane fade" id="v-pills-add-division" role="tabpanel" aria-labelledby="v-pills-add-division-tab">
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h4 class="card-title mb-4">Add Divisions</h4>
+                                                    <form class="outer-repeater needs-validation" action="{{route('division.store')}}" method="POST" novalidate>
+                                                        @csrf
+                                                        <div data-repeater-list="outer-group" class="outer">
+                                                            <div data-repeater-item class="row outer" style="margin: 10px">
+                                                                <div class="col-md-5">
+                                                                    <div class="mb-3">
+                                                                        <label class="visually-hidden" for="departmentSelect">Preference</label>
+
+                                                                        <select class="form-select" id="departmentSelect" name="departmentSelect" required>
+                                                                            <option selected disabled value="">Choose Department</option>
+                                                                            @foreach($departments as $department)
+                                                                            <option value="{{$department->department_code}}">{{$department->department_name}}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        <div class="invalid-feedback">
+                                                                            Please select a department.
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!--Division adding part-->
+
+
+                                                                <div class="inner-repeater mb-4">
+                                                                    <div data-repeater-list="inner-group" class="inner mb-3">
+                                                                        <div data-repeater-item class="inner mb-3 row">
+                                                                            <div class="col-md-3 col-4">
+                                                                                <input type="text" class="inner form-control" name="divisionName" placeholder="Division Name" required />
+                                                                                <div class="invalid-feedback">
+                                                                                    Please enter a division name.
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-3 col-4">
+                                                                                <input type="text" class="inner form-control" name="divisionCode" placeholder="Division Code" required />
+                                                                                <div class="invalid-feedback">
+                                                                                    Please enter a division code.
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-4">
+                                                                                <input type="text" class="inner form-control" name="divisionHead" placeholder="Division Head ID" required />
+                                                                                <div class="invalid-feedback">
+                                                                                    Please enter a division head ID.
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-2 col-4">
+                                                                                <div class="d-grid">
+                                                                                    <input data-repeater-delete type="button" class="btn btn-warning inner" value="Delete" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <input data-repeater-create type="button" class="btn btn-success inner" value="Add Division" />
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+
+                                                        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                                                    </form>
+
+                                                    <script>
+                                                        (function() {
+                                                            'use strict';
+                                                            window.addEventListener('load', function() {
+                                                                var forms = document.getElementsByClassName('needs-validation');
+                                                                Array.prototype.filter.call(forms, function(form) {
+                                                                    form.addEventListener('submit', function(event) {
+                                                                        if (form.checkValidity() === false) {
+                                                                            event.preventDefault();
+                                                                            event.stopPropagation();
+                                                                        }
+                                                                        form.classList.add('was-validated');
+                                                                    }, false);
+                                                                });
+                                                            }, false);
+                                                        })();
+                                                    </script>
                                                 </div>
                                             </div>
                                         </div>

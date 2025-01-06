@@ -19,27 +19,13 @@
 
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            User accounts
-        </h2>
+
 
     </x-slot>
+    <main>
 
-    <div class="py-12">
+        <x-vertical-nav-tab :departments="$departments" :divisionsData="$divisionsData" />
 
-        <body data-sidebar="dark">
-
-
-
-            <x-vertical-nav-tab :departments="$departments" :divisionsData="$divisionsData" />
-
-
-
-
-
-
-
-        </body>
-    </div>
+    </main>
 
 </x-app-layout>
