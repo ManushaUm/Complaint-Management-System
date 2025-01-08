@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HRController;
+use App\Http\Controllers\Usercontroller;
 
 //auth routes
 Route::get('/departments', [DepartmentController::class, 'index2'])->middleware(['auth', 'verified'])->name('departments');
@@ -27,7 +28,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//view routes
+
+
+
+Route::get('/search', [Usercontroller::class, 'search'])->name('user.search');
+Route::get('/api/roles', [UserController::class, 'getRoles']);
+Route::get('/api/users', [UserController::class, 'getUsers']);
+//Route::put('api/users/{id}/role', [UserController::class, 'updateRole']);
+//Route::put('/api/users/{userId}/role', [UserController::class, 'updateUserRole']);
+//Route::put('/api/users/update-role/{userId}', [UserController::class, 'updateRole']);
+Route::put('/api/users/update-role', [UserController::class, 'updateUserRole']);
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -40,7 +51,22 @@ Route::get('/viewcomplaints', function () {
 
 Route::get('/searchcomplaints', function () {
     return view('searchcomplaints');
-})->middleware(['auth', 'verified'])->name('searchcomplaints');
+})->middleware(['auth', 'verified'])->name('search.complaints');
+
+Route::get('/users', function () {
+    return view('roleassignment');
+})->middleware(['auth', 'verified'])->name('users');
+
+Route::get('/roles', function () {
+    return view('useraccess');
+})->middleware(['auth', 'verified'])->name('roles');
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 Route::get('/complaint', function () {
     return view('complaint');

@@ -10,6 +10,64 @@ use Illuminate\Support\Facades\DB;
 
 class NewComplaintController extends Controller
 {
+        public function show($policy_number)
+        {
+            // Find the complaint by policy number
+            $complaint = Complaint::where('policy_number', $policy_number)->first(); // This will return a 404 if not found
+        
+            // Pass the complaint data to the view
+            return view('showComplaint', compact('complaint'));
+        }
+    
+        public function searchForm()
+        {
+            return view('searchcomplaints');
+        }
+
+
+        public function search(Request $request)
+        {
+            $query = DB::table('new_complaints');
+        
+            if ($request->customer_name) {
+                $query->where('name', 'like', '%' . trim($request->customer_name) . '%');
+            }
+            
+            if ($request->policy_number) {
+                $query->where('policy_number', 'like', '%' . $request->policy_number . '%');
+            }
+            if ($request->complaint_date) {
+                $query->whereDate('complaint_date', $request->complaint_date);
+            }
+            if ($request->email) {
+                $query->where('email', 'like', '%' . $request->email . '%');
+            }
+        
+            $complaints = $query->get();
+            return view('searchcomplaints', ['complaints' => $complaints]);
+        }
+        
+
+
+    public function verifyUser(Request $request)
+    {
+        // Validate that the policy_number field exists
+        $request->validate([
+            'user_id' => 'required|string|max:255',
+        ]);
+
+        // Check if the policy number exists in the 'userinfo' table
+        $userExists = DB::table('user_info')
+            ->where('user_id', $request->user_id)
+            ->exists();
+
+        // Return the response as JSON to be handled by the AJAX call
+        return response()->json([
+            'exists' => $userExists,
+        ]);
+
+    }
+
     public function lodgeNew()
     {
         $newComplaint = new complaintType();

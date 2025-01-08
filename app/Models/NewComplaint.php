@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class NewComplaint extends Model
 {
+    use HasFactory;
+    protected $table = 'new_complaints';
     protected $fillable = [
         'name',
         'insured',
