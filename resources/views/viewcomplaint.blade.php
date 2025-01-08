@@ -159,40 +159,45 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a id="download-pdf-button" href="#" class="btn btn-primary">Download PDF</a>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var complaintRows = document.querySelectorAll('.complaint-row');
-                    var transactionDetailModal = document.getElementById('transaction-detailModalsimple');
 
-                    complaintRows.forEach(function(row) {
-                        row.addEventListener('click', function(event) {
-                            // Check if the click event originated from the "View Details" button
-                            if (event.target.tagName === 'BUTTON') {
-                                return;
-                            }
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var complaintRows = document.querySelectorAll('.complaint-row');
+                                var transactionDetailModal = document.getElementById('transaction-detailModalsimple');
 
-                            var complaint = JSON.parse(row.getAttribute('data-complaint'));
-                            document.getElementById('complaint-name').innerText = complaint.name;
-                            document.getElementById('complaint-contact_no').innerText = complaint.contact_no;
-                            document.getElementById('complaint-email').innerText = complaint.email;
-                            document.getElementById('complaint-customer_type').innerText = complaint.customer_type;
-                            document.getElementById('complaint-policy_number').innerText = complaint.policy_number;
-                            document.getElementById('complaint-complaint_date').innerText = complaint.complaint_date;
-                            document.getElementById('complaint-complaint_detail').innerText = complaint.complaint_detail;
-                            var modalTitle = document.getElementById('transaction-detailModalLabel');
-                            modalTitle.innerText = 'Complaint Details (ID: ' + complaint.id + ')';
-                            var modal = new bootstrap.Modal(transactionDetailModal);
-                            modal.show();
-                        });
-                    });
-                });
-            </script>
+                                complaintRows.forEach(function(row) {
+                                    row.addEventListener('click', function(event) {
+                                        // Check if the click event originated from the "View Details" button
+                                        if (event.target.tagName === 'BUTTON') {
+                                            return;
+                                        }
 
-            @endauth
+                                        var complaint = JSON.parse(row.getAttribute('data-complaint'));
+                                        document.getElementById('complaint-name').innerText = complaint.name;
+                                        document.getElementById('complaint-contact_no').innerText = complaint.contact_no;
+                                        document.getElementById('complaint-email').innerText = complaint.email;
+                                        document.getElementById('complaint-customer_type').innerText = complaint.customer_type;
+                                        document.getElementById('complaint-policy_number').innerText = complaint.policy_number;
+                                        document.getElementById('complaint-complaint_date').innerText = complaint.complaint_date;
+                                        document.getElementById('complaint-complaint_detail').innerText = complaint.complaint_detail;
+
+                                        var modalTitle = document.getElementById('transaction-detailModalLabel');
+                                        modalTitle.innerText = 'Complaint Details (ID: ' + complaint.id + ')';
+
+                                        // Set the download PDF button link
+                                        var downloadPdfButton = document.getElementById('download-pdf-button');
+                                        downloadPdfButton.href = '/complaint/' + complaint.id + '/download-pdf';
+
+                                        var modal = new bootstrap.Modal(transactionDetailModal);
+                                        modal.show();
+                                    });
+                                });
+                            });
+                        </script>
+
+                        @endauth
 
         </body>
     </div>
