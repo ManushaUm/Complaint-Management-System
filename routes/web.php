@@ -47,6 +47,7 @@ Route::get('/viewcomplaint', [NewComplaintController::class, 'viewcomplaint'])->
 Route::get('/complaintdropdown', [complaintcontroller::class, 'typeview'])->name('complaintstatus.typeview');
 Route::post('/complaintsave', [complaintcontroller::class, 'store'])->name('complaintstatus.store');
 Route::get('/complaints/{id}/attachment', [NewComplaintController::class, 'getAttachment'])->name('complaints.attachment');
+Route::get('/complaint/{id}/download-pdf', [NewComplaintController::class, 'downloadPdf'])->name('complaint.downloadPdf');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin-auth.php';
