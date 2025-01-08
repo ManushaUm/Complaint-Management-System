@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->string('department_name');
-            $table->string('department_head');
-            $table->string('department_alter_head');
+            $table->string('department_name')->unique();
+            $table->string('department_code')->unique();
+            $table->string('department_head', 255); //emp_id
+            $table->string('department_alter_head', 255);
+            $table->json('department_divisions');
             $table->boolean('is active')->default(1);
             $table->timestamps();
+            //$table->foreign('department_head')->references('emp_id')->on('hr')->onDelete('no action');
         });
     }
 

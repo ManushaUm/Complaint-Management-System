@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-200 border-b border-gray-100 dark:border-gray-200">
+<nav x-data="{ open: false }" class="bg-gray dark:bg-gray-200 border-b border-gray-100 dark:border-gray-200">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -31,11 +31,11 @@
                         {{ __('Search Complaints') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
-                        {{ __('User managemenent') }}
+                    <x-nav-link :href="route('departments')" :active="request()->routeIs('departments')">
+                        {{ __('Department Management') }}
                     </x-nav-link>
 
-                    
+
 
                     <x-nav-link :href="route('complaint')" :active="request()->routeIs('complaint')">
                         {{ __('Assigining Complaint') }}

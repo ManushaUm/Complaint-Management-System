@@ -1,5 +1,6 @@
 <x-app-layout>
-<head>
+
+    <head>
         <meta charset="utf-8" />
         <title>CI Lanka - Complaint Management System</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,7 @@
         <meta content="Themesbrand" name="author" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        
+
 
         <!-- App favicon -->
         <link rel="shortcut icon" href="assets/images/CI-logo.png">
@@ -28,6 +29,14 @@
     </x-slot>
 
     <div class="py-12">
+
+        <body data-sidebar="dark">
+
+
+
+
+
+        </body>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
@@ -56,9 +65,9 @@
                         </div>
 
                         <div class="mt-6">
-                        <button type="submit" class="btn btn-outline-primary w-md">
-                            Search
-                        </button>
+                            <button type="submit" class="btn btn-outline-primary w-md">
+                                Search
+                            </button>
 
 
                         </div>
@@ -85,7 +94,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $complaint->complaint_date}}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $complaint->email}}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                        <a href="{{ route('complaints.show', $complaint->policy_number) }}" class="text-indigo-600 hover:text-indigo-900">View Details</a>
+                                            <a href="{{ route('complaints.show', $complaint->policy_number) }}" class="text-indigo-600 hover:text-indigo-900">View Details</a>
 
                                         </td>
                                     </tr>
@@ -99,4 +108,25 @@
             </div>
         </div>
     </div>
+
+    <script src="assets/libs/jquery/jquery.min.js"></script>
+    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/libs/metismenu/metisMenu.min.js"></script>
+    <script src="assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="assets/libs/node-waves/waves.min.js"></script>
+    <script src="assets/libs/parsleyjs/parsley.min.js"></script>
+    <script src="assets/js/pages/form-validation.init.js"></script>
+
+    <script src="assets/js/app.js"></script>
+
+    <script src="assets/libs/select2/js/select2.min.js"></script>
+    <script src="assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+    <script src="assets/libs/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+    <script src="assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <script src="assets/libs/%40chenfengyuan/datepicker/datepicker.min.js"></script>
+
+    <!-- form advanced init -->
+    <script src="assets/js/pages/form-advanced.init.js"></script>
 </x-app-layout>

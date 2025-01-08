@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\complaintstatus;
+use App\Models\NewComplaint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
@@ -45,16 +46,36 @@ class complaintcontroller extends Controller
         }
     }
 
-    public function typeview(){
+    public function typeview()
+    {
         $category = DB::table('complaint_type')->get();
         return $category;
     }
 
-    public function subcategory(Request $request){
-        $category = $request->category;
-        $subcategory = DB::table('complaint_subtype')->where('category', $category)->get();
-        return $subcategory;
-    }
+    public function assignComplaint(Request $request)
+    {
+        // Validate incoming request
+        $request->validate([
+            'modalComplaintId' => 'required|integer',
+            'dept_id' => 'required|string',
+        ]);
 
-    
+        // Find the complaint by ID
+        $complaint = NewComplaint::find($request->modalComplaintId);
+
+        // Check if complaint exists
+        if (!$complaint) {
+            return redirect()->back()->with('error', 'Complaint not found.');
+        }
+
+        // Update the department and status
+        $complaint->department = $request->dept_id;
+        $complaint->updateStatus($request->modalComplaintId);
+
+        // Save the changes
+        $complaint->save();
+
+        // Redirect with success message
+        return redirect()->back()->with('success', 'Complaint assigned successfully.');
+    }
 }

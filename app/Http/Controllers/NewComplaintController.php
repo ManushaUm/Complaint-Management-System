@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Departments;
+use App\Models\complaintType;
+use App\Models\Department;
 use Illuminate\Http\Request;
-use App\Models\newComplaints;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
+
 
 class NewComplaintController extends Controller
 {
@@ -71,7 +70,7 @@ class NewComplaintController extends Controller
 
     public function lodgeNew()
     {
-        $newComplaint = new newComplaints();
+        $newComplaint = new complaintType();
         $getComplaintType = $newComplaint->getComplaintType();
         // dd($getComplaintType);
         return view('newcomplaint', ['complaintTypes' => $getComplaintType]);
@@ -84,8 +83,6 @@ class NewComplaintController extends Controller
         //check the input
         //dd($request->input());
         // Validate the request
-
-
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -104,21 +101,6 @@ class NewComplaintController extends Controller
 
         // Handle file upload
         $attachment = $request->file('attachment') ? $request->file('attachment')->store('attachments') : null;
-
-        // Create the new complaint
-        // newComplaints::create([
-        //     'name' => $request->name,
-        //     'insured' => $request->insured === 'Yes',
-        //     'relation' => $request->insured === 'No' ? $request->relation : null,
-        //     'address' => $request->address,
-        //     'contact_no' => $request->contact_no,
-        //     'email' => $request->email,
-        //     'complaint_type' => $request->complaint_type,
-        //     'policy_number' => $request->policy_number,
-        //     'complaint_date' => $request->complaint_date,
-        //     'complaint_detail' => $request->complaint_detail,
-        //     'attachment' => $attachment,
-        // ]);
 
         $data = array(
             'name' => $request->name,
@@ -149,15 +131,19 @@ class NewComplaintController extends Controller
         $complaints = DB::table('new_complaints')->get();
         $assignedComplaints = DB::table('as_complaints')->get();
 
-        $departments = new Departments();
+        $departments = new Department();
         $getDepartmentName = $departments->getDepartment();
+        $getDivisionName = $departments->getDivision();
 
 
-        dd($getDepartmentName);
+
+        //dd($getDivisionName);
         return view('viewcomplaint', [
             'complaints' => $complaints,
             'assignedComplaints' => $assignedComplaints,
-            'departments' => $getDepartmentName
+            'departmentNames' => $getDepartmentName,
+            'divisionNames' => $getDivisionName
+
         ]);
     }
 }

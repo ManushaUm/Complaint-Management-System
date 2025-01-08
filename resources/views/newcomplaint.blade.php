@@ -8,7 +8,7 @@
         <meta content="Themesbrand" name="author" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        
+
 
         <!-- App favicon -->
         <link rel="shortcut icon" href="assets/images/CI-logo.png">
@@ -22,13 +22,12 @@
         <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
     </head>
-   
+
 
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <h4 class="card-title">Welcome {{ Auth::user()->name }} </h4>
-        </h2>
+        <x-user-profile />
+
     </x-slot>
 
     <div class="py-12">
@@ -82,7 +81,7 @@
                                                 @endif
                                             </div>
 
-                                           
+
 
                                             <label for="relation-input" class="col-md-1 col-form-label">Relation</label>
                                             <div class="col-md-4">
@@ -94,17 +93,17 @@
                                         </div>
 
                                         <div class="mb-3 row">
-                                                <label for="userid-input" class="col-md-2 col-form-label">User ID</label>
-                                                <div class="col-md-5">
-                                                    <input class="form-control" type="text" name="user_id" placeholder="Enter User ID" id="user_id" required>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <button class="btn btn-primary" type="button" id="verify-userid-btn">Verify</button>
-                                                </div>
-                                                <div class="col-md-3" id="verification-message"></div>
-                                                
+                                            <label for="userid-input" class="col-md-2 col-form-label">User ID</label>
+                                            <div class="col-md-5">
+                                                <input class="form-control" type="text" name="user_id" placeholder="Enter User ID" id="user_id" required>
                                             </div>
-                                           
+                                            <div class="col-md-2">
+                                                <button class="btn btn-primary" type="button" id="verify-userid-btn">Verify</button>
+                                            </div>
+                                            <div class="col-md-3" id="verification-message"></div>
+
+                                        </div>
+
 
                                         <div class="mb-3 row">
                                             <label for="address" class="col-md-2 col-form-label">Address</label>
@@ -210,7 +209,7 @@
 
 
                         </div>
-                        
+
                     </form>
                 </div>
             </div>
@@ -222,5 +221,9 @@
         @endif
         @endauth
     </div>
-    
+
+    <x-complaint-form :complaintTypes="$complaintTypes" />
+
+
+
 </x-app-layout>
