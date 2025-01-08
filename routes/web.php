@@ -10,7 +10,7 @@ use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HRController;
 
 //auth routes
-Route::get('/users', [DepartmentController::class, 'index2'])->middleware(['auth', 'verified'])->name('users');
+Route::get('/departments', [DepartmentController::class, 'index2'])->middleware(['auth', 'verified'])->name('departments');
 //Route::get('/users', [DivisionController::class, 'index']);
 
 //add new department route

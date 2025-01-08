@@ -31,7 +31,7 @@
                         {{ __('Search Complaints') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
+                    <x-nav-link :href="route('departments')" :active="request()->routeIs('departments')">
                         {{ __('Department Management') }}
                     </x-nav-link>
 
