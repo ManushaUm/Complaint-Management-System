@@ -77,21 +77,23 @@
                                             <button type="submit" class="btn btn-primary w-md">Add Department</button>
                                         </div>
                                     </form>
+                                    
                                 </div>
                                 <!-- end card body -->
                             </div>
                             <!-- end card -->
                         </div>
                         <!-- end col -->
-
+                       
+                    </div>
+                    </div>
 
 
                     </div>
                 </div>
             </div>
-
-
-
         </body>
     </div>
+
+
 </x-app-layout>

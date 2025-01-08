@@ -35,6 +35,8 @@
                         {{ __('User managemenent') }}
                     </x-nav-link>
 
+                    
+
                     <x-nav-link :href="route('complaint')" :active="request()->routeIs('complaint')">
                         {{ __('Assigining Complaint') }}
                     </x-nav-link>

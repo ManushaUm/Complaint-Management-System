@@ -5,6 +5,15 @@ use App\Http\Controllers\NewComplaintController;
 use App\Http\Controllers\TableViewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\complaintcontroller;
+use App\Http\Controllers\Usercontroller;
+
+Route::get('/search', [Usercontroller::class, 'search'])->name('user.search');
+Route::get('/api/roles', [UserController::class, 'getRoles']);
+Route::get('/api/users', [UserController::class, 'getUsers']); 
+//Route::put('api/users/{id}/role', [UserController::class, 'updateRole']);
+//Route::put('/api/users/{userId}/role', [UserController::class, 'updateUserRole']);
+//Route::put('/api/users/update-role/{userId}', [UserController::class, 'updateRole']);
+Route::put('/api/users/update-role', [UserController::class, 'updateUserRole']);
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,8 +52,12 @@ Route::get('/searchcomplaints', function () {
 })->middleware(['auth', 'verified'])->name('searchcomplaints');
 
 Route::get('/users', function () {
-    return view('useraccess');
+    return view('roleassignment');
 })->middleware(['auth', 'verified'])->name('users');
+
+Route::get('/roles', function () {
+    return view('useraccess');
+})->middleware(['auth', 'verified'])->name('roles');
 
 
 Route::middleware('auth')->group(function () {
