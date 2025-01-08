@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HRController;
+use App\Http\Controllers\Usercontroller;
 
 //auth routes
 Route::get('/departments', [DepartmentController::class, 'index2'])->middleware(['auth', 'verified'])->name('departments');
@@ -27,8 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//view routes
-use App\Http\Controllers\Usercontroller;
+
+
 
 Route::get('/search', [Usercontroller::class, 'search'])->name('user.search');
 Route::get('/api/roles', [UserController::class, 'getRoles']);
@@ -50,7 +51,7 @@ Route::get('/viewcomplaints', function () {
 
 Route::get('/searchcomplaints', function () {
     return view('searchcomplaints');
-})->middleware(['auth', 'verified'])->name('searchcomplaints');
+})->middleware(['auth', 'verified'])->name('search.complaints');
 
 Route::get('/users', function () {
     return view('roleassignment');

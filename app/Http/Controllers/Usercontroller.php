@@ -19,74 +19,44 @@ class UserController extends Controller
         $query = $request->input('query');
 
         $users = User::where('name', 'LIKE', '%' . $query . '%')
-                     ->orWhere('email', 'LIKE', '%' . $query . '%')
-                     ->select('name', 'email', 'role')
-                     ->get();
+            ->orWhere('email', 'LIKE', '%' . $query . '%')
+            ->select('name', 'email', 'role')
+            ->get();
 
         return response()->json($users);
     }
 
-        public function getRoles()
+    public function getRoles()
     {
         $roles = Role::all(); // Assuming you have a Role model
         return response()->json($roles);
     }
-/*
-    public function getUsers()
-{
-    $users = User::select('id', 'name', 'email')->get();
-    $formattedUsers = $users->map(function ($user) {
-        return [
-            'id' => $user->id,
-            'text' => "{$user->name} ({$user->email})"
-        ];
-    });
 
-    return response()->json($formattedUsers);
-}
-/*
-public function updateRole(Request $request, $id)
-{  
+    public function updateUserRole(Request $request)
+    {
+        //dd($request);
+        // Validate the incoming request
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'role' => 'required|exists:roles,name',
+        ]);
 
-    // 1. Retrieve the user by ID or fail if the user doesn't exist
-    $user = User::findOrFail($id);
+        // Find the user by email
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
 
-    // 2. Retrieve the 'role' from the request input
-    $newRole = $request->input('role');
+        // Update the user's role
+        $role = Role::where('name', $request->role)->first();
+        if (!$role) {
+            return response()->json(['error' => 'Role not found'], 404);
+        }
 
-    // 3. Update the user's role
-    $user->role = $newRole;
-    $user->save();
 
-    // 4. Return a success response
-    return response()->json(['message' => 'Role updated successfully.']);
-}
-*/
-public function updateUserRole(Request $request)
-{
-    //dd($request);
-    // Validate the incoming request
-    $request->validate([
-        'email' => 'required|email|exists:users,email', 
-        'role' => 'required|exists:roles,name', 
-    ]);
+        $user->role = $role->name;  // Store the role name in the 'role' field
+        $user->save();
 
-    // Find the user by email
-    $user = User::where('email', $request->email)->first();
-    if (!$user) {
-        return response()->json(['error' => 'User not found'], 404);
+        return response()->json(['message' => 'User role updated successfully', 'user' => $user]);
     }
-
-    // Update the user's role
-    $role = Role::where('name', $request->role)->first();
-    if (!$role) {
-        return response()->json(['error' => 'Role not found'], 404);
-    }
-
-
-    $user->role = $role->name;  // Store the role name in the 'role' field
-    $user->save();
-
-    return response()->json(['message' => 'User role updated successfully', 'user' => $user]);
-}
 }

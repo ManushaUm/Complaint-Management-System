@@ -27,7 +27,7 @@
                         {{ __('View Complaints') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('searchcomplaints')" :active="request()->routeIs('searchcomplaints')">
+                    <x-nav-link :href="route('search.complaints')" :active="request()->routeIs('search.complaints')">
                         {{ __('Search Complaints') }}
                     </x-nav-link>
 
@@ -37,8 +37,8 @@
 
 
 
-                    <x-nav-link :href="route('complaint')" :active="request()->routeIs('complaint')">
-                        {{ __('Assigining Complaint') }}
+                    <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
+                        {{ __('Users') }}
                     </x-nav-link>
 
                     @endif
