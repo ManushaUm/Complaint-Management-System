@@ -9,7 +9,35 @@ use Illuminate\Support\Facades\DB;
 
 
 class NewComplaintController extends Controller
-{
+{   
+    
+    public function fullComplaint(Request $request)
+    {
+        // Retrieve the complaint ID from the request
+        $id = $request->input('id');
+    
+        if ($id) {
+            // Fetch the specific complaint by ID
+            $complaint = DB::table('new_complaints')->find($id);
+    
+            // Check if complaint exists
+            if (!$complaint) {
+                return redirect()->back()->with('error', 'Complaint not found.');
+            }
+    
+            // Pass the specific complaint to the view
+            return view('fullcomplaint', ['complaint' => $complaint]);
+        } else {
+            // If no ID is provided, fetch all complaints
+            $complaints = DB::table('new_complaints')->get();
+    
+            // Pass all complaints to the view
+            return view('fullcomplaint', ['complaints' => $complaints]);
+        }
+    }
+    
+
+
         public function show($policy_number)
         {
             // Find the complaint by policy number

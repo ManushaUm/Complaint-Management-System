@@ -10,6 +10,11 @@ use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HRController;
 use App\Http\Controllers\Usercontroller;
 
+Route::get('/fullcomplaint', [NewComplaintController::class, 'fullComplaint'])
+    ->middleware(['auth'])
+    ->name('full.complaint');
+
+
 //auth routes
 Route::get('/departments', [DepartmentController::class, 'index2'])->middleware(['auth', 'verified'])->name('departments');
 //Route::get('/users', [DivisionController::class, 'index']);

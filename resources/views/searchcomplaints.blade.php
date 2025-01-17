@@ -22,91 +22,104 @@
         <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
     </head>
+    <div class="py-12">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-400 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Search Complaints
         </h2>
     </x-slot>
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Outer Container -->
+            <div class="bg-gray-50 p-8 shadow-lg rounded-lg border border-gray-200">
+    
 
-    <div class="py-12">
-
-        <body data-sidebar="dark">
-
-
-
-
-
-        </body>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <form action="{{ route('search.complaints') }}" method="POST">
-                        @csrf
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="customer_name" class="block text-sm font-medium text-gray-700">Customer Name</label>
-                                <input type="text" name="customer_name" id="customer_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            </div>
-
-                            <div>
-                                <label for="policy_number" class="block text-sm font-medium text-gray-700">Policy/Vehicle Number</label>
-                                <input type="text" name="policy_number" id="policy_number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            </div>
-
-                            <div>
-                                <label for="complaint_date" class="block text-sm font-medium text-gray-700">Complaint Date</label>
-                                <input type="date" name="complaint_date" id="complaint_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            </div>
-
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                <input type="email" name="email" id="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            </div>
-                        </div>
-
-                        <div class="mt-6">
-                            <button type="submit" class="btn btn-outline-primary w-md">
-                                Search
-                            </button>
-
-
-                        </div>
-                    </form>
-
-                    @if(isset($complaints))
-                    <div class="mt-8">
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Policy Number</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach($complaints as $complaint)
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $complaint->name}}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $complaint->policy_number}}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $complaint->complaint_date}}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $complaint->email}}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{ route('complaints.show', $complaint->policy_number) }}" class="text-indigo-600 hover:text-indigo-900">View Details</a>
-
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+        <div class="row">
+        <div class="col-9">
+            <!-- Card-like container -->
+            <div class="">
+            
+                <form action="{{ route('search.complaints') }}" method="GET">
+                    @csrf
+                    <div class="mb-3 row">
+                        <label for="customer_name" class="col-md-2 col-form-label">Customer Name</label>
+                        <div class="col-md-7">
+                            <input type="text" name="customer_name" id="customer_name" 
+                                   class="form-control" placeholder="Enter customer name">
                         </div>
                     </div>
-                    @endif
+
+                    <div class="mb-3 row">
+                        <label for="policy_number" class="col-md-2 col-form-label">Policy/Vehicle Number</label>
+                        <div class="col-md-7">
+                            <input type="text" name="policy_number" id="policy_number" 
+                                   class="form-control" placeholder="Enter policy or vehicle number">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="complaint_date" class="col-md-2 col-form-label">Complaint Date</label>
+                        <div class="col-md-7">
+                            <input type="date" name="complaint_date" id="complaint_date" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="email" class="col-md-2 col-form-label">Email</label>
+                        <div class="col-md-7">
+                            <input type="email" name="email" id="email" 
+                                   class="form-control" placeholder="Enter email address">
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="mb-3 row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-7">
+                            <button type="submit" class="btn btn-outline-primary w-md">Search</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Results Section -->
+                @if(isset($complaints))
+                <div class="mt-8">
+                    <div class="overflow-x-auto">
+                        <table class="table table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Policy Number</th>
+                                    <th>Date</th>
+                                    <th>Email</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($complaints as $comp)
+                                    <tr>
+                                        <td>{{ $comp->id }}</td>
+                                        <td>{{ $comp->name }}</td>
+                                        <td>{{ $comp->insured ? 'Yes' : 'No' }}</td>
+                                        <td>{{ $comp->contact_no }}</td>
+                                        <td>{{ $comp->email }}</td>
+                                        <td>
+                                            <a href="{{ route('full.complaint', ['id' => $comp->id]) }}" class="btn btn-primary btn-sm">View</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                @endif
             </div>
         </div>
+        </div>
+        </div>
+   
+    </div>
+</div>
+        </body>
     </div>
 
     <script src="assets/libs/jquery/jquery.min.js"></script>

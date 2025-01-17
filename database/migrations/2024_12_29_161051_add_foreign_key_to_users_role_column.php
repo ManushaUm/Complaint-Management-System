@@ -15,7 +15,7 @@ return new class extends Migration
             $table->foreign('role')
             ->references('name') // Link to `name` in roles table
             ->on('roles')
-            ->onDelete('set null'); /
+            ->onDelete('set null'); 
         });
     }
 
