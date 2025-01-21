@@ -9,6 +9,25 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
+        <!-- Emp ID -->
+        <div class="mt-4">
+            <x-input-label for="emp_id" :value="__('Employye Id')" />
+            <x-text-input id="emp_id" class="block mt-1 w-full" type="text" name="emp_id" :value="old('emp_id')" required autofocus autocomplete="emp_id" />
+            <x-input-error :messages="$errors->get('emp_id')" class="mt-2" />
+        </div>
+
+        <!-- Department -->
+        <div class="mt-4">
+            <x-input-label for="department" :value="__('Department')" />
+            <select id="department" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full" name="department">
+                <option value="" selected hidden>Select...</option>
+                @foreach($departments as $department)
+                <option value="{{$department->department_code}}">{{$department->department_name}}</option>
+                @endforeach
+            </select>
+
+        </div>
+
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
