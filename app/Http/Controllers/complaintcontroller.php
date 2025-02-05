@@ -54,10 +54,15 @@ class complaintcontroller extends Controller
 
     public function assignComplaint(Request $request)
     {
+        //dd($request->all()); //checked
         // Validate incoming request
         $request->validate([
             'modalComplaintId' => 'required|integer',
             'dept_id' => 'required|string',
+            'div_name' => 'required|string',
+            'district' => 'required|string',
+            'branch' => 'required|string',
+            'notes' => 'required|string',
         ]);
 
         // Find the complaint by ID
@@ -68,6 +73,22 @@ class complaintcontroller extends Controller
             return redirect()->back()->with('error', 'Complaint not found.');
         }
 
+        //create the data array for the complaint
+        $data = array(
+            'Reference_number' => $request->modalComplaintId,
+            'Department' => $request->dept_id,
+            'Sub_division' => $request->div_name,
+            'Notes' => $request->notes,
+            //need to update priority here
+        );
+
+        //dd('data array', $data); //checked
+
+        //store to log
+        $id = DB::table('complaint_logs')->insertGetId($data);
+
+
+
         // Update the department and status
         $complaint->department = $request->dept_id;
         $complaint->updateStatus($request->modalComplaintId);
@@ -76,6 +97,10 @@ class complaintcontroller extends Controller
         $complaint->save();
 
         // Redirect with success message
-        return redirect()->back()->with('success', 'Complaint assigned successfully.');
+        if ($id) {
+            return redirect()->back()->with('success', 'Complaint assigned successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Error assigning complaint');
+        }
     }
 }

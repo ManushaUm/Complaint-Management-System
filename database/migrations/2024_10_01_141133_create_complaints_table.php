@@ -25,6 +25,7 @@ return new class extends Migration
             $table->text('complaint_detail')->nullable();
             $table->string('attachment')->nullable();
             $table->boolean('complaint_status')->default(0);
+            $table->boolean('is_closed')->default(0);
         });
     }
 

@@ -34,6 +34,7 @@
                         <h4 class="card-title">Assigning</h4>
                         <form class="needs-validation" novalidate action="{{ route('assign.complaint') }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <input type="hidden" name="modalComplaintId" id="modalComplaintId" value="">
                             <div class="row">
                                 <div class="row">
@@ -57,7 +58,7 @@
                                             <select class="form-select" id="div_name" name="div_name" required>
                                                 <option selected disabled>Choose...</option>
                                                 @foreach ($divisionNames as $division)
-                                                <option value="{{ $division->division_name }}">{{ $division->division_name }}</option>
+                                                <option value="{{ $division->division_code }}">{{ $division->division_name }}</option>
                                                 @endforeach
                                             </select>
                                             <div class="invalid-feedback">
@@ -99,7 +100,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="mb-6">
+                                    <div class="mb-3">
                                         <label for="validationCustom01" class="form-label">Notes</label>
                                         <textarea class="form-control" id="notes" name="notes" placeholder="Add notes for review"></textarea>
                                     </div>

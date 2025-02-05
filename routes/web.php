@@ -34,9 +34,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/search', [Usercontroller::class, 'search'])->name('user.search');
 Route::get('/api/roles', [UserController::class, 'getRoles']);
 Route::get('/api/users', [UserController::class, 'getUsers']);
-//Route::put('api/users/{id}/role', [UserController::class, 'updateRole']);
-//Route::put('/api/users/{userId}/role', [UserController::class, 'updateUserRole']);
-//Route::put('/api/users/update-role/{userId}', [UserController::class, 'updateRole']);
 Route::put('/api/users/update-role', [UserController::class, 'updateUserRole']);
 
 Route::get('/', function () {
@@ -52,6 +49,7 @@ Route::get('/viewcomplaints', function () {
 Route::get('/searchcomplaints', function () {
     return view('searchcomplaints');
 })->middleware(['auth', 'verified'])->name('search.complaints');
+
 
 Route::get('/users', function () {
     return view('roleassignment');
@@ -82,7 +80,7 @@ Route::get('/viewcomplaint', [NewComplaintController::class, 'viewcomplaint'])->
 Route::get('/complaintdropdown', [complaintcontroller::class, 'typeview'])->name('complaintstatus.typeview');
 Route::post('/complaintsave', [complaintcontroller::class, 'store'])->name('complaintstatus.store');
 
-Route::post('/assign-complaint', [ComplaintController::class, 'assignComplaint'])->name('assign.complaint');
+Route::put('/assign-complaint', [ComplaintController::class, 'assignComplaint'])->name('assign.complaint');
 
 Route::get('/hr', [HRController::class, 'index']);
 Route::get('/employee/search', [HRController::class, 'searchEmp'])->name('employee.search');
