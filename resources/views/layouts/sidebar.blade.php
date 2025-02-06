@@ -21,29 +21,38 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 ">
-    
+<div>
+<!-- Sidebar -->
+<aside>
+<!--logo -->
+<div>
+<div>
+<a href="">
+<x-application-logo class="block w-auto h-10 text-gray-600 fill-current"/>
+</a>
+<span>CI Lanka</span>
+</div>
+<button>
+<svg xmlns="http://www.w3.org/2000/svg" class="block w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+</svg>
+</button>
+</div>
 
-        @include('layouts.navigation')
+<!--Nav links -->
+<nav>
+</nav>
 
-        <!-- Page Heading -->
-        @isset($header)
-        <header class="bg-white shadow :bg-gray-800">
-            <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                {{ $header }}
-            </div>
-        </header>
-        @endisset
+</aside>
+<!--Main content -->
+<main>
+<nav></nav>
+<div>
+{{ $slot }}
+</div>
+</main>
+</div>
 
-        <!-- Page Content -->
-        <main>
-            @if ($slot -> isEmpty())
-            <p>Provide content for slot</p>
-            @else
-            {{ $slot }}
-            @endif
-        </main>
-    </div>
 </body>
 
 </html>
