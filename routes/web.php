@@ -76,6 +76,8 @@ Route::get('/lodgenew', [NewComplaintController::class, 'lodgeNew'])->name('newc
 //Viewc complaints
 Route::post('/viewcomplaints', [NewComplaintController::class, 'store'])->name('complaints.store');
 Route::get('/viewcomplaint', [NewComplaintController::class, 'viewcomplaint'])->name('viewcomplaint');
+//Route::get('/complaint-log', [NewComplaintController::class, 'complaintLogData'])->name('complaintLog');
+
 //Route::get('/users', [NewComplaintController::class, 'viewcomplaint'])->name('users');
 Route::get('/complaintdropdown', [complaintcontroller::class, 'typeview'])->name('complaintstatus.typeview');
 Route::post('/complaintsave', [complaintcontroller::class, 'store'])->name('complaintstatus.store');

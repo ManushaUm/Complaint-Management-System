@@ -6,6 +6,7 @@ use App\Models\complaintType;
 use App\Models\Department;
 use App\Models\NewComplaint;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -130,22 +131,26 @@ class NewComplaintController extends Controller
 
     public function viewcomplaint()
     {
-        $complaints = DB::table('new_complaints')->get();
-        $assignedComplaints = DB::table('as_complaints')->get();
+        $user = Auth::user();
+        if ($user->role === 'admin') {
+            $complaints = DB::table('new_complaints')->get();
+        } else {
+            $complaints = DB::table('new_complaints')->where('department', $user->department)->get();
+        }
 
         $departments = new Department();
         $getDepartmentName = $departments->getDepartment();
         $getDivisionName = $departments->getDivision();
 
+        $complaintLogs = DB::table('complaint_logs')->get();
 
-
-        //dd($getDivisionName);
         return view('viewcomplaint', [
             'complaints' => $complaints,
-            'assignedComplaints' => $assignedComplaints,
             'departmentNames' => $getDepartmentName,
-            'divisionNames' => $getDivisionName
-
+            'divisionNames' => $getDivisionName,
+            'complaintLogs' => $complaintLogs
         ]);
     }
+
+    public function complaintLogData() {}
 }

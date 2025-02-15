@@ -14,15 +14,17 @@
                 @auth
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 
-                    @if(Session('role') == 'admin')
+                    @if(Session('role') == 'admin' || Session('role') == 'head' || Session('role') == 'member')
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-
+                    @endif
+                    @if(Session('role') == 'admin')
                     <x-nav-link :href="route('newcomplaint')" :active="request()->routeIs('newcomplaint')">
                         {{ __('New Complaint') }}
                     </x-nav-link>
-
+                    @endif
+                    @if(Session('role') == 'admin' || Session('role') == 'head' || Session('role') == 'member')
                     <x-nav-link :href="route('viewcomplaint')" :active="request()->routeIs('viewcomplaint')">
                         {{ __('View Complaints') }}
                     </x-nav-link>
@@ -30,7 +32,8 @@
                     <x-nav-link :href="route('search.complaints')" :active="request()->routeIs('search.complaints')">
                         {{ __('Search Complaints') }}
                     </x-nav-link>
-
+                    @endif
+                    @if(Session('role') == 'admin')
                     <x-nav-link :href="route('departments')" :active="request()->routeIs('departments')">
                         {{ __('Department Management') }}
                     </x-nav-link>
@@ -43,26 +46,6 @@
 
                     @endif
 
-                    @if(Session('role') == 'member')
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard Member') }}
-                    </x-nav-link>
-
-
-
-                    <x-nav-link :href="route('viewcomplaint')" :active="request()->routeIs('viewcomplaint')">
-                        {{ __('View Complaints') }}
-                    </x-nav-link>
-
-                    <x-nav-link :href="route('searchcomplaints')" :active="request()->routeIs('searchcomplaints')">
-                        {{ __('Search Complaints') }}
-                    </x-nav-link>
-
-
-
-
-
-                    @endif
 
 
 

@@ -1,24 +1,4 @@
 <x-app-layout>
-
-    <head>
-        <meta charset="utf-8" />
-        <title>CI Lanka - Complaint Management System</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-        <meta content="Themesbrand" name="author" />
-        <link rel="shortcut icon" href="assets/images/CI-logo.png">
-
-        <!-- Bootstrap-->
-        <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-        <!-- Icons-->
-        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-        <!-- App-->
-        <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
-    </head>
-
-
     <x-slot name="header">
         <x-user-profile />
 
@@ -35,16 +15,22 @@
 
                         <!-- Nav tabs -->
                         <ul class="nav nav-pills nav-justified" role="tablist">
+                            @if(Session('role') == 'admin')
                             <li class="nav-item waves-effect waves-light">
                                 <a class="nav-link active" data-bs-toggle="tab" href="#home-1" role="tab">
                                     <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
                                     <span class="d-none d-sm-block">New Complaints</span>
                                 </a>
                             </li>
+                            @endif
                             <li class="nav-item waves-effect waves-light">
                                 <a class="nav-link" data-bs-toggle="tab" href="#profile-1" role="tab">
                                     <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                    @if(Session('role') == 'admin')
                                     <span class="d-none d-sm-block">Assigned Complaints</span>
+                                    @else
+                                    <span class="d-none d-sm-block">Received Complaints</span>
+                                    @endif
                                 </a>
                             </li>
                             <li class="nav-item waves-effect waves-light">
@@ -59,7 +45,14 @@
 
                         <!-- Tab panes -->
                         <div class="tab-content p-3 text-muted">
-                            <div class="tab-pane active" id="home-1" role="tabpanel">
+
+                            @php
+                            $className1 = (session('role') == 'admin') ? 'tab-pane active' : 'tab-pane';
+                            $className2 = (session('role') == 'head') ? 'tab-pane active' : 'tab-pane';
+                            @endphp
+
+                            @if(Session('role') == 'admin')
+                            <div class="{{$className1}}" id="home-1" role="tabpanel">
                                 <p class="mb-0">
                                     Table of new complaint
                                 </p>
@@ -140,10 +133,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="profile-1" role="tabpanel">
+                            @endif
+                            <div class="{{$className2}}" id="profile-1" role="tabpanel">
+
                                 <p class="mb-0">
+                                    @if(Session('role') == 'admin')
                                     Table of assigned
+                                    @else
+                                    Received Complaints
+                                    @endif
                                 </p>
+
                                 <div class="container-fluid">
                                     <div>
                                         <div class="row">
@@ -171,11 +171,16 @@
                                                                                         <th>Action</th>
                                                                                     </tr>
                                                                                 </thead>
-                                                                                <tbody>
-                                                                                    @foreach($complaints as $complaint)
-                                                                                    @if($complaint->is_closed == 0 && $complaint->complaint_status == 1) <tr>
-                                                                                        <td>{{ $complaint->name }}</td>
 
+
+                                                                                <tbody>
+
+                                                                                    @foreach($complaints as $complaint)
+
+                                                                                    @if($complaint->is_closed == 0 && $complaint->complaint_status == 1)
+
+                                                                                    <tr>
+                                                                                        <td>{{ $complaint->name }}</td>
                                                                                         <td>{{ $complaint->contact_no }}</td>
                                                                                         <td>{{ $complaint->email }}</td>
                                                                                         <td>{{ $complaint->customer_type }}</td>
@@ -192,10 +197,12 @@
                                                                                                 View Details
                                                                                             </button>
                                                                                         </td>
-                                                                                    </tr> @endif
-
+                                                                                    </tr>
+                                                                                    @endif
                                                                                     @endforeach
+
                                                                                 </tbody>
+
                                                                             </table>
 
                                                                         </div>
@@ -219,6 +226,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="tab-pane" id="messages-1" role="tabpanel">
                                 <p class="mb-0">
                                     Table of closed
@@ -304,6 +312,7 @@
                         </div>
 
                     </div>
+
                 </div>
 
 
