@@ -103,4 +103,12 @@ class complaintcontroller extends Controller
             return redirect()->back()->with('error', 'Error assigning complaint');
         }
     }
+
+    public function getComplaintDetails($id)
+    {
+        //dd($id);
+        $complaint = NewComplaint::find($id);
+        //dd($complaint);
+        return view('complaint.complaintdetail', compact('complaint'));
+    }
 }

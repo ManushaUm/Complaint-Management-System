@@ -7,21 +7,14 @@
         <body data-sidebar="light">
             <!-- Begin page -->
             <div id="layout-wrapper">
-                <div class="justify-content-center">
-                    <div class="card">
-                        <div class="card-body">
-                            <x-complaint-form :complaintTypes="$complaintTypes" />
-                        </div>
-                    </div>
+                <div class="main-content">
+                    <h1>hiii</h1>
                 </div>
             </div>
         </body>
         @endif
         @endauth
     </div>
-
-
-
 
 
 </x-app-layout>

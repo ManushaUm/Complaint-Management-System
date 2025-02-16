@@ -46,6 +46,8 @@ Route::get('/viewcomplaints', function () {
     return view('viewcomplaint');
 })->middleware(['auth', 'verified'])->name('viewcomplaint');
 
+Route::get('/viewcomplaint/{id}', [ComplaintController::class, 'getComplaintDetails']);
+
 Route::get('/searchcomplaints', function () {
     return view('searchcomplaints');
 })->middleware(['auth', 'verified'])->name('search.complaints');

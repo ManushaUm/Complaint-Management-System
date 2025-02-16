@@ -5,7 +5,7 @@
                 <div class="d-flex">
                     <div class="flex-shrink-0 me-3">
                         <a href="/profile">
-                            <img src="assets/images/users/avatar-7.jpg" alt="" class="avatar-md rounded-circle img-thumbnail"></a>
+                            <img src="../../../assets/images/users/avatar-7.jpg" alt="" class="avatar-md rounded-circle img-thumbnail"></a>
                     </div>
                     <div class="flex-grow-1 align-self-center">
                         <div class="text-muted">
