@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="header">
+    <x-slot name="slot">
         <div class="page-content">
             <div class="container-fluid">
                 <div class="row">

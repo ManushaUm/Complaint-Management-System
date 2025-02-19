@@ -24,6 +24,7 @@ class NewComplaint extends Model
         'attachment',
         'complaint_status',
         'department',
+        'logged_by',
 
     ];
 

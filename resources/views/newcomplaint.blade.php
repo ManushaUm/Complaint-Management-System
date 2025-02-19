@@ -1,26 +1,18 @@
 <x-app-layout>
+    <x-slot name="slot">
+        <div class="py-12">
+            @auth
+            @if(Session('role')=='admin')
 
-    <div class="py-12">
-        @auth
-        @if(Session('role')=='admin')
+            <x-complaint-form :complaintTypes="$complaintTypes" />
 
-        <body data-sidebar="light">
-            <!-- Begin page -->
-            <div id="layout-wrapper">
-                <div class="justify-content-center">
-                    <div class="card">
-                        <div class="card-body">
-                            <x-complaint-form :complaintTypes="$complaintTypes" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </body>
+
+        </div>
         @endif
         @endauth
-    </div>
+        </div>
 
-
+    </x-slot>
 
 
 

@@ -7,7 +7,7 @@
 
     <div class="py-12">
 
-        <body data-sidebar="light">
+        <body data-sidebar="dark">
             <!-- Begin page -->
             <div id="layout-wrapper">
 

@@ -1,13 +1,11 @@
 <x-app-layout>
+    <x-slot name="slot">
+        <div class="py-12">
 
-    <div class="py-12">
-
-
-        <body data-sidebar="dark">
             @auth
             <div id="layout-wrapper">
-                <div class="card max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div class="card-body">
+                <div class="card mx-auto sm:px-6 lg:px-8">
+                    <div class="card-body py-10">
 
                         <!-- Nav tabs -->
                         <ul class="nav nav-pills nav-justified" role="tablist">
@@ -171,6 +169,7 @@
 
                                                                                 <tbody>
 
+
                                                                                     @foreach($complaints as $complaint)
 
                                                                                     @if($complaint->is_closed == 0 && $complaint->complaint_status == 1)
@@ -183,17 +182,20 @@
                                                                                         <td>{{ $complaint->policy_number }}</td>
                                                                                         <td>{{ $complaint->complaint_date }}</td>
 
-
                                                                                         <td>
-                                                                                            <!-- Button trigger modal -->
+                                                                                            @if(Session('role') == 'admin')
                                                                                             <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light"
                                                                                                 data-bs-toggle="modal"
                                                                                                 data-bs-target="#transaction-detailModal"
                                                                                                 data-complaint='@json($complaint)'>
                                                                                                 View Details
                                                                                             </button>
+                                                                                            @elseif(Session('role') == 'head')
+                                                                                            <a href="{{route('viewcomplaintId' , ['id' => $complaint->id])}}"> View</a>
+                                                                                            @endif
                                                                                         </td>
                                                                                     </tr>
+
                                                                                     @endif
                                                                                     @endforeach
 
@@ -317,6 +319,7 @@
             </div>
             @endauth
 
-        </body>
-    </div>
+
+        </div>
+    </x-slot>
 </x-app-layout>

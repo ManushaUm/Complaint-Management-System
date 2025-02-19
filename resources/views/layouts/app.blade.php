@@ -33,41 +33,57 @@
     <script src="../../../assets/libs/select2/js/select2.min.js"></script>
     <script src="../../../assets/js/pages/form-advanced.init.js"></script>
 
+
 </head>
 
+<body class="font-sans antialiased" data-sidebar="dark">
 
+    <div class="min-h-screen bg-gray-300 d-flex flex-column">
 
-<body class="font-sans antialiased">
-
-    <div class="min-h-screen bg-gray-300">
-        @include('layouts.navigation')
-        @include('components.user-profile')
-        <!-- Page Heading -->
-        @isset($header)
-        <header class="bg-gray-100 shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                {{ $header }}
+        <!-- Fixed Topbar -->
+        <header class="bg-gray-100 shadow fixed-top w-100">
+            <div class="mx-auto  sm:px-6 lg:px-8">
+                @include('layouts.topbar')
             </div>
-            <div>
-
-            </div>
-
         </header>
-        @endisset
 
-        <!-- Page Content -->
-        <main class="bg-gray-200">
-            @if ($slot->isEmpty())
-            <p>Provide content for slot</p>
-            @else
-            {{ $slot }}
-            @endif
-        </main>
+        <div>
 
+            <nav class="bg-gray-100 shadow">
+                @include('layouts.navbar')
+            </nav>
 
+            <!-- Page Content -->
+            <main class="bg-gray-200 flex-grow-1" style="margin-left: 250px;">
+                @isset($header)
+                <header class="bg-gray-100 shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-2 sm:px-4 lg:px-6">
+                        {{ $header }}
+                    </div>
+                </header>
+                @endisset
+                {{ $slot }}
+
+            </main>
+        </div>
     </div>
 
 </body>
+
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+
+            </div>
+            <div class="col-sm-6">
+                <div class="text-sm-end d-none d-sm-block">
+                    Proud product by <span><a href="https://github.com/ManushaUm">Seeds.co</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 
 
 </html>

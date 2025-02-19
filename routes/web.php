@@ -46,7 +46,8 @@ Route::get('/viewcomplaints', function () {
     return view('viewcomplaint');
 })->middleware(['auth', 'verified'])->name('viewcomplaint');
 
-Route::get('/viewcomplaint/{id}', [ComplaintController::class, 'getComplaintDetails']);
+Route::get('/viewcomplaint/{id}', [ComplaintController::class, 'getComplaintDetails'])->name('viewcomplaintId');
+Route::post('/assign-job/{id}', [ComplaintController::class, 'assignJob'])->name('assign-job');
 
 Route::get('/searchcomplaints', function () {
     return view('searchcomplaints');
@@ -77,7 +78,7 @@ Route::get('/complaint', function () {
 Route::get('/lodgenew', [NewComplaintController::class, 'lodgeNew'])->name('newcomplaint');
 //Viewc complaints
 Route::post('/viewcomplaints', [NewComplaintController::class, 'store'])->name('complaints.store');
-Route::get('/viewcomplaint', [NewComplaintController::class, 'viewcomplaint'])->name('viewcomplaint');
+Route::get('/viewcomplaint', [NewComplaintController::class, 'viewcomplaint'])->middleware(['auth', 'verified'])->name('viewcomplaint');
 //Route::get('/complaint-log', [NewComplaintController::class, 'complaintLogData'])->name('complaintLog');
 
 //Route::get('/users', [NewComplaintController::class, 'viewcomplaint'])->name('users');
