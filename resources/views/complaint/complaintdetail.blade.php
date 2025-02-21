@@ -254,7 +254,19 @@
                                         </div>
 
                                         <div class="mt-4">
-
+                                            @if ($errors->any())
+                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                <strong>Error in submitting:</strong> Please fix the following issues:
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                    @if($error == 'The commentmessage-input field is required.')
+                                                    <li>Please Enter the Solution as a text</li>
+                                                    @endif
+                                                    @endforeach
+                                                </ul>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                            @endif
                                             @if ($assignedTo == 'NULL'){
                                             <p class="text-muted">Please Take the job to start</p>
                                             }
@@ -264,6 +276,7 @@
                                             @if ($complaintLog->Status !== 'Solved')
                                             <!--Action Card-->
                                             <x-complaint-action-form id="{{$id}}" />
+
 
                                             @elseif($complaintLog->Status == 'Solved' && $status == 'In-Progress')
                                             <p class=" text-blue-500">Complaint was submitted for review by {{$complaintLog->Comment_by}} </p>
@@ -289,12 +302,6 @@
                 <!-- End Page-content -->
 
             </div>
-
-
-
-
-
-            <!-- JAVASCRIPT -->
             <!-- JAVASCRIPT -->
             <script src="http://skote-v.laravel.themesbrand.com/assets/libs/jquery/jquery.min.js"></script>
             <script src="http://skote-v.laravel.themesbrand.com/assets/libs/bootstrap/bootstrap.min.js"></script>

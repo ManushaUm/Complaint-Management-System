@@ -7,7 +7,7 @@
         @csrf
 
         <div class="mb-3">
-            <label for="commentmessage-input" class="form-label">Solution</label>
+            <label for="commentmessage-input" class="form-label">Solution <span class="text-red-500">*</span></label>
             <textarea class="form-control" id="commentmessage-input" placeholder="Your Solution..." rows="3" name="commentmessage-input"></textarea>
         </div>
 

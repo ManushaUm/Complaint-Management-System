@@ -150,9 +150,12 @@ class complaintcontroller extends Controller
     {
 
         // Validate the request
-        $request->validate([
+        $validated = $request->validate([
             'commentmessage-input' => 'required|string',
+
         ]);
+
+        dd($validated);
 
         $data = $request->all();
         $complaint = ComplaintLog::where('Reference_number', $id)->latest()->first();
