@@ -135,7 +135,6 @@ class complaintcontroller extends Controller
 
     public function assignJob($id)
     {
-
         //dd($id);
         $complaint = ComplaintLog::where('Reference_number', $id)->latest()->first();
         //dd($complaint);
@@ -144,6 +143,33 @@ class complaintcontroller extends Controller
         //update the relevent row, assinged_to  column by emp_id
         $complaint->assigned_to = $emp_id;
         $complaint->save();
-        return view('complaint.complaintdetail');
+        return redirect()->back()->with('success', 'Job assigned successfully.');
+    }
+
+    public function addComment($id, Request $request)
+    {
+
+        // Validate the request
+        $request->validate([
+            'commentmessage-input' => 'required|string',
+        ]);
+
+        $data = $request->all();
+        $complaint = ComplaintLog::where('Reference_number', $id)->latest()->first();
+
+        if ($complaint) {
+            $complaint->Comment = $data['commentmessage-input'];
+            $complaint->Comment_by = Auth::user()->emp_id;
+
+            if (isset($data['solved']) && $data['solved'] == 'on') {
+                $complaint->Status = 'Solved';
+            }
+
+            $complaint->save();
+
+            return redirect()->back()->with('success', 'Comment added successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Complaint not found.');
+        }
     }
 }

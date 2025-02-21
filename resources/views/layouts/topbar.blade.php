@@ -1,3 +1,4 @@
+@auth
 <div class="navbar-header">
     <div class="d-flex align-items-center">
         <!-- LOGO -->
@@ -5,14 +6,12 @@
             <i class="fa fa-fw fa-bars"></i>
         </button>
 
-        <div class="shrink-0 flex items-center">
+        <div class="shrink-0 d-flex align-items-center">
             <a href="{{ route('dashboard') }}">
                 <x-application-logo />
             </a>
         </div>
     </div>
-
-
 
     <div class="d-flex align-items-center">
         <!-- Fullscreen Button -->
@@ -47,7 +46,14 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item text-danger" href="#"><i class="bx bx-power-off me-2 text-danger"></i> Logout</a></li>
+                <li>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="dropdown-item text-danger">
+                            <i class="bx bx-power-off me-2 text-danger"></i> Logout
+                        </button>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>
@@ -55,3 +61,4 @@
 
 <!-- Include Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+@endauth

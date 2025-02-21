@@ -78,7 +78,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="text-sm-end d-none d-sm-block">
-                    Proud product by <span><a href="https://github.com/ManushaUm">Seeds.co</a></span>
+                    Proud product by <span><a href="https://github.com/ManushaUm">Seeds.co</a>
                 </div>
             </div>
         </div>

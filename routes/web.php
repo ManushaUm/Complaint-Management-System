@@ -48,6 +48,7 @@ Route::get('/viewcomplaints', function () {
 
 Route::get('/viewcomplaint/{id}', [ComplaintController::class, 'getComplaintDetails'])->name('viewcomplaintId');
 Route::post('/assign-job/{id}', [ComplaintController::class, 'assignJob'])->name('assign-job');
+Route::post('/add-comment/{id}', [ComplaintController::class, 'addComment'])->name('add-comment');
 
 Route::get('/searchcomplaints', function () {
     return view('searchcomplaints');

@@ -20,6 +20,7 @@
                         @foreach ($prevData as $Initcomplaint)
                         <div class="row">
                             <div class="col-xl-3">
+                                <!--Complaint overview Card-->
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="fw-semibold">Complaint Overview</h5>
@@ -58,12 +59,11 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="hstack gap-2">
-                                            <button class="btn btn-soft-primary w-100">Apply Now</button>
-                                            <button class="btn btn-soft-danger w-100">Contact Us</button>
-                                        </div>
+
                                     </div>
                                 </div>
+                                <!--End Complaint overview Card-->
+                                <!--Complaint Brief Card-->
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="text-center">
@@ -88,6 +88,8 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--End Complaint Brief Card-->
+                                <!--Customer contact info Card-->
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="text-center">
@@ -130,6 +132,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--End Customer contact info Card-->
 
                             </div>
                             <!--end col-->
@@ -185,7 +188,12 @@
                                                 </form>
 
                                                 @else
-                                                <a href="javascript:void(0)"><i class="uil uil-facebook-f"></i> Assigned to {{$assignedTo}}</a>
+                                                <a href="javascript:void(0)">
+                                                    @if ( Auth::user()->emp_id == $assignedTo)
+                                                    Assigned to you</a>
+                                                @else
+                                                <a href="javascript:void(0)"></a>Assigned to {{$assignedTo}}</a>
+                                                @endif
                                                 @endif
                                             </li>
                                         </div>
@@ -246,18 +254,26 @@
                                         </div>
 
                                         <div class="mt-4">
-                                            <ul class="list-inline mb-0">
 
-                                                <li class="list-inline-item mt-1">
-                                                    <a href="javascript:void(0)" class="btn btn-outline-primary btn-hover"><i class="uil uil-facebook-f"></i> Facebook</a>
-                                                </li>
-                                                <li class="list-inline-item mt-1">
-                                                    <a href="javascript:void(0)" class="btn btn-outline-danger btn-hover"><i class="uil uil-google"></i> Google+</a>
-                                                </li>
-                                                <li class="list-inline-item mt-1">
-                                                    <a href="javascript:void(0)" class="btn btn-outline-success btn-hover"><i class="uil uil-linkedin-alt"></i> linkedin</a>
-                                                </li>
-                                            </ul>
+                                            @if ($assignedTo == 'NULL'){
+                                            <p class="text-muted">Please Take the job to start</p>
+                                            }
+
+                                            @elseif ( Auth::user()->emp_id == $assignedTo)
+
+                                            @if ($complaintLog->Status !== 'Solved')
+                                            <!--Action Card-->
+                                            <x-complaint-action-form id="{{$id}}" />
+
+                                            @elseif($complaintLog->Status == 'Solved' && $status == 'In-Progress')
+                                            <p class=" text-blue-500">Complaint was submitted for review by {{$complaintLog->Comment_by}} </p>
+                                            @elseif($complaintLog->Status == 'Solved' && $status == 'Closed')
+                                            <p class=" text-green-500"> Job Closed </p>
+                                            @endif
+
+                                            @elseif ( Auth::user()->emp_id !== $assignedTo)
+                                            <p class="text-muted">This issue was already took by <a href="#">{{$assignedTo}}</a></p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

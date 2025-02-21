@@ -38,7 +38,7 @@
 
 
                         <!-- Tab panes -->
-                        <div class="tab-content p-3 text-muted">
+                        <div class="tab-content p-1 text-muted">
 
                             @php
                             $className1 = (session('role') == 'admin') ? 'tab-pane active' : 'tab-pane';
@@ -184,12 +184,7 @@
 
                                                                                         <td>
                                                                                             @if(Session('role') == 'admin')
-                                                                                            <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light"
-                                                                                                data-bs-toggle="modal"
-                                                                                                data-bs-target="#transaction-detailModal"
-                                                                                                data-complaint='@json($complaint)'>
-                                                                                                View Details
-                                                                                            </button>
+                                                                                            <a href="{{route('viewcomplaintId' , ['id' => $complaint->id])}}"> View</a>
                                                                                             @elseif(Session('role') == 'head')
                                                                                             <a href="{{route('viewcomplaintId' , ['id' => $complaint->id])}}"> View</a>
                                                                                             @endif
