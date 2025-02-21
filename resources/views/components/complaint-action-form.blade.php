@@ -15,12 +15,13 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="solved" name="solved" checked>
+                        <input class="form-check-input" type="checkbox" id="solved" name="solved">
                         <label class="form-check-label" for="solved">Solved the issue</label>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <div class="text-end">
             <button type="submit" class="btn btn-success w-sm">Submit</button>

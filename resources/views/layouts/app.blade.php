@@ -33,6 +33,9 @@
     <script src="../../../assets/libs/select2/js/select2.min.js"></script>
     <script src="../../../assets/js/pages/form-advanced.init.js"></script>
 
+    <!-- Plugins css -->
+    <link href="../../../assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+
 
 </head>
 

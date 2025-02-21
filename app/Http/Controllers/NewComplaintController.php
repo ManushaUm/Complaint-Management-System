@@ -144,7 +144,11 @@ class NewComplaintController extends Controller
 
         $complaintLogs = DB::table('complaint_logs')->get();
 
+        $updatedComplaints = DB::table('new_complaints')->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')->select('new_complaints.*', 'complaint_logs.*')->get();
+
+
         return view('viewcomplaint', [
+            'updatedComplaints' => $updatedComplaints,
             'complaints' => $complaints,
             'departmentNames' => $getDepartmentName,
             'divisionNames' => $getDivisionName,

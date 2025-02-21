@@ -179,6 +179,20 @@
                                                         <i class="mdi mdi-account"></i> <span class="text-muted">Complaint logged by <span><a href="#">{{$loggedBy}}</a></span></span>
                                                     </li>
                                                 </ul>
+
+                                                @if (session('success'))
+                                                <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                                                    {{ session('success') }}
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                                @endif
+
+                                                @if (session('error'))
+                                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                    {{ session('error') }}
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                                @endif
                                             </div>
                                             <li class="list-inline-item mt-1">
                                                 @if ($assignedTo == NULL)
@@ -217,7 +231,7 @@
                                                         <h5 class="font-size-14 mb-1"><span><a href="#">{{$complaintLog->Notes_by}}</a></span> <small class="text-muted float-end badge badge-soft-info">{{$complaintLog->Status}}</small></h5>
                                                         <p class="text-muted">{{$complaintLog->Notes}}</p>
                                                         <div>
-                                                            <a href="javascript: void(0);" class="text-success px-2"><i class="mdi mdi-reply px-1"></i> Reply</a>
+                                                            <a href="javascript: void(0);" class="text-success px-2"><i class="mdi mdi-reply px-1"></i> Contact</a>
                                                             <a href="javascript: void(0);" class="text-primary px-2"><i class="bx bxs-file px-1"></i> Attachments</a>
                                                         </div>
 
@@ -241,7 +255,7 @@
                                                         <h5 class="font-size-14 mb-1"><span><a href="#">{{$complaintLog->Comment_by}}</a></span> <small class="text-muted float-end badge badge-soft-info">{{$complaintLog->Status}}</small></h5>
                                                         <p class="text-muted">{{$complaintLog->Comment}}</p>
                                                         <div>
-                                                            <a href="javascript: void(0);" class="text-success px-2"><i class="mdi mdi-reply px-1"></i> Reply</a>
+                                                            <a href="javascript: void(0);" class="text-success px-2"><i class="mdi mdi-reply px-1"></i> Contact</a>
                                                             <a href="javascript: void(0);" class="text-primary px-2"><i class="bx bxs-file px-1"></i> Attachments</a>
                                                         </div>
                                                     </div>

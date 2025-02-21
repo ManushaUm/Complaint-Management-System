@@ -155,13 +155,10 @@
                                                                                     <tr>
                                                                                         <th>Customer</th>
 
-                                                                                        <th>Contact No</th>
-                                                                                        <th>Email</th>
                                                                                         <th>Customer Type</th>
                                                                                         <th>Policy/Vehicle Number</th>
                                                                                         <th>Complaint Date</th>
-
-
+                                                                                        <th>Complaint Status</th>
                                                                                         <th>Action</th>
                                                                                     </tr>
                                                                                 </thead>
@@ -170,17 +167,18 @@
                                                                                 <tbody>
 
 
-                                                                                    @foreach($complaints as $complaint)
+                                                                                    @foreach($updatedComplaints as $complaint)
 
                                                                                     @if($complaint->is_closed == 0 && $complaint->complaint_status == 1)
 
+
                                                                                     <tr>
                                                                                         <td>{{ $complaint->name }}</td>
-                                                                                        <td>{{ $complaint->contact_no }}</td>
-                                                                                        <td>{{ $complaint->email }}</td>
+
                                                                                         <td>{{ $complaint->customer_type }}</td>
                                                                                         <td>{{ $complaint->policy_number }}</td>
                                                                                         <td>{{ $complaint->complaint_date }}</td>
+                                                                                        <td>{{ $complaint->Status}}</td>
 
                                                                                         <td>
                                                                                             @if(Session('role') == 'admin')

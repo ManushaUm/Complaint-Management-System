@@ -135,15 +135,17 @@ class complaintcontroller extends Controller
 
     public function assignJob($id)
     {
-        //dd($id);
         $complaint = ComplaintLog::where('Reference_number', $id)->latest()->first();
-        //dd($complaint);
-        $emp_id = Auth::user()->emp_id;
-        //dd($emp_id);
-        //update the relevent row, assinged_to  column by emp_id
-        $complaint->assigned_to = $emp_id;
-        $complaint->save();
-        return redirect()->back()->with('success', 'Job assigned successfully.');
+        if ($complaint) {
+            $emp_id = Auth::user()->emp_id;
+            //update the relevent row, assinged_to  column by emp_id
+            $complaint->assigned_to = $emp_id;
+            $complaint->Status = 'assigned';
+            $complaint->save();
+            return redirect()->back()->with('success', 'Job assigned successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Complaint not Found. Please contact your administrator');
+        }
     }
 
     public function addComment($id, Request $request)
@@ -155,7 +157,7 @@ class complaintcontroller extends Controller
 
         ]);
 
-        dd($validated);
+        //dd($validated);
 
         $data = $request->all();
         $complaint = ComplaintLog::where('Reference_number', $id)->latest()->first();
