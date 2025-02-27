@@ -46,6 +46,10 @@ Route::get('/viewcomplaints', function () {
     return view('viewcomplaint');
 })->middleware(['auth', 'verified'])->name('viewcomplaint');
 
+Route::get('/test-employee', function () {
+    return view('profile.information.test');
+})->name('test-employee');
+
 Route::get('/viewcomplaint/{id}', [ComplaintController::class, 'getComplaintDetails'])->name('viewcomplaintId');
 Route::post('/assign-job/{id}', [ComplaintController::class, 'assignJob'])->name('assign-job');
 Route::post('/add-comment/{id}', [ComplaintController::class, 'addComment'])->name('add-comment');

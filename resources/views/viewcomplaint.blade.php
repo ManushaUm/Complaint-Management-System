@@ -11,14 +11,14 @@
                         <ul class="nav nav-pills nav-justified" role="tablist">
                             @if(Session('role') == 'admin')
                             <li class="nav-item waves-effect waves-light">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#home-1" role="tab">
-                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                <a class="nav-link active" data-bs-toggle="tab" href="#new-complaints" role="tab">
+                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i> </span>
                                     <span class="d-none d-sm-block">New Complaints</span>
                                 </a>
                             </li>
                             @endif
                             <li class="nav-item waves-effect waves-light">
-                                <a class="nav-link" data-bs-toggle="tab" href="#profile-1" role="tab">
+                                <a class="nav-link" data-bs-toggle="tab" href="#assigned-complaints" role="tab">
                                     <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
                                     @if(Session('role') == 'admin')
                                     <span class="d-none d-sm-block">Assigned Complaints</span>
@@ -27,12 +27,22 @@
                                     @endif
                                 </a>
                             </li>
+                            @if(Session('role') == 'admin' || Session('role') == 'head')
                             <li class="nav-item waves-effect waves-light">
                                 <a class="nav-link" data-bs-toggle="tab" href="#messages-1" role="tab">
                                     <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
                                     <span class="d-none d-sm-block">Closed</span>
                                 </a>
                             </li>
+                            @endif
+                            @if(Session('role') == 'member')
+                            <li class="nav-item waves-effect waves-light">
+                                <a class="nav-link" data-bs-toggle="tab" href="#member-jobs" role="tab">
+                                    <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                    <span class="d-none d-sm-block">My Jobs</span>
+                                </a>
+                            </li>
+                            @endif
 
                         </ul>
 
@@ -46,10 +56,8 @@
                             @endphp
 
                             @if(Session('role') == 'admin')
-                            <div class="{{$className1}}" id="home-1" role="tabpanel">
-                                <p class="mb-0">
-                                    Table of new complaint
-                                </p>
+                            <div class="{{$className1}}" id="new-complaints" role="tabpanel">
+
                                 <div class="container-fluid">
                                     <div>
                                         <div class="row">
@@ -107,15 +115,11 @@
                                                                             </table>
 
                                                                         </div>
-                                                                        <!-- end table-responsive -->
-
-                                                                        <!-- Transaction Modal -->
-
-
+                                                                        <!-- Assigning Modal -->
                                                                         <x-complaint-assign-modal :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
-
                                                                         <!-- end modal -->
 
+                                                                        <!-- end table -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -128,16 +132,7 @@
                                 </div>
                             </div>
                             @endif
-                            <div class="{{$className2}}" id="profile-1" role="tabpanel">
-
-                                <p class="mb-0">
-                                    @if(Session('role') == 'admin')
-                                    Table of assigned
-                                    @else
-                                    Received Complaints
-                                    @endif
-                                </p>
-
+                            <div class="{{$className2}}" id="assigned-complaints" role="tabpanel">
                                 <div class="container-fluid">
                                     <div>
                                         <div class="row">
@@ -154,7 +149,6 @@
                                                                                 <thead class="table-light">
                                                                                     <tr>
                                                                                         <th>Customer</th>
-
                                                                                         <th>Customer Type</th>
                                                                                         <th>Policy/Vehicle Number</th>
                                                                                         <th>Complaint Date</th>
@@ -165,21 +159,14 @@
 
 
                                                                                 <tbody>
-
-
                                                                                     @foreach($updatedComplaints as $complaint)
-
                                                                                     @if($complaint->is_closed == 0 && $complaint->complaint_status == 1)
-
-
                                                                                     <tr>
                                                                                         <td>{{ $complaint->name }}</td>
-
                                                                                         <td>{{ $complaint->customer_type }}</td>
                                                                                         <td>{{ $complaint->policy_number }}</td>
                                                                                         <td>{{ $complaint->complaint_date }}</td>
                                                                                         <td>{{ $complaint->Status}}</td>
-
                                                                                         <td>
                                                                                             @if(Session('role') == 'admin')
                                                                                             <a href="{{route('viewcomplaintId' , ['id' => $complaint->id])}}"> View</a>
@@ -200,8 +187,6 @@
                                                                         <!-- end table-responsive -->
 
                                                                         <!-- Transaction Modal -->
-
-
                                                                         <x-complaint-assign-modal :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
 
                                                                         <!-- end modal -->
@@ -216,12 +201,10 @@
                                         </div> <!-- end row -->
                                     </div>
                                 </div>
+
                             </div>
 
                             <div class="tab-pane" id="messages-1" role="tabpanel">
-                                <p class="mb-0">
-                                    Table of closed
-                                </p>
                                 <div class="container-fluid">
                                     <div>
                                         <div class="row">
@@ -299,8 +282,13 @@
                                 </div>
                             </div>
 
+                            <div class="tab-pane" id="member-jobs" role="tabpanel">
+
+                                <x-member-assigned-table :complaints="$complaints" />
+                            </div>
 
                         </div>
+
 
                     </div>
 
