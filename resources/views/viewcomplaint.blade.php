@@ -88,6 +88,7 @@
                                                                                 <tbody>
                                                                                     @foreach($complaints as $complaint)
                                                                                     @if($complaint->is_closed == 0 && $complaint->complaint_status == 0)
+
                                                                                     <tr>
                                                                                         <td>{{ $complaint->name }}</td>
 
@@ -170,7 +171,7 @@
                                                                                         <td>
                                                                                             @if(Session('role') == 'admin')
                                                                                             <a href="{{route('viewcomplaintId' , ['id' => $complaint->id])}}"> View</a>
-                                                                                            @elseif(Session('role') == 'head')
+                                                                                            @elseif(Session('role') == 'head' || Session('role') == 'member')
                                                                                             <a href="{{route('viewcomplaintId' , ['id' => $complaint->id])}}"> View</a>
                                                                                             @endif
                                                                                         </td>

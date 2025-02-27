@@ -26,15 +26,12 @@
                         <i class="bx bx-task"></i>
                         <span key="t-layouts">Complaints</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="true">
+                    <ul class="sub-menu mm-collapse mm-show" aria-expanded="true">
                         <li>
                             <a href="{{route('newcomplaint')}}" key="t-vertical">New Complaints</a>
-
                         </li>
-
                         <li>
                             <a href="{{route('viewcomplaint')}}" key="t-horizontal">View Complaints</a>
-
                         </li>
                     </ul>
                 </li>
@@ -89,10 +86,10 @@
                         <i class="bx bx-task"></i>
                         <span key="t-layouts">Complaints</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="true">
+                    <ul class="sub-menu mm-collapse mm-show" aria-expanded="true">
+
                         <li>
                             <a href="{{route('viewcomplaint')}}" key="t-horizontal">View Complaints</a>
-
                         </li>
                     </ul>
                 </li>
