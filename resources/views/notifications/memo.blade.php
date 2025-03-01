@@ -1,8 +1,18 @@
 <x-app-layout>
     <x-slot name="slot">
 
-        <!-- Put the page content here. ths is the main area -->
-        <!-- Use contents only, do not use head elements, ONLY add **requried** CSS & js-->
+        <div class="container mt-5 py-10">
+            @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+            @endif
+
+            <!-- Memo Form Component -->
+            @include('components.employee-notification-form')
+
+        </div>
 
     </x-slot>
+
 </x-app-layout>
