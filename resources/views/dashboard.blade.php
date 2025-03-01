@@ -143,6 +143,12 @@
                     </div>
 
                 </div>
+                <div class="row">
+                    <div class="col-xl-4">
+                        <a href="{{ route('memo.form') }}" class="btn btn-primary">Send a Memo</a>
+                    </div>
+                </div>
+
                 <!-- end row -->
 
             </div> <!-- container-fluid -->
