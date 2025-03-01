@@ -146,9 +146,25 @@ class NewComplaintController extends Controller
 
         $updatedComplaints = DB::table('new_complaints')->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')->select('new_complaints.*', 'complaint_logs.*')->get();
 
+        $newComplaints = [];
+        $assignedComplaints = [];
+        $closedComplaints = [];
+
+        foreach ($complaints as $complaint) {
+            if ($complaint->is_closed == 0 && $complaint->complaint_status == 0) {
+                $newComplaints[] = $complaint;
+            } else if ($complaint->complaint_status == 1 && $complaint->is_closed == 0) {
+                $assignedComplaints[] = $complaint;
+            } else if ($complaint->is_closed == 1 && $complaint->complaint_status == 0) {
+                $closedComplaints[] = $complaint;
+            }
+        }
 
         return view('viewcomplaint', [
             'updatedComplaints' => $updatedComplaints,
+            'newComplaints' => $newComplaints,
+            'assignedComplaints' => $assignedComplaints,
+            'closedComplaints' => $closedComplaints,
             'complaints' => $complaints,
             'departmentNames' => $getDepartmentName,
             'divisionNames' => $getDivisionName,
