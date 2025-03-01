@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('Notes');
             $table->string('Notes_by');
             $table->string('Assigned_to')->default(null);
-            $table->string('Status')->default('Started');
+            $table->string('Status')->default('Received');
             $table->string('Priority')->default('Not-set');
             $table->string('Comment_by')->default(null);
             $table->string('Comment')->nullable();

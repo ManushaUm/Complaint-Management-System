@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="slot">
 
-        Test
+        <x-member-assigned-table :complaints="$complaints" />
 
     </x-slot>
 </x-app-layout>

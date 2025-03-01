@@ -8,7 +8,7 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title mb-4">Your Complaints</h4>
+                                        <h4 class="card-title mb-4">Your Complaints {{Auth::user()->emp_id}}</h4>
                                         <div class="table-responsive">
                                             <table class="table align-middle table-nowrap mb-0">
                                                 <thead class="table-light">
@@ -23,26 +23,28 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @php
+                                                        $user_id = Auth::user()->emp_id;
+                                                    @endphp
+                                                
                                                     @foreach($complaints as $complaint)
-                                                    @if($complaint->is_closed ==1)
-                                                    <tr>
-                                                        <td>{{ $complaint->name }}</td>
-
-                                                        <td>{{ $complaint->contact_no }}</td>
-                                                        <td>{{ $complaint->email }}</td>
-                                                        <td>{{ $complaint->customer_type }}</td>
-                                                        <td>{{ $complaint->policy_number }}</td>
-                                                        <td>{{ $complaint->complaint_date }}</td>
-
-
-                                                        <td>
-                                                            <!-- Button trigger modal -->
-                                                            <a href="#" class="btn btn-primary btn-sm">View</a>
-                                                        </td>
-                                                    </tr>
-                                                    @endif
+                                                        
+                                                            <tr>
+                                                                <td>{{ $complaint->name }}</td>
+                                                                <td>{{ $complaint->contact_no }}</td>
+                                                                <td>{{ $complaint->email }}</td>
+                                                                <td>{{ $complaint->customer_type }}</td>
+                                                                <td>{{ $complaint->policy_number }}</td>
+                                                                <td>{{ $complaint->complaint_date }}</td>
+                                                                <td>
+                                                                    <!-- Button trigger modal -->
+                                                                    <a href="{{route('viewcomplaintId' , ['id' => $complaint->id])}}" class="btn btn-primary btn-sm">View</a>
+                                                                </td>
+                                                            </tr>
+                                                        
                                                     @endforeach
                                                 </tbody>
+                                                
                                             </table>
 
                                         </div>

@@ -283,9 +283,11 @@
                                 </div>
                             </div>
 
+                            <!-- Member assigned complaints -->
+                            
                             <div class="tab-pane" id="member-jobs" role="tabpanel">
-
-                                <x-member-assigned-table :complaints="$complaints" />
+                                
+                                <x-member-assigned-table :complaints=$updatedComplaints />
                             </div>
 
                         </div>

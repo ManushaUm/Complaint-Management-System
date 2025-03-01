@@ -177,4 +177,18 @@ class complaintcontroller extends Controller
             return redirect()->back()->with('error', 'Complaint not found.');
         }
     }
+
+    //Member Jobs Handling
+    public function myJobs()
+    {
+        $updatedComplaints = DB::table('new_complaints')->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')->select('new_complaints.*', 'complaint_logs.*')->get();
+        //dd($updatedComplaints);
+        foreach ($updatedComplaints as $complaint) {
+            if ($complaint->Assigned_to == Auth::user()->emp_id) {
+                $complaints[] = $complaint;
+            };
+        }
+        //dd($complaints);
+        return view('Member.myjobs', compact('complaints'));
+    }
 }

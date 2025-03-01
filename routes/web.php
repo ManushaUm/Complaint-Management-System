@@ -37,6 +37,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('useraccess');
     })->name('roles');
 
+    Route::get('/employee', function () {
+        return view('profile.information.employee');
+    })->name('employee');
+
+    //Member Job view return
+    Route::get('/my-jobs', [complaintcontroller::class, 'myJobs'])->name('my-jobs');
+
     //add new department-page routes
     Route::prefix('departments')->group(function () {
         Route::get('/', [DepartmentController::class, 'index2'])->name('departments');

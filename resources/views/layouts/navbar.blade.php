@@ -87,9 +87,11 @@
                         <span key="t-layouts">Complaints</span>
                     </a>
                     <ul class="sub-menu mm-collapse mm-show" aria-expanded="true">
-
                         <li>
                             <a href="{{route('viewcomplaint')}}" key="t-horizontal">View Complaints</a>
+                        </li>
+                        <li>
+                            <a href="{{route('my-jobs')}}" key="t-horizontal">My Jobs</a>
                         </li>
                     </ul>
                 </li>
