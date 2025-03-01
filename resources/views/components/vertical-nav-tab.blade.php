@@ -1,6 +1,5 @@
 <div class="row" style="margin: 10px;">
-
-    <div class="col-md-8">
+    <div class="col-md-12">
         <!-- First column content here -->
         <div class="col-12">
             <div class="card">

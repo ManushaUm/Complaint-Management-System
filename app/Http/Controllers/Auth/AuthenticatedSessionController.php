@@ -30,7 +30,10 @@ class AuthenticatedSessionController extends Controller
 
         // Store the authenticated user's role in the session
         $request->session()->put('role', Auth::user()->role);
+        // Store the authenticated user's department in the session
+        $request->session()->put('department', Auth::user()->department);
         //check if the user is get the role
+        $request->session()->put('emp_id', Auth::user()->emp_id);
         //dd($request->session()->all());
 
         return redirect()->intended(route('dashboard', absolute: false));

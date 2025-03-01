@@ -32,7 +32,55 @@
 
         <body data-sidebar="dark">
 
+            <div class="card max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="card-body">
 
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-pills nav-justified" role="tablist">
+                        <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#home-1" role="tab">
+                                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                <span class="d-none d-sm-block">New Complaints</span>
+                            </a>
+                        </li>
+                        <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link" data-bs-toggle="tab" href="#profile-1" role="tab">
+                                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                <span class="d-none d-sm-block">Assigned Complaints</span>
+                            </a>
+                        </li>
+                        <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link" data-bs-toggle="tab" href="#messages-1" role="tab">
+                                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                <span class="d-none d-sm-block">Closed</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content p-3 text-muted">
+                        <div class="tab-pane active" id="home-1" role="tabpanel">
+                            <p class="mb-0">
+                                Table of new complaints
+                            </p>
+                        </div>
+                        <div class="tab-pane" id="profile-1" role="tabpanel">
+                            <p class="mb-0">
+                                Table of assigned
+                            </p>
+                        </div>
+                        <div class="tab-pane" id="messages-1" role="tabpanel">
+                            <p class="mb-0">
+                                Table of closed
+                            </p>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
 
 
 

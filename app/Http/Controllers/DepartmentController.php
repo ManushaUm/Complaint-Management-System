@@ -55,9 +55,6 @@ class DepartmentController extends Controller
         return view('useraccess', compact('departments', 'divisionsData'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //dd($request->all());
@@ -72,10 +69,8 @@ class DepartmentController extends Controller
         $deptCode = $outerGroup['deptCode'];
         $deptHead = $outerGroup['deptHead'];
         $deptAltHead = $outerGroup['deptAltHead'];
-        $deptDivs = $outerGroup['inner-group'];
+
         //dd($deptDivs);
-
-
 
         $department = new Department();
         $department->department_name = $deptName;
@@ -85,19 +80,7 @@ class DepartmentController extends Controller
 
         $department->save();
 
-        //dd($department);
-        foreach ($deptDivs as $deptDiv) {
-            $division = new Division();
-            $division->division_name = $deptDiv['divisionName'];
-            $division->division_code = $deptCode;
-            $division->department_code = $deptDiv['divisionName'];
-            $division->division_head = $deptDiv['divisionHead'];
-            //dd($division);
-            $division->save();
-        }
-
-
-        return redirect()->route('users')->with('success', 'Department created successfully.');
+        return redirect()->back()->with('success', 'Department created successfully.');
     }
 
     public function updateHead(Request $request)
