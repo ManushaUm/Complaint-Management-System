@@ -1,4 +1,7 @@
 <div>
+    @auth
+        
+    
     <div class="card">
         <div class="card-body">
             <h4 class="card-title mb-4">New Complaints</h4>
@@ -28,12 +31,17 @@
 
                             <td>
                                 <!-- Button trigger modal -->
+                                @if (Session('role') == 'admin' )
                                 <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light"
                                     data-bs-toggle="modal"
                                     data-bs-target="#transaction-detailModal"
                                     data-complaint='@json($complaint)'>
                                     View Details
                                 </button>
+@else
+                                    <!-- More detail view -->
+                                    <a href="{{route('viewcomplaintId' , ['id' => $complaint->Reference_number])}}" class="btn btn-primary btn-sm">View</a>
+                                @endif
                             </td>
                         </tr>
 
@@ -49,4 +57,5 @@
             <!-- end table -->
         </div>
     </div>
+    @endauth
 </div>

@@ -131,39 +131,71 @@ class NewComplaintController extends Controller
 
     public function viewcomplaint()
     {
+
+        $latestComplaints = [];
         $user = Auth::user();
         if ($user->role === 'admin') {
             $complaints = DB::table('new_complaints')->get();
         } else {
+
+            $latestComplaints = DB::table('new_complaints')
+                ->joinSub(
+                    DB::table('complaint_logs')
+                        ->select('complaint_logs.*')
+                        ->latest(),
+                    'latest_logs',
+                    'new_complaints.id',
+                    'latest_logs.Reference_number'
+                )
+                ->select('new_complaints.*', 'latest_logs.*')
+                ->where('new_complaints.department', $user->department)
+                ->get();
             $complaints = DB::table('new_complaints')->where('department', $user->department)->get();
         }
-
+        //dd($latestComplaints);
         $departments = new Department();
         $getDepartmentName = $departments->getDepartment();
         $getDivisionName = $departments->getDivision();
 
         $complaintLogs = DB::table('complaint_logs')->get();
 
-        $updatedComplaints = DB::table('new_complaints')->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')->select('new_complaints.*', 'complaint_logs.*')->get();
-
+        $updatedComplaints = DB::table('new_complaints')
+            ->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')
+            ->select('new_complaints.*', 'complaint_logs.*')
+            ->get();
+        //dd($updatedComplaints);
         $newComplaints = [];
         $assignedComplaints = [];
         $closedComplaints = [];
+        $receivedComplaints = [];
+
 
         foreach ($complaints as $complaint) {
             if ($complaint->is_closed == 0 && $complaint->complaint_status == 0) {
                 $newComplaints[] = $complaint;
-            } else if ($complaint->complaint_status == 1 && $complaint->is_closed == 0) {
+            }
+        }
+
+        //dd($latestComplaints);
+        foreach ($latestComplaints as $complaint) {
+            if ($complaint->complaint_status == 1 && $complaint->is_closed == 0 && $complaint->Status == 'In-Progress') {
                 $assignedComplaints[] = $complaint;
+            } else if ($complaint->complaint_status == 1 && $complaint->is_closed == 0 && $complaint->Status == 'Received') {
+                $receivedComplaints[] = $complaint;
+            } else if ($complaint->is_closed == 0 && $complaint->complaint_status == 1 && $complaint->Status == 'Solved') {
+                $solvedComplaints[] = $complaint;
             } else if ($complaint->is_closed == 1 && $complaint->complaint_status == 0) {
                 $closedComplaints[] = $complaint;
             }
         }
+        //dd($receivedComplaints);
 
         return view('viewcomplaint', [
             'updatedComplaints' => $updatedComplaints,
             'newComplaints' => $newComplaints,
             'assignedComplaints' => $assignedComplaints,
+            'receivedComplaints' => $receivedComplaints,
+            'solvedComplaints' => $solvedComplaints,
             'closedComplaints' => $closedComplaints,
             'complaints' => $complaints,
             'departmentNames' => $getDepartmentName,

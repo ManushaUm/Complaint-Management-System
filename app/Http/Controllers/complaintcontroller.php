@@ -81,10 +81,8 @@ class complaintcontroller extends Controller
         //create the data array for the complaint
         $Logdata = array(
             'Reference_number' => $request->modalComplaintId,
-            //'Department' => $request->dept_id,
-            //'Sub_division' => $request->div_name,
             'Notes' => $request->notes,
-            //need to update priority here
+
         );
 
         $departmentData = array(
@@ -101,9 +99,6 @@ class complaintcontroller extends Controller
 
         //store to log
         $id = DB::table('complaint_logs')->insertGetId($Logdata);
-
-
-
 
         // Update the department and status
         $complaint->department = $request->dept_id;
@@ -130,7 +125,12 @@ class complaintcontroller extends Controller
 
 
         $newData = DB::table('complaint_logs')->select('*')->where('Reference_number', $id)->get();
-        return view('complaint.complaintdetail', compact('prevData', 'newData'));
+        if ($newData) {
+            return view('complaint.complaintdetail', compact('prevData', 'newData'));
+        } else {
+
+            return redirect()->back()->with('error', 'Complaint not found.');
+        }
     }
 
     public function assignJob($id)
@@ -142,6 +142,12 @@ class complaintcontroller extends Controller
             $complaint->assigned_to = $emp_id;
             $complaint->Status = 'assigned';
             $complaint->save();
+            //update the new_complaints table status
+            $Intialcomplaint = NewComplaint::find($id);
+            $Intialcomplaint->complaint_status = 1;
+            $Intialcomplaint->is_closed = 0;
+            $Intialcomplaint->save();
+
             return redirect()->back()->with('success', 'Job assigned successfully.');
         } else {
             return redirect()->back()->with('error', 'Complaint not Found. Please contact your administrator');
@@ -189,6 +195,27 @@ class complaintcontroller extends Controller
             };
         }
         //dd($complaints);
-        return view('Member.myjobs', compact('complaints'));
+        return view('complaint.myjobs', compact('complaints'));
+    }
+
+    //Closed Jobs Handling
+    public function closedJobs()
+    {
+        $closedComplaints = DB::table('new_complaints')->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')->select('new_complaints.*', 'complaint_logs.*')->get();
+
+        foreach ($closedComplaints as $complaint) {
+            if ($complaint->Status == 'Solved' && $complaint->department == Auth::user()->department) {
+                $complaints[] = $complaint;
+            };
+        }
+
+
+        return view('complaint.closedjobs', compact('complaints'));
+    }
+
+    //Close Complaint
+    public function closeComplaint($id, Request $request)
+    {
+        dd($request->all());
     }
 }

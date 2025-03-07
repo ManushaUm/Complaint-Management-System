@@ -21,6 +21,8 @@
     <link href="../../../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App-->
     <link href="../../../assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- Plugins css -->
+    <link href="../../../assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -79,6 +81,8 @@
             </main>
         </div>
     </div>
+
+
 
 </body>
 

@@ -155,21 +155,8 @@
             <div class="main-content">
 
 
-                <!-- End Page-content -->
-
-
-
-                <!-- Begin page -->
-                <div id="layout-wrapper">
-
-
-                    <!-- Start right Content here -->
-                    <!-- ============================================================== -->
-
-                    <!-- end main content-->
-
-
-                </div>
+            
+    
 
 
 

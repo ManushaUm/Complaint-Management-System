@@ -17,7 +17,9 @@
                             </div>
                         </div>
                         <!-- end page title -->
+
                         @foreach ($prevData as $Initcomplaint)
+
                         <div class="row">
                             <div class="col-xl-3">
                                 <!--Complaint overview Card-->
@@ -44,7 +46,9 @@
                                                         <th scope="row">Status</th>
                                                         @if ($Initcomplaint->complaint_status == '1' && $Initcomplaint->is_closed == '0')
                                                         <td><span class="badge badge-soft-info">Assigned</span></td>
-                                                        @else
+                                                        @elseif ($Initcomplaint->complaint_status == '0' && $Initcomplaint->is_closed == '0')
+                                                        <td><span class="badge badge-soft-warning">Received</span></td>
+                                                        @elseif ($Initcomplaint->complaint_status == '0' && $Initcomplaint->is_closed == '1')
                                                         <td><span class="badge badge-soft-success">Closed</span></td>
                                                         @endif
                                                     </tr>
@@ -63,6 +67,7 @@
                                     </div>
                                 </div>
                                 <!--End Complaint overview Card-->
+
                                 <!--Complaint Brief Card-->
                                 <div class="card">
                                     <div class="card-body">
@@ -89,6 +94,7 @@
                                     </div>
                                 </div>
                                 <!--End Complaint Brief Card-->
+
                                 <!--Customer contact info Card-->
                                 <div class="card">
                                     <div class="card-body">
@@ -145,9 +151,11 @@
                                                 <h5 class="fw-semibold font-size-16">Complaint on Reference number <span><a href="#">{{$Initcomplaint->id}}</a></span> </h5>
                                                 <ul class="list-unstyled hstack gap-2 mb-0">
                                                     @php
+
                                                     $id = $prevData[0]->id;
                                                     $loggedBy = $prevData[0]->logged_by;
                                                     $priority = $newData[sizeof($newData)-1]->Priority;
+                                                    $currentStatus = $newData[sizeof($newData)-1]->Status;
                                                     $status = $prevData[0]->is_closed == '0' ? 'In-Progress' : 'Closed';
                                                     $assignedTo = $newData[sizeof($newData)-1]->Assigned_to;
                                                     if ($priority == 'HIGH') {
@@ -301,6 +309,51 @@
                                             @elseif ( Auth::user()->emp_id !== $assignedTo)
                                             <p class="text-muted">This issue was already took by <a href="#">{{$assignedTo}}</a></p>
                                             @endif
+
+                                            <!--HERE -->
+                                            @if ($currentStatus == 'Solved' && Auth::user()->role == 'head')
+
+                                            <div>
+                                                <div class="d-flex justify-content-end">
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#complaintAction">Close Job</button>
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#complaintAction">Reopen Job</button>
+                                                </div>
+
+                                                <!-- modal content -->
+                                                <div id="complaintAction" class="modal fade" tabindex="-1" aria-labelledby="complaintActionLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="complaintActionLabel"><span class="">Complaint Closing</span></h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <form action="{{route('closeComplaint' , ['id' => $id])}}" method="POST">
+
+                                                                <div class="modal-body">
+                                                                    Close the job {{$complaintLog->Reference_number}}
+                                                                    @csrf
+                                                                    <div class=" mb-3">
+
+                                                                        <label for="head-note" class="col-form-label">Notes</label>
+                                                                        <textarea class="form-control my-2" id="head-note" name="head-note"></textarea>
+
+                                                                        <input class="form-control form-control-sm" id="formFileSm" type="file">
+
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cancel</button>
+                                                                    <button type="submit" class="btn btn-success waves-effect waves-light">Close Job</button>
+                                                                </div>
+                                                            </form>
+                                                        </div><!-- /.modal-content -->
+                                                    </div><!-- /.modal-dialog -->
+                                                </div><!-- /.modal -->
+                                            </div>
+
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -310,12 +363,15 @@
                         @endforeach
                         <!--end row-->
 
+
+
                     </div>
                     <!-- container-fluid -->
                 </div>
                 <!-- End Page-content -->
 
             </div>
+
             <!-- JAVASCRIPT -->
             <script src="http://skote-v.laravel.themesbrand.com/assets/libs/jquery/jquery.min.js"></script>
             <script src="http://skote-v.laravel.themesbrand.com/assets/libs/bootstrap/bootstrap.min.js"></script>
@@ -361,9 +417,9 @@
                     });
                 });
             </script>
+            <script src="assets/libs/dropzone/min/dropzone.min.js"></script>
 
             <script src="http://skote-v.laravel.themesbrand.com/assets/js/app.min.js"></script>
-
             <!-- App js -->
             <script src="http://skote-v.laravel.themesbrand.com/assets/js/app.min.js"></script>
 
