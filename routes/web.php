@@ -77,7 +77,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     //complaint closing by head
-    Route::post('/close-complaint/{id}', [complaintcontroller::class, 'closeComplaint'])->name('closeComplaint');
+    Route::put('/close-complaint/{id}', [complaintcontroller::class, 'closeComplaint'])->name('closeComplaint');
+    //complaint Reopening by head
+    Route::put('/log-complaint/{id}', [complaintcontroller::class, 'reopenComplaint'])->name('logcomplaint');
 });
 
 

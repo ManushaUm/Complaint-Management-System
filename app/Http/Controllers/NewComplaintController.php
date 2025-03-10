@@ -178,7 +178,7 @@ class NewComplaintController extends Controller
 
         //dd($latestComplaints);
         foreach ($latestComplaints as $complaint) {
-            if ($complaint->complaint_status == 1 && $complaint->is_closed == 0 && $complaint->Status == 'In-Progress') {
+            if (($complaint->complaint_status == 1 && $complaint->is_closed == 0) && ($complaint->Status == 'In-Progress' || $complaint->Status == 'Reopened')) {
                 $assignedComplaints[] = $complaint;
             } else if ($complaint->complaint_status == 1 && $complaint->is_closed == 0 && $complaint->Status == 'Received') {
                 $receivedComplaints[] = $complaint;

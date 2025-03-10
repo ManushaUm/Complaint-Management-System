@@ -24,27 +24,27 @@
                                                 </thead>
                                                 <tbody>
                                                     @php
-                                                        $user_id = Auth::user()->emp_id;
+                                                    $user_id = Auth::user()->emp_id;
                                                     @endphp
-                                                
+
                                                     @foreach($complaints as $complaint)
-                                                        
-                                                            <tr>
-                                                                <td>{{ $complaint->name }}</td>
-                                                                <td>{{ $complaint->contact_no }}</td>
-                                                                <td>{{ $complaint->email }}</td>
-                                                                <td>{{ $complaint->customer_type }}</td>
-                                                                <td>{{ $complaint->policy_number }}</td>
-                                                                <td>{{ $complaint->complaint_date }}</td>
-                                                                <td>
-                                                                    <!-- Button trigger modal -->
-                                                                    <a href="{{route('viewcomplaintId' , ['id' => $complaint->id])}}" class="btn btn-primary btn-sm">View</a>
-                                                                </td>
-                                                            </tr>
-                                                        
+
+                                                    <tr>
+                                                        <td>{{ $complaint->name }}</td>
+                                                        <td>{{ $complaint->contact_no }}</td>
+                                                        <td>{{ $complaint->email }}</td>
+                                                        <td>{{ $complaint->customer_type }}</td>
+                                                        <td>{{ $complaint->policy_number }}</td>
+                                                        <td>{{ $complaint->complaint_date }}</td>
+                                                        <td>
+                                                            <!-- Button trigger modal -->
+                                                            <a href="{{route('viewcomplaintId' , ['id' => $complaint->Reference_number])}}" class="btn btn-primary btn-sm">View</a>
+                                                        </td>
+                                                    </tr>
+
                                                     @endforeach
                                                 </tbody>
-                                                
+
                                             </table>
 
                                         </div>

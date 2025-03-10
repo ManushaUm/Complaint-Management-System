@@ -201,14 +201,18 @@ class complaintcontroller extends Controller
     //Closed Jobs Handling
     public function closedJobs()
     {
-        $closedComplaints = DB::table('new_complaints')->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')->select('new_complaints.*', 'complaint_logs.*')->get();
+        $closedComplaints = DB::table('new_complaints')
+            ->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')
+            ->select('new_complaints.*', 'complaint_logs.*')
+            ->get();
+
 
         foreach ($closedComplaints as $complaint) {
-            if ($complaint->Status == 'Solved' && $complaint->department == Auth::user()->department) {
+            if ($complaint->Status == 'Solved' && $complaint->department == Auth::user()->department && $complaint->is_closed !== 1) {
                 $complaints[] = $complaint;
             };
         }
-
+        //dd($complaints);
 
         return view('complaint.closedjobs', compact('complaints'));
     }
@@ -216,6 +220,66 @@ class complaintcontroller extends Controller
     //Close Complaint
     public function closeComplaint($id, Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
+        //validate the request
+        $validated =  $request->validate([
+            'headNote' => 'required|string',
+        ]);
+        // dd($validated);
+        //need to save the request to complaint_log table
+        $data = array(
+            'Reference_number' => $id,
+            'Notes' => $request->headNote,
+            'Notes_by' => Auth::user()->emp_id,
+            'Assigned_to' => Auth::user()->emp_id,
+            'Status' => 'Closed',
+
+        );
+        //dd($data);
+        $complaint = NewComplaint::find($id);
+        //dd($complaint);
+        if ($complaint) {
+            $complaint->is_closed = 1;
+            $complaint->complaint_status = 0;
+            $complaint->save();
+            DB::table('complaint_logs')->insertGetId($data);
+            return redirect()->back()->with('success', 'Complaint closed successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Complaint not found.');
+        }
+    }
+
+    //Reopen the complaint
+    public function reopenComplaint($id, Request $request)
+    {
+        //extract data from dataRecord
+        $dataRecord = $request->dataRecord;
+        $assignedTo = $dataRecord['Assigned_to'];
+        //dd($assignedTo);
+
+        //validate the request
+        $validated =  $request->validate([
+            'headNote' => 'required|string',
+        ]);
+        //data array
+        $data = array(
+            'Reference_number' => $id,
+            'Notes' => $request->headNote,
+            'Notes_by' => Auth::user()->emp_id,
+            'Assigned_to' => $assignedTo,
+            'Status' => 'Reopened',
+        );
+
+        $complaint = NewComplaint::find($id);
+
+        if ($complaint) {
+            $complaint->is_closed = 0;
+            $complaint->complaint_status = 1;
+            $complaint->save();
+            DB::table('complaint_logs')->insertGetId($data);
+            return redirect()->back()->with('success', 'Complaint Logged successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Complaint not found.');
+        }
     }
 }

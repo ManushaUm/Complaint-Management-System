@@ -293,7 +293,7 @@
                                             <p class="text-muted">Please Take the job to start</p>
                                             }
 
-                                            @elseif ( Auth::user()->emp_id == $assignedTo)
+                                            @elseif ( Auth::user()->emp_id == $assignedTo && $status !== 'Closed')
 
                                             @if ($complaintLog->Status !== 'Solved')
                                             <!--Action Card-->
@@ -316,41 +316,15 @@
                                             <div>
                                                 <div class="d-flex justify-content-end">
                                                     <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#complaintAction">Close Job</button>
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#complaintAction">Reopen Job</button>
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#complaintOpen">Reopen Job</button>
                                                 </div>
 
-                                                <!-- modal content -->
-                                                <div id="complaintAction" class="modal fade" tabindex="-1" aria-labelledby="complaintActionLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="complaintActionLabel"><span class="">Complaint Closing</span></h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <form action="{{route('closeComplaint' , ['id' => $id])}}" method="POST">
-
-                                                                <div class="modal-body">
-                                                                    Close the job {{$complaintLog->Reference_number}}
-                                                                    @csrf
-                                                                    <div class=" mb-3">
-
-                                                                        <label for="head-note" class="col-form-label">Notes</label>
-                                                                        <textarea class="form-control my-2" id="head-note" name="head-note"></textarea>
-
-                                                                        <input class="form-control form-control-sm" id="formFileSm" type="file">
-
-
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cancel</button>
-                                                                    <button type="submit" class="btn btn-success waves-effect waves-light">Close Job</button>
-                                                                </div>
-                                                            </form>
-                                                        </div><!-- /.modal-content -->
-                                                    </div><!-- /.modal-dialog -->
-                                                </div><!-- /.modal -->
+                                                <!-- Complaint Closing Model-->
+                                                <x-head-complaint-closing-modal :id="$id" :prevData="$prevData" :newData="$newData" />
+                                                <!-- /.modal -->
+                                                <!-- Complaint Reopen Model-->
+                                                <x-head-complaint-reopen-model :id="$id" :prevData="$prevData" :newData="$newData" />
+                                                <!-- /.modal -->
                                             </div>
 
                                             @endif
