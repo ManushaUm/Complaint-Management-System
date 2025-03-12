@@ -138,17 +138,17 @@ class NewComplaintController extends Controller
             $complaints = DB::table('new_complaints')->get();
         } else {
 
-            $latestComplaints = DB::table('new_complaints')
-                ->joinSub(
-                    DB::table('complaint_logs')
-                        ->select('complaint_logs.*')
-                        ->latest(),
-                    'latest_logs',
-                    'new_complaints.id',
-                    'latest_logs.Reference_number'
-                )
-                ->select('new_complaints.*', 'latest_logs.*')
-                ->where('new_complaints.department', $user->department)
+            $latestComplaints = DB::table('new_complaints as nc')
+                ->leftJoin(DB::raw('(
+                SELECT reference_number, MAX(updated_at) as latest_date
+                FROM complaint_logs
+                GROUP BY reference_number
+            ) as latest_logs'), 'nc.id', '=', 'latest_logs.reference_number')
+                ->leftJoin('complaint_logs as cl', function ($join) {
+                    $join->on('latest_logs.reference_number', '=', 'cl.reference_number')
+                        ->on('latest_logs.latest_date', '=', 'cl.updated_at');
+                })
+                ->select('nc.*', 'cl.*')
                 ->get();
             $complaints = DB::table('new_complaints')->where('department', $user->department)->get();
         }
@@ -168,6 +168,7 @@ class NewComplaintController extends Controller
         $assignedComplaints = [];
         $closedComplaints = [];
         $receivedComplaints = [];
+        $solvedComplaints = [];
 
 
         foreach ($complaints as $complaint) {
@@ -188,7 +189,7 @@ class NewComplaintController extends Controller
                 $closedComplaints[] = $complaint;
             }
         }
-        //dd($receivedComplaints);
+        //dd($solvedComplaints);
 
         return view('viewcomplaint', [
             'updatedComplaints' => $updatedComplaints,

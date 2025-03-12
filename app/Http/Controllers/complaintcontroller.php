@@ -201,14 +201,22 @@ class complaintcontroller extends Controller
     //Closed Jobs Handling
     public function closedJobs()
     {
-        $closedComplaints = DB::table('new_complaints')
-            ->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')
-            ->select('new_complaints.*', 'complaint_logs.*')
+        $closedComplaints = DB::table('new_complaints as nc')
+            ->leftJoin(DB::raw('(
+            SELECT reference_number, MAX(updated_at) as latest_date
+            FROM complaint_logs
+            GROUP BY reference_number
+        ) as latest_logs'), 'nc.id', '=', 'latest_logs.reference_number')
+            ->leftJoin('complaint_logs as cl', function ($join) {
+                $join->on('latest_logs.reference_number', '=', 'cl.reference_number')
+                    ->on('latest_logs.latest_date', '=', 'cl.updated_at');
+            })
+            ->select('nc.*', 'cl.*')
             ->get();
-
-
+        //dd($closedComplaints);
+        $complaints = [];
         foreach ($closedComplaints as $complaint) {
-            if ($complaint->Status == 'Solved' && $complaint->department == Auth::user()->department && $complaint->is_closed !== 1) {
+            if ($complaint->Status == 'Solved' &&  $complaint->department == Auth::user()->department && $complaint->is_closed !== 1) {
                 $complaints[] = $complaint;
             };
         }
