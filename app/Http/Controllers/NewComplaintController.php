@@ -189,7 +189,7 @@ class NewComplaintController extends Controller
                 $closedComplaints[] = $complaint;
             }
         }
-        //dd($solvedComplaints);
+        //dd($closedComplaints);
 
         return view('viewcomplaint', [
             'updatedComplaints' => $updatedComplaints,

@@ -187,8 +187,20 @@ class complaintcontroller extends Controller
     //Member Jobs Handling
     public function myJobs()
     {
-        $updatedComplaints = DB::table('new_complaints')->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')->select('new_complaints.*', 'complaint_logs.*')->get();
+        $updatedComplaints = DB::table('new_complaints as nc')
+            ->leftJoin(DB::raw('(
+            SELECT reference_number, MAX(updated_at) as latest_date
+            FROM complaint_logs
+            GROUP BY reference_number
+        ) as latest_logs'), 'nc.id', '=', 'latest_logs.reference_number')
+            ->leftJoin('complaint_logs as cl', function ($join) {
+                $join->on('latest_logs.reference_number', '=', 'cl.reference_number')
+                    ->on('latest_logs.latest_date', '=', 'cl.updated_at');
+            })
+            ->select('nc.*', 'cl.*')
+            ->get();
         //dd($updatedComplaints);
+        $complaints = [];
         foreach ($updatedComplaints as $complaint) {
             if ($complaint->Assigned_to == Auth::user()->emp_id) {
                 $complaints[] = $complaint;
@@ -228,7 +240,7 @@ class complaintcontroller extends Controller
     //Close Complaint
     public function closeComplaint($id, Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         //validate the request
         $validated =  $request->validate([
             'headNote' => 'required|string',

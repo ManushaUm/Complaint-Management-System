@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="slot">
-        <div class="py-12">
+        <div class="py-12 my-4">
             @auth
             <div id="layout-wrapper">
                 <div class="card mx-auto sm:px-6 lg:px-8">
@@ -9,10 +9,10 @@
                         <!-- Nav tabs  Admin and Heads-->
                         @php
                         $activeclass1 = (session('role') == 'admin') ? 'nav-link active' : 'nav-link';
-                        $activeclass2 = (session('role') == 'head') ? 'nav-link active' : 'nav-link';
+                        $activeclass2 = (session('role') == 'head' || session('role') == 'd-head') ? 'nav-link active' : 'nav-link';
                         @endphp
 
-                        @if(Session('role') == 'admin' || Session('role') == 'head')
+                        @if(Session('role') == 'admin' || Session('role') == 'head' || Session('role') == 'd-head')
 
                         <ul class="nav nav-pills nav-justified" role="tablist">
 
@@ -25,24 +25,24 @@
                             </li>
                             @endif
 
-                            @if(Session('role') == 'head')
+                            @if(Session('role') == 'head' || Session('role') == 'd-head')
                             <li class="nav-item waves-effect waves-light">
                                 <a class="{{$activeclass2}}" data-bs-toggle="tab" href="#received-complaints" role="tab">
                                     <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                                   
+
                                     <span class="d-none d-sm-block">Received Complaints</span>
-                                   
+
                                 </a>
                             </li>
 
                             @endif
-                            
+
                             <li class="nav-item waves-effect waves-light">
                                 <a class="nav-link" data-bs-toggle="tab" href="#assigned-complaints" role="tab">
                                     <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                                   
+
                                     <span class="d-none d-sm-block">Assigned Complaints</span>
-                                    
+
                                 </a>
                             </li>
 
@@ -59,7 +59,7 @@
 
                             @php
                             $className1 = (session('role') == 'admin') ? 'tab-pane active' : 'tab-pane';
-                            $className2 = (session('role') == 'head') ? 'tab-pane active' : 'tab-pane';
+                            $className2 = (session('role') == 'head' || session('role') == 'd-head') ? 'tab-pane active' : 'tab-pane';
                             @endphp
 
                             @if(Session('role') == 'admin')
@@ -71,7 +71,7 @@
                                             <x-complaint-view-table :complaints="$newComplaints" :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
                                             <!-- End Table -->
                                         </div>
-                                    </div>           <!-- end row -->
+                                    </div> <!-- end row -->
                                 </div>
                             </div>
                             @endif
@@ -105,7 +105,7 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <x-complaint-view-table :complaints="$solvedComplaints" :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
+                                            <x-complaint-view-table :complaints="$closedComplaints" :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
                                         </div>
                                     </div>
                                 </div>

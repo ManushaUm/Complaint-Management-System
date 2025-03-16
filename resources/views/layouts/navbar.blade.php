@@ -66,7 +66,7 @@
         </div>
         @endif
 
-        @if(Session('role') == 'head' )
+        @if(Session('role') == 'head' || Session('role') == 'd-head')
         <!--- Sidemenu heads -->
         <div id="sidebar-menu">
             <!-- Left Menu Start -->

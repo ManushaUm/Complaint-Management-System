@@ -153,7 +153,7 @@
                                                     @php
 
                                                     $id = $prevData[0]->id;
-                                                    $loggedBy = $prevData[0]->logged_by;
+                                                    $loggedBy = $newData[0]->Notes_by;
                                                     $priority = $newData[sizeof($newData)-1]->Priority;
                                                     $currentStatus = $newData[sizeof($newData)-1]->Status;
                                                     $status = $prevData[0]->is_closed == '0' ? 'In-Progress' : 'Closed';
@@ -289,25 +289,25 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                             </div>
                                             @endif
-                                            @if ($assignedTo == 'NULL'){
-                                            <p class="text-muted">Please Take the job to start</p>
-                                            }
 
-                                            @elseif ( Auth::user()->emp_id == $assignedTo && $status !== 'Closed')
+                                            @if ($assignedTo == '')
+                                            <p class="text-muted">Please take the job to start</p>
 
-                                            @if ($complaintLog->Status !== 'Solved')
+
+                                            @elseif ( Auth::user()->emp_id == $assignedTo && ($status !== 'Closed' || $complaintLog->Status !== 'Solved'))
                                             <!--Action Card-->
                                             <x-complaint-action-form id="{{$id}}" />
 
 
-                                            @elseif($complaintLog->Status == 'Solved' && $status == 'In-Progress')
+                                            @elseif($complaintLog->Status == 'Solved' )
                                             <p class=" text-blue-500">Complaint was submitted for review by {{$complaintLog->Comment_by}} </p>
-                                            @elseif($complaintLog->Status == 'Solved' && $status == 'Closed')
-                                            <p class=" text-green-500"> Job Closed </p>
-                                            @endif
+                                            @elseif($complaintLog->Status == 'Closed')
 
-                                            @elseif ( Auth::user()->emp_id !== $assignedTo)
-                                            <p class="text-muted">This issue was already took by <a href="#">{{$assignedTo}}</a></p>
+                                            <p class=" text-green-500"> Job Closed by <span><a href="#">{{$complaintLog->Assigned_to}}</a></span></p>
+
+
+                                            @elseif ( Auth::user()->emp_id !== $assignedTo && $assignedTo !== null)
+                                            <p class="text-muted">This issue was assigned to <a href="#">{{$assignedTo}}</a></p>
                                             @endif
 
                                             <!--HERE -->
@@ -326,8 +326,16 @@
                                                 <x-head-complaint-reopen-model :id="$id" :prevData="$prevData" :newData="$newData" />
                                                 <!-- /.modal -->
                                             </div>
-
                                             @endif
+                                            @if ($currentStatus == 'Closed' && Auth::user()->role == 'd-head')
+                                            <div class="d-flex justify-content-end">
+                                                <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#complaintAction">Action</button>
+                                                <!-- Complaint Closing Model-->
+                                                <x-head-complaint-closing-modal :id="$id" :prevData="$prevData" :newData="$newData" />
+                                            </div>
+                                            @endif
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -345,6 +353,8 @@
                 <!-- End Page-content -->
 
             </div>
+
+
 
             <!-- JAVASCRIPT -->
             <script src="http://skote-v.laravel.themesbrand.com/assets/libs/jquery/jquery.min.js"></script>
@@ -391,11 +401,14 @@
                     });
                 });
             </script>
-            <script src="assets/libs/dropzone/min/dropzone.min.js"></script>
+            <script src="../../../assets/libs/dropzone/min/dropzone.min.js"></script>
 
-            <script src="http://skote-v.laravel.themesbrand.com/assets/js/app.min.js"></script>
-            <!-- App js -->
-            <script src="http://skote-v.laravel.themesbrand.com/assets/js/app.min.js"></script>
+            <!-- jquery step -->
+            <script src="../../../assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
+
+            <!-- form wizard init -->
+            <script src="../../../assets/js/pages/form-wizard.init.js"></script>
+            <script src="../../../assets/js/app.js"></script>
 
         </body>
     </x-slot>
