@@ -18,6 +18,7 @@ class ComplaintLog extends Model
         'Status',
         'Priority',
         'Comment',
+        'Attachment',
     ];
     public $timestamps = true;
 }

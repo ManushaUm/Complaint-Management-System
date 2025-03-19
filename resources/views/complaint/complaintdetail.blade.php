@@ -240,7 +240,7 @@
                                                         <p class="text-muted">{{$complaintLog->Notes}}</p>
                                                         <div>
                                                             <a href="javascript: void(0);" class="text-success px-2"><i class="mdi mdi-reply px-1"></i> Contact</a>
-                                                            <a href="javascript: void(0);" class="text-primary px-2"><i class="bx bxs-file px-1"></i> Attachments</a>
+                                                            <a href="{{ Storage::url($complaintLog->Attachment)}}" target="_blank" class="text-primary px-2"><i class="bx bxs-file px-1"></i> Attachments</a>
                                                         </div>
 
                                                     </div>
@@ -264,7 +264,7 @@
                                                         <p class="text-muted">{{$complaintLog->Comment}}</p>
                                                         <div>
                                                             <a href="javascript: void(0);" class="text-success px-2"><i class="mdi mdi-reply px-1"></i> Contact</a>
-                                                            <a href="javascript: void(0);" class="text-primary px-2"><i class="bx bxs-file px-1"></i> Attachments</a>
+                                                            <a href="{{ Storage::url($complaintLog->Attachment)}}" target="_blank" class="text-primary px-2"><i class="bx bxs-file px-1"></i> Attachments</a>
                                                         </div>
                                                     </div>
 

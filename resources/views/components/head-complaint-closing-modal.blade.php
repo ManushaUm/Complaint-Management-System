@@ -92,13 +92,14 @@
                     </ul>
                     <div class="tab-content p-3 text-muted">
                         <div class="tab-pane active" id="approval" role="tabpanel">
-                            <form action="#">
+                            <form action="{{route('closeComplaint' , ['id' => $id])}}" method="POST" enctype="multipart/form-data">
+                                @method('PUT')
                                 @csrf
                                 <div class=" mb-3">
                                     <label for="headNote" class="col-form-label">Final notes</label>
                                     <textarea class="form-control my-2" id="headNote" name="headNote"></textarea>
 
-                                    <input class="form-control form-control-sm" id="formFileSm" type="file">
+                                    <input class="form-control form-control-sm" id="formFileSm" name="formFileSm" type="file">
                                 </div>
                                 <button type="submit" class="btn btn-success waves-effect waves-light">Approve</button>
                             </form>
@@ -133,16 +134,17 @@
                                             </form>
                                         </div>
                                         <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                                            <form action="#">
+                                            <form action="{{route('logcomplaint' , ['id' => $id, 'newData' => $newData])}}" method="POST" enctype="multipart/form-data">
+                                                @method('PUT')
                                                 @csrf
                                                 <div class=" mb-3">
                                                     <label for="headNote" class="col-form-label">Remarks</label>
                                                     <textarea class="form-control my-2" id="headNote" name="headNote"></textarea>
 
-                                                    <input class="form-control form-control-sm" id="formFileSm" type="file">
+                                                    <input class="form-control form-control-sm" name="formFileSm" id="formFileSm" type="file">
 
                                                     <div class="form-check mb-3 py-2">
-                                                        <input class="form-check-input" type="checkbox" id="userUpdate">
+                                                        <input class="form-check-input" name="checkbox" type="checkbox" id="userUpdate" value="{{$newData[sizeof($newData)-1]->Assigned_to}}">
                                                         <label class="form-check-label" for="userUpdate">
                                                             Assign complaint to {{$newData[sizeof($newData)-1]->Assigned_to}}
                                                         </label>

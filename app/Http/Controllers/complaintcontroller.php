@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\ComplaintLog;
 use Illuminate\Http\Request;
-use App\Models\complaintstatus;
+use App\Models\FinalLog;
 use App\Models\NewComplaint;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
+
 
 use function Laravel\Prompts\error;
 
@@ -240,66 +237,141 @@ class complaintcontroller extends Controller
     //Close Complaint
     public function closeComplaint($id, Request $request)
     {
-        dd($request->all());
-        //validate the request
-        $validated =  $request->validate([
-            'headNote' => 'required|string',
-        ]);
-        // dd($validated);
-        //need to save the request to complaint_log table
-        $data = array(
-            'Reference_number' => $id,
-            'Notes' => $request->headNote,
-            'Notes_by' => Auth::user()->emp_id,
-            'Assigned_to' => Auth::user()->emp_id,
-            'Status' => 'Closed',
+        if (Auth::user()->role == 'head') {
+            dd($request->all());
+            //validate the request
+            $validated =  $request->validate([
+                'headNote' => 'required|string',
+            ]);
+            // dd($validated);
+            //need to save the request to complaint_log table
+            $data = array(
+                'Reference_number' => $id,
+                'Notes' => $request->headNote,
+                'Notes_by' => Auth::user()->emp_id,
+                'Assigned_to' => Auth::user()->emp_id,
+                'Status' => 'Closed',
 
-        );
-        //dd($data);
-        $complaint = NewComplaint::find($id);
-        //dd($complaint);
-        if ($complaint) {
-            $complaint->is_closed = 1;
-            $complaint->complaint_status = 0;
-            $complaint->save();
-            DB::table('complaint_logs')->insertGetId($data);
-            return redirect()->back()->with('success', 'Complaint closed successfully.');
-        } else {
-            return redirect()->back()->with('error', 'Complaint not found.');
+            );
+            //dd($data);
+            $complaint = NewComplaint::find($id);
+            //dd($complaint);
+            if ($complaint) {
+                $complaint->is_closed = 1;
+                $complaint->complaint_status = 0;
+                $complaint->save();
+                DB::table('complaint_logs')->insertGetId($data);
+                return redirect()->back()->with('success', 'Complaint closed successfully.');
+            } else {
+                return redirect()->back()->with('error', 'Complaint not found.');
+            }
+        } elseif (Auth::user()->role == 'd-head') {
+
+            //dd($request->file('formFileSm'), $request->all());
+            //validate the request
+            $validated =  $request->validate([
+                'headNote' => 'required|string',
+            ]);
+
+            $data = [
+                'reference' => $id,
+                'remarks' => $validated['headNote'],
+                'remarks_by' => Auth::user()->emp_id,
+                'status' => 'Approved',
+            ];
+
+            if ($request->hasFile('formFileSm')) {
+
+                $file = $request->file('formFileSm');
+                $filename = $file->getClientOriginalName();
+                $path = $file->store('uploads', 'public');
+
+                $data['attachment_path'] = $path;
+                $data['attachment_name'] = $filename;
+            }
+            //dd($data);
+
+            try {
+                FinalLog::create($data);
+                NewComplaint::find($id)->update(['is_approved' => 1]);
+
+                return redirect()->back()->with('success', 'Successfully Approved.');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Error Approving.');
+            }
         }
     }
 
     //Reopen the complaint
-    public function reopenComplaint($id, Request $request)
+    public function  reopenComplaint(Request $request, $id)
     {
-        //extract data from dataRecord
-        $dataRecord = $request->dataRecord;
-        $assignedTo = $dataRecord['Assigned_to'];
-        //dd($assignedTo);
+        //dd($request->all());
+        if (Auth::user()->role == 'd-head') {
 
-        //validate the request
-        $validated =  $request->validate([
-            'headNote' => 'required|string',
-        ]);
-        //data array
-        $data = array(
-            'Reference_number' => $id,
-            'Notes' => $request->headNote,
-            'Notes_by' => Auth::user()->emp_id,
-            'Assigned_to' => $assignedTo,
-            'Status' => 'Reopened',
-        );
+            $validated = $request->validate([
+                'headNote' => 'required|string',
+            ]);
+            if ($validated) {
+                $data = [
+                    'Reference_number' => $id,
+                    'Notes' => $validated['headNote'],
+                    'Notes_by' => Auth::user()->emp_id,
+                    'Assigned_to' => $request->checkbox,
+                    'Status' => 'Reopened',
+                ];
 
-        $complaint = NewComplaint::find($id);
+                if ($request->hasFile('formFileSm')) {
 
-        if ($complaint) {
-            $complaint->is_closed = 0;
-            $complaint->complaint_status = 1;
-            $complaint->save();
-            DB::table('complaint_logs')->insertGetId($data);
-            return redirect()->back()->with('success', 'Complaint Logged successfully.');
-        } else {
-            return redirect()->back()->with('error', 'Complaint not found.');
+                    $file = $request->file('formFileSm');
+                    $Attachment = $file->store('uploads', 'public');
+
+                    $data['Attachment'] = $Attachment;
+                }
+
+                //dd($data);
+                try {
+                    $complaint = NewComplaint::find($id);
+                    if ($complaint) {
+                        $complaint->is_closed = 0;
+                        $complaint->complaint_status = 1;
+                        $complaint->save();
+                        ComplaintLog::create($data);
+                        return redirect()->back()->with('success', 'Complaint Logged successfully.');
+                    }
+                } catch (\Exception $e) {
+                    return redirect()->back()->with('error', 'Error Logging.');
+                }
+            } else {
+                //extract data from dataRecord
+                $dataRecord = $request->dataRecord;
+                $assignedTo = $dataRecord['Assigned_to'];
+                //dd($assignedTo);
+
+                //validate the request
+                $validated =  $request->validate([
+                    'headNote' => 'required|string',
+                ]);
+                //data array
+                $data = array(
+                    'Reference_number' => $id,
+                    'Notes' => $request->headNote,
+                    'Notes_by' => Auth::user()->emp_id,
+                    'Assigned_to' => $assignedTo,
+                    'Status' => 'Reopened',
+                );
+
+                $complaint = NewComplaint::find($id);
+
+                if ($complaint) {
+                    $complaint->is_closed = 0;
+                    $complaint->complaint_status = 1;
+                    $complaint->save();
+                    DB::table('complaint_logs')->insertGetId($data);
+                    return redirect()->back()->with('success', 'Complaint Logged successfully.');
+                } else {
+                    return redirect()->back()->with('error', 'Complaint not found.');
+                }
+            }
         }
     }
 }
