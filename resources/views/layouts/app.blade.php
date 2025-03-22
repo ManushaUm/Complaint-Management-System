@@ -63,6 +63,7 @@
 
         <div>
 
+
             <nav class="bg-gray-200 shadow">
                 @include('layouts.navbar')
             </nav>
@@ -71,7 +72,9 @@
             <main class="bg-gray-200 flex-grow-1" style="margin-left: 250px;">
                 @isset($header)
                 <header class="bg-gray-200 shadow">
+
                     <div class="max-w-7xl mx-auto py-6 px-2 sm:px-4 lg:px-6">
+
                         {{ $header }}
                     </div>
                 </header>

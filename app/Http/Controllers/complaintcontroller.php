@@ -137,7 +137,7 @@ class complaintcontroller extends Controller
             $emp_id = Auth::user()->emp_id;
             //update the relevent row, assinged_to  column by emp_id
             $complaint->assigned_to = $emp_id;
-            $complaint->Status = 'assigned';
+            $complaint->Status = 'in-progress';
             $complaint->save();
             //update the new_complaints table status
             $Intialcomplaint = NewComplaint::find($id);
@@ -166,7 +166,7 @@ class complaintcontroller extends Controller
         $complaint = ComplaintLog::where('Reference_number', $id)->latest()->first();
 
         if ($complaint) {
-            $complaint->Comment = $data['commentmessage-input'];
+            $complaint->Comment = $validated['commentmessage-input'];
             $complaint->Comment_by = Auth::user()->emp_id;
 
             if (isset($data['solved']) && $data['solved'] == 'on') {
@@ -199,29 +199,21 @@ class complaintcontroller extends Controller
         //dd($updatedComplaints);
         $complaints = [];
         foreach ($updatedComplaints as $complaint) {
-            if ($complaint->Assigned_to == Auth::user()->emp_id) {
+            //update here with the logic =================<<<
+            if ($complaint->Assigned_to == Auth::user()->emp_id && ($complaint->Status !== 'Solved' && $complaint->Status !== 'Closed')) {
                 $complaints[] = $complaint;
             };
         }
-        //dd($complaints);
+        // dd($complaints);
         return view('complaint.myjobs', compact('complaints'));
     }
 
     //Closed Jobs Handling
     public function closedJobs()
     {
-        $closedComplaints = DB::table('new_complaints as nc')
-            ->leftJoin(DB::raw('(
-            SELECT reference_number, MAX(updated_at) as latest_date
-            FROM complaint_logs
-            GROUP BY reference_number
-        ) as latest_logs'), 'nc.id', '=', 'latest_logs.reference_number')
-            ->leftJoin('complaint_logs as cl', function ($join) {
-                $join->on('latest_logs.reference_number', '=', 'cl.reference_number')
-                    ->on('latest_logs.latest_date', '=', 'cl.updated_at');
-            })
-            ->select('nc.*', 'cl.*')
-            ->get();
+        //dd('closed jobs');
+        $closedComplaints = new NewComplaint();
+        $closedComplaints = $closedComplaints->getLatestLogs();
         //dd($closedComplaints);
         $complaints = [];
         foreach ($closedComplaints as $complaint) {
@@ -372,6 +364,45 @@ class complaintcontroller extends Controller
                     return redirect()->back()->with('error', 'Complaint not found.');
                 }
             }
+        }
+    }
+
+    //Reject the complaint
+    public function rejectComplaint(Request $request, $id)
+    {
+        //dd($request->all());
+        //validate the request
+        $validated =  $request->validate([
+            'headNote' => 'required|string',
+        ]);
+
+        //data array
+        $data = array(
+            'reference' => $id,
+            'remarks' => $request->headNote,
+            'remarks_by' => Auth::user()->emp_id,
+            'status' => 'Rejected',
+        );
+
+        //file upload
+        if ($request->hasFile('formFileSm')) {
+
+            $file = $request->file('formFileSm');
+            $filename = $file->getClientOriginalName();
+            $Attachment = $file->store('uploads', 'public');
+
+            $data['attachment_path'] = $Attachment;
+            $data['attachment_name'] = $filename;
+        }
+        //dd($data);
+        //insert data into final_logs table and update new_complaints
+        try {
+            FinalLog::create($data);
+            NewComplaint::find($id)->update(['is_approved' => 1]);
+
+            return redirect()->back()->with('success', 'Complaint Rejected.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error Rejecting.');
         }
     }
 }

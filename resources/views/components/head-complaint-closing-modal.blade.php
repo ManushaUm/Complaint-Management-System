@@ -116,13 +116,14 @@
                                 <div class="col-md-9">
                                     <div class="tab-content" id="v-pills-tabContent">
                                         <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                                            <form action="#">
+                                            <form action="{{route('rejectComplaint' , ['id' => $id])}}" method="POST" enctype="multipart/form-data">
                                                 @csrf
+                                                @method('PUT')
                                                 <div class=" mb-3">
                                                     <label for="headNote" class="col-form-label">Final notes</label>
                                                     <textarea class="form-control my-2" id="headNote" name="headNote"></textarea>
 
-                                                    <input class="form-control form-control-sm" id="formFileSm" type="file">
+                                                    <input class="form-control form-control-sm" name="formFileSm" id="formFileSm" type="file">
                                                     <div class="form-check mb-3 py-2">
                                                         <input class="form-check-input" type="checkbox" id="userUpdate">
                                                         <label class="form-check-label" for="userUpdate">

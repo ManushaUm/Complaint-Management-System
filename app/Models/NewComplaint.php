@@ -22,6 +22,7 @@ class NewComplaint extends Model
         'complaint_date',
         'complaint_detail',
         'attachment',
+        'priority',
         'department',
         'division',
         'is_closed',
@@ -62,5 +63,23 @@ class NewComplaint extends Model
         //     ->where('id', $id)
         //     ->update(['complaint_status' => 1]);
         // return $updateStatus;
+    }
+
+    public function getLatestLogs()
+    {
+        $latestLogs = DB::table('new_complaints as nc')
+            ->leftJoin(DB::raw('(
+                SELECT reference_number, MAX(updated_at) as latest_date
+                FROM complaint_logs
+                GROUP BY reference_number
+            ) as latest_logs'), 'nc.id', '=', 'latest_logs.reference_number')
+            ->leftJoin('complaint_logs as cl', function ($join) {
+                $join->on('latest_logs.reference_number', '=', 'cl.reference_number')
+                    ->on('latest_logs.latest_date', '=', 'cl.updated_at');
+            })
+            ->select('nc.*', 'cl.*')
+            ->get();
+
+        return $latestLogs;
     }
 }

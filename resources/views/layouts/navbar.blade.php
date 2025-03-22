@@ -139,6 +139,9 @@
                         <li>
                             <a href="{{route('my-jobs')}}" key="t-horizontal">My Jobs</a>
                         </li>
+                        <li>
+                            <a href="{{route('completedJobs')}}" key="t-horizontal">Completed Jobs</a>
+                        </li>
                     </ul>
                 </li>
 

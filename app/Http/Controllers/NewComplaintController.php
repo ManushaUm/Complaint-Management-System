@@ -179,13 +179,13 @@ class NewComplaintController extends Controller
 
         //dd($latestComplaints);
         foreach ($latestComplaints as $complaint) {
-            if (($complaint->complaint_status == 1 && $complaint->is_closed == 0) && ($complaint->Status == 'In-Progress' || $complaint->Status == 'Reopened')) {
+            if ($complaint->is_approved == 0 && ($complaint->complaint_status == 1 && $complaint->is_closed == 0) && ($complaint->Status == 'in-Progress' || $complaint->Status == 'Reopened')) {
                 $assignedComplaints[] = $complaint;
-            } else if ($complaint->complaint_status == 1 && $complaint->is_closed == 0 && $complaint->Status == 'Received') {
+            } else if ($complaint->complaint_status == 1 && $complaint->is_closed == 0 && $complaint->Status == 'Received' && $complaint->is_approved == 0) {
                 $receivedComplaints[] = $complaint;
-            } else if ($complaint->is_closed == 0 && $complaint->complaint_status == 1 && $complaint->Status == 'Solved') {
+            } else if ($complaint->is_closed == 0 && $complaint->complaint_status == 1 && $complaint->Status == 'Solved' && $complaint->is_approved == 0) {
                 $solvedComplaints[] = $complaint;
-            } else if ($complaint->is_closed == 1 && $complaint->complaint_status == 0) {
+            } else if ($complaint->is_closed == 1 && $complaint->complaint_status == 0 && $complaint->is_approved == 0) {
                 $closedComplaints[] = $complaint;
             }
         }
@@ -206,4 +206,28 @@ class NewComplaintController extends Controller
     }
 
     public function complaintLogData() {}
+
+    public function completedJobs()
+    {
+        //dd('check');
+        //update the contents
+
+        $latestComplaints = DB::table('new_complaints')
+            ->leftJoin('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')
+            ->get();
+        //$complaints = DB::table('new_complaints')->where('department', $user->department)->get();
+        //dd($latestComplaints);
+        $complaints = [];
+        foreach ($latestComplaints as $complaint) {
+            if ($complaint->Assigned_to == Auth::user()->emp_id && $complaint->Status == 'Solved') {
+                $complaints[] = $complaint;
+            }
+        }
+        //dd($complaints);
+        $departments = new Department();
+        $getDepartmentName = $departments->getDepartment();
+        $getDivisionName = $departments->getDivision();
+
+        return view('complaint.completedjobs', ['complaints' => $complaints, 'departmentNames' => $getDepartmentName, 'divisionNames' => $getDivisionName]);
+    }
 }

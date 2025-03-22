@@ -154,10 +154,13 @@
 
                                                     $id = $prevData[0]->id;
                                                     $loggedBy = $newData[0]->Notes_by;
+                                                    $is_approved = $prevData[0]->is_approved;
                                                     $priority = $newData[sizeof($newData)-1]->Priority;
                                                     $currentStatus = $newData[sizeof($newData)-1]->Status;
                                                     $status = $prevData[0]->is_closed == '0' ? 'In-Progress' : 'Closed';
                                                     $assignedTo = $newData[sizeof($newData)-1]->Assigned_to;
+                                                    $latestComment = $newData[sizeof($newData)-1]->Comment_by;
+
                                                     if ($priority == 'HIGH') {
                                                     $className = "badge bg-danger";
                                                     } elseif ($priority == 'LOW') {
@@ -292,22 +295,25 @@
 
                                             @if ($assignedTo == '')
                                             <p class="text-muted">Please take the job to start</p>
+                                            @endif
 
+                                            @if ( Auth::user()->emp_id == $assignedTo && ($currentStatus =='in-progress' || $currentStatus == 'In-Progress') && $latestComment == NULL)
 
-                                            @elseif ( Auth::user()->emp_id == $assignedTo && ($status !== 'Closed' || $complaintLog->Status !== 'Solved'))
                                             <!--Action Card-->
                                             <x-complaint-action-form id="{{$id}}" />
 
 
-                                            @elseif($complaintLog->Status == 'Solved' )
+                                            @elseif($complaintLog->Status == 'Solved' && $is_approved == 0)
                                             <p class=" text-blue-500">Complaint was submitted for review by {{$complaintLog->Comment_by}} </p>
-                                            @elseif($complaintLog->Status == 'Closed')
 
+                                            @elseif($complaintLog->Status == 'Closed' && $is_approved == 0)
                                             <p class=" text-green-500"> Job Closed by <span><a href="#">{{$complaintLog->Assigned_to}}</a></span></p>
 
-
-                                            @elseif ( Auth::user()->emp_id !== $assignedTo && $assignedTo !== null)
+                                            @elseif ( Auth::user()->emp_id !== $assignedTo && $assignedTo !== null && $is_approved == 0)
                                             <p class="text-muted">This issue was assigned to <a href="#">{{$assignedTo}}</a></p>
+
+                                            @elseif($is_approved == 1)
+                                            <p class="text-muted">This issue was approved by the department head</p>
                                             @endif
 
                                             <!--HERE -->
@@ -327,7 +333,8 @@
                                                 <!-- /.modal -->
                                             </div>
                                             @endif
-                                            @if ($currentStatus == 'Closed' && Auth::user()->role == 'd-head')
+
+                                            @if ($currentStatus == 'Closed' && Auth::user()->role == 'd-head' && $is_approved == 0)
                                             <div class="d-flex justify-content-end">
                                                 <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#complaintAction">Action</button>
                                                 <!-- Complaint Closing Model-->
