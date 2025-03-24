@@ -14,7 +14,7 @@
             <!-- Memo Content -->
             <div class="mb-3">
                 <label for="formrow-memocontent-input" class="form-label">Memo Content</label>
-                <textarea class="form-control" id="formrow-memocontent-input" name="content" placeholder="Enter Your Content" rows="4" required></textarea>
+                <textarea class="form-control" id="formrow-memocontent-input" name="content" placeholder="Enter Your Content" rows="2" required></textarea>
             </div>
 
             <!-- Send To Options -->
