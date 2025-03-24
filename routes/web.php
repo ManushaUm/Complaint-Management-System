@@ -9,6 +9,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HRController;
 use App\Http\Controllers\Usercontroller;
+use App\Http\Controllers\MemoController;
 
 
 //Guest Routes
@@ -106,6 +107,14 @@ Route::put('/assign-complaint', [ComplaintController::class, 'assignComplaint'])
 Route::get('/hr', [HRController::class, 'index']);
 Route::get('/employee/search', [HRController::class, 'searchEmp'])->name('employee.search');
 
+Route::get('/memo', function () {
+    return view('notifications.memo');
+})->name('memo.form');
+
+Route::post('/memo', [MemoController::class, 'store'])->name('memo.store');
+
+// Add this route in your routes/web.php file
+Route::get('/search-employees', [MemoController::class, 'searchEmployees'])->name('search.employees');
 
 
 require __DIR__ . '/auth.php';
