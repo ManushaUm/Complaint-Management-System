@@ -1,18 +1,27 @@
-<x-app-layout>
-    <x-slot name="slot">
+<!DOCTYPE html>
+<html lang="en">
 
-        <div class="container mt-5 py-10">
-            @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-            @endif
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memo Form</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}"> <!-- Include your styles -->
+</head>
 
-            <!-- Memo Form Component -->
-            @include('components.employee-notification-form')
+<body class="bg-white">
 
+    <div class="container ">
+        <!-- Success Alert -->
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
         </div>
+        @endif
 
-    </x-slot>
+        <!-- Memo Form -->
+        @include('components.employee-notification-form')
+    </div>
 
-</x-app-layout>
+</body>
+
+</html>
