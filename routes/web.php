@@ -21,9 +21,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('/viewcomplaints', function () {
+    /*Route::get('/viewcomplaints', function () {
         return view('viewcomplaint');
-    })->name('viewcomplaint');
+    })->name('viewcomplaint');*/
 
     Route::get('/searchcomplaints', function () {
         return view('searchcomplaints');
