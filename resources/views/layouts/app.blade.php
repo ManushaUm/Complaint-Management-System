@@ -21,6 +21,8 @@
     <link href="../../../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App-->
     <link href="../../../assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- Plugins css -->
+    <link href="../../../assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -39,18 +41,18 @@
     <link rel="shortcut icon" href="assets/images/favicon.ico">
 
     <!-- Bootstrap Css -->
-    <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
-    <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
 
 </head>
 
 <body class="font-sans antialiased" data-sidebar="dark">
 
-    <div class="min-h-screen bg-gray-300 d-flex flex-column">
+    <div class="min-h-screen bg-gray-200 d-flex flex-column">
 
         <!-- Fixed Topbar -->
         <header class="bg-gray-100 shadow fixed-top w-100">
@@ -61,15 +63,18 @@
 
         <div>
 
-            <nav class="bg-gray-100 shadow">
+
+            <nav class="bg-gray-200 shadow">
                 @include('layouts.navbar')
             </nav>
 
             <!-- Page Content -->
             <main class="bg-gray-200 flex-grow-1" style="margin-left: 250px;">
                 @isset($header)
-                <header class="bg-gray-100 shadow">
+                <header class="bg-gray-200 shadow">
+
                     <div class="max-w-7xl mx-auto py-6 px-2 sm:px-4 lg:px-6">
+
                         {{ $header }}
                     </div>
                 </header>
@@ -79,6 +84,8 @@
             </main>
         </div>
     </div>
+
+
 
 </body>
 

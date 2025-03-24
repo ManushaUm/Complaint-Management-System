@@ -8,10 +8,10 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title mb-4">Your Complaints {{Auth::user()->emp_id}}</h4>
+                                        <h4 class="card-title mb-4">Your Complaints </h4>
                                         <div class="table-responsive">
                                             <table class="table align-middle table-nowrap mb-0">
-                                                <thead class="table-light">
+                                                <thead class="bg-slate-700 text-slate-200">
                                                     <tr>
                                                         <th>Customer</th>
                                                         <th>Contact No</th>
@@ -24,27 +24,29 @@
                                                 </thead>
                                                 <tbody>
                                                     @php
-                                                        $user_id = Auth::user()->emp_id;
+                                                    $user_id = Auth::user()->emp_id;
                                                     @endphp
-                                                
+
                                                     @foreach($complaints as $complaint)
-                                                        
-                                                            <tr>
-                                                                <td>{{ $complaint->name }}</td>
-                                                                <td>{{ $complaint->contact_no }}</td>
-                                                                <td>{{ $complaint->email }}</td>
-                                                                <td>{{ $complaint->customer_type }}</td>
-                                                                <td>{{ $complaint->policy_number }}</td>
-                                                                <td>{{ $complaint->complaint_date }}</td>
-                                                                <td>
-                                                                    <!-- Button trigger modal -->
-                                                                    <a href="{{route('viewcomplaintId' , ['id' => $complaint->id])}}" class="btn btn-primary btn-sm">View</a>
-                                                                </td>
-                                                            </tr>
-                                                        
+                                                    @php
+                                                    $tableclass = $complaint->priority == 'high' ? 'table-danger' : 'table-light';
+                                                    @endphp
+                                                    <tr class="{{$tableclass}}">
+                                                        <td>{{ $complaint->name }}</td>
+                                                        <td>{{ $complaint->contact_no }}</td>
+                                                        <td>{{ $complaint->email }}</td>
+                                                        <td>{{ $complaint->customer_type }}</td>
+                                                        <td>{{ $complaint->policy_number }}</td>
+                                                        <td>{{ $complaint->complaint_date }}</td>
+                                                        <td>
+                                                            <!-- Button trigger modal -->
+                                                            <a href="{{route('viewcomplaintId' , ['id' => $complaint->Reference_number])}}" class="btn btn-primary btn-sm">View</a>
+                                                        </td>
+                                                    </tr>
+
                                                     @endforeach
                                                 </tbody>
-                                                
+
                                             </table>
 
                                         </div>

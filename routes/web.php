@@ -41,9 +41,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('profile.information.employee');
     })->name('employee');
 
-    //Member Job view return
+    //Member Job view 
     Route::get('/my-jobs', [complaintcontroller::class, 'myJobs'])->name('my-jobs');
-
+    //Closed jobs view for Heads
+    Route::get('/closed-jobs', [complaintcontroller::class, 'closedJobs'])->name('closed-jobs');
     //add new department-page routes
     Route::prefix('departments')->group(function () {
         Route::get('/', [DepartmentController::class, 'index2'])->name('departments');
@@ -68,12 +69,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/assign-job/{id}', [ComplaintController::class, 'assignJob'])->name('assign-job');
     Route::post('/add-comment/{id}', [ComplaintController::class, 'addComment'])->name('add-comment');
 
+    Route::get('/completed-jobs', [NewComplaintController::class, 'completedJobs'])->name('completedJobs');
+
     //Profile handling routes
     Route::prefix('/profile')->group(function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
+
+    //complaint closing by head
+    Route::put('/close-complaint/{id}', [complaintcontroller::class, 'closeComplaint'])->name('closeComplaint');
+    //complaint Reopening by head
+    Route::put('/log-complaint/{id}', [complaintcontroller::class, 'reopenComplaint'])->name('logcomplaint');
+    //complaint rejection by head
+    Route::put('/reject-complaint/{id}', [complaintcontroller::class, 'rejectComplaint'])->name('rejectComplaint');
 });
 
 

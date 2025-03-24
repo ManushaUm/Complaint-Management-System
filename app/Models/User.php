@@ -22,6 +22,7 @@ class User extends Authenticatable
         'emp_id',
         'email',
         'department',
+        'division',
         'password',
         'role',
     ];

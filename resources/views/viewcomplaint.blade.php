@@ -1,309 +1,179 @@
 <x-app-layout>
     <x-slot name="slot">
-        <div class="py-12">
+        <div class="page-content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0 font-size-18">Saas</h4>
 
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
+                                <li class="breadcrumb-item active">Saas</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
             @auth
             <div id="layout-wrapper">
                 <div class="card mx-auto sm:px-6 lg:px-8">
                     <div class="card-body py-10">
 
-                        <!-- Nav tabs -->
+                        <!-- Nav tabs  Admin and Heads-->
+                        @php
+                        $activeclass1 = (session('role') == 'admin') ? 'nav-link active' : 'nav-link';
+                        $activeclass2 = (session('role') == 'head' || session('role') == 'd-head') ? 'nav-link active' : 'nav-link';
+                        @endphp
+
+                        @if(Session('role') == 'admin' || Session('role') == 'head' || Session('role') == 'd-head')
+
                         <ul class="nav nav-pills nav-justified" role="tablist">
+
                             @if(Session('role') == 'admin')
                             <li class="nav-item waves-effect waves-light">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#new-complaints" role="tab">
+                                <a class="{{$activeclass1}}" data-bs-toggle="tab" href="#new-complaints" role="tab">
                                     <span class="d-block d-sm-none"><i class="fas fa-home"></i> </span>
                                     <span class="d-none d-sm-block">New Complaints</span>
                                 </a>
                             </li>
                             @endif
+
+                            @if(Session('role') == 'head' || Session('role') == 'd-head')
+                            <li class="nav-item waves-effect waves-light">
+                                <a class="{{$activeclass2}}" data-bs-toggle="tab" href="#received-complaints" role="tab">
+                                    <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+
+                                    <span class="d-none d-sm-block">Received Complaints</span>
+
+                                </a>
+                            </li>
+
+                            @endif
+
                             <li class="nav-item waves-effect waves-light">
                                 <a class="nav-link" data-bs-toggle="tab" href="#assigned-complaints" role="tab">
                                     <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                                    @if(Session('role') == 'admin')
+
                                     <span class="d-none d-sm-block">Assigned Complaints</span>
-                                    @else
-                                    <span class="d-none d-sm-block">Received Complaints</span>
-                                    @endif
+
                                 </a>
                             </li>
-                            @if(Session('role') == 'admin' || Session('role') == 'head')
+                            @if(Session('role') == 'admin' || Session('role') == 'd-head')
                             <li class="nav-item waves-effect waves-light">
-                                <a class="nav-link" data-bs-toggle="tab" href="#messages-1" role="tab">
+                                <a class="nav-link" data-bs-toggle="tab" href="#closed-complaints" role="tab">
                                     <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
                                     <span class="d-none d-sm-block">Closed</span>
                                 </a>
                             </li>
                             @endif
-                            @if(Session('role') == 'member')
-                            <li class="nav-item waves-effect waves-light">
-                                <a class="nav-link" data-bs-toggle="tab" href="#member-jobs" role="tab">
-                                    <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                                    <span class="d-none d-sm-block">My Jobs</span>
-                                </a>
-                            </li>
-                            @endif
-
                         </ul>
-
-
-                        <!-- Tab panes -->
+                        @endif
+                        <!-- Tab panes Admins and Heads-->
                         <div class="tab-content p-1 text-muted">
 
                             @php
                             $className1 = (session('role') == 'admin') ? 'tab-pane active' : 'tab-pane';
-                            $className2 = (session('role') == 'head') ? 'tab-pane active' : 'tab-pane';
+                            $className2 = (session('role') == 'head' || session('role') == 'd-head') ? 'tab-pane active' : 'tab-pane';
                             @endphp
 
                             @if(Session('role') == 'admin')
                             <div class="{{$className1}}" id="new-complaints" role="tabpanel">
-
                                 <div class="container-fluid">
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="card">
-                                                                    <div class="card-body">
-                                                                        <h4 class="card-title mb-4">New Complaints</h4>
-                                                                        <div class="table-responsive">
-                                                                            <table class="table align-middle table-nowrap mb-0">
-                                                                                <thead class="table-light">
-                                                                                    <tr>
-                                                                                        <th>Customer</th>
-
-                                                                                        <th>Contact No</th>
-                                                                                        <th>Email</th>
-                                                                                        <th>Customer Type</th>
-                                                                                        <th>Policy/Vehicle Number</th>
-                                                                                        <th>Complaint Date</th>
-
-
-                                                                                        <th>Action</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    @foreach($complaints as $complaint)
-                                                                                    @if($complaint->is_closed == 0 && $complaint->complaint_status == 0)
-
-                                                                                    <tr>
-                                                                                        <td>{{ $complaint->name }}</td>
-
-                                                                                        <td>{{ $complaint->contact_no }}</td>
-                                                                                        <td>{{ $complaint->email }}</td>
-                                                                                        <td>{{ $complaint->customer_type }}</td>
-                                                                                        <td>{{ $complaint->policy_number }}</td>
-                                                                                        <td>{{ $complaint->complaint_date }}</td>
-
-
-                                                                                        <td>
-                                                                                            <!-- Button trigger modal -->
-                                                                                            <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light"
-                                                                                                data-bs-toggle="modal"
-                                                                                                data-bs-target="#transaction-detailModal"
-                                                                                                data-complaint='@json($complaint)'>
-                                                                                                View Details
-                                                                                            </button>
-                                                                                        </td>
-                                                                                    </tr>
-
-                                                                                    @endif
-                                                                                    @endforeach
-                                                                                </tbody>
-                                                                            </table>
-
-                                                                        </div>
-                                                                        <!-- Assigning Modal -->
-                                                                        <x-complaint-assign-modal :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
-                                                                        <!-- end modal -->
-
-                                                                        <!-- end table -->
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
-                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <!--New Complaints Table -->
+                                            <x-complaint-view-table :complaints="$newComplaints" :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
+                                            <!-- End Table -->
+                                        </div>
+                                    </div> <!-- end row -->
                                 </div>
                             </div>
                             @endif
-                            <div class="{{$className2}}" id="assigned-complaints" role="tabpanel">
+
+                            <div class="{{$className2}}" id="received-complaints" role="tabpanel">
+
                                 <div class="container-fluid">
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="card">
-                                                                    <div class="card-body">
-                                                                        <h4 class="card-title mb-4">New Complaints</h4>
-                                                                        <div class="table-responsive">
-                                                                            <table class="table align-middle table-nowrap mb-0">
-                                                                                <thead class="table-light">
-                                                                                    <tr>
-                                                                                        <th>Customer</th>
-                                                                                        <th>Customer Type</th>
-                                                                                        <th>Policy/Vehicle Number</th>
-                                                                                        <th>Complaint Date</th>
-                                                                                        <th>Complaint Status</th>
-                                                                                        <th>Action</th>
-                                                                                    </tr>
-                                                                                </thead>
-
-
-                                                                                <tbody>
-                                                                                    @foreach($updatedComplaints as $complaint)
-                                                                                    @if($complaint->is_closed == 0 && $complaint->complaint_status == 1)
-                                                                                    <tr>
-                                                                                        <td>{{ $complaint->name }}</td>
-                                                                                        <td>{{ $complaint->customer_type }}</td>
-                                                                                        <td>{{ $complaint->policy_number }}</td>
-                                                                                        <td>{{ $complaint->complaint_date }}</td>
-                                                                                        <td>{{ $complaint->Status}}</td>
-                                                                                        <td>
-                                                                                            @if(Session('role') == 'admin')
-                                                                                            <a href="{{route('viewcomplaintId' , ['id' => $complaint->id])}}"> View</a>
-                                                                                            @elseif(Session('role') == 'head' || Session('role') == 'member')
-                                                                                            <a href="{{route('viewcomplaintId' , ['id' => $complaint->id])}}"> View</a>
-                                                                                            @endif
-                                                                                        </td>
-                                                                                    </tr>
-
-                                                                                    @endif
-                                                                                    @endforeach
-
-                                                                                </tbody>
-
-                                                                            </table>
-
-                                                                        </div>
-                                                                        <!-- end table-responsive -->
-
-                                                                        <!-- Transaction Modal -->
-                                                                        <x-complaint-assign-modal :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
-
-                                                                        <!-- end modal -->
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            @if(count($receivedComplaints) > 0)
+                                            <x-complaint-view-table :complaints="$receivedComplaints" :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
+                                            @else
+                                            <div class="page-content">
+                                                <div class="p-4 bg-yellow-100 text-yellow-700 rounded-md">
+                                                    <p class="font-medium"><span><i class="bx bx-info-circle"></i></span> There are no received complaints left.</p>
                                                 </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
+                                            </div>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
 
                             </div>
 
-                            <div class="tab-pane" id="messages-1" role="tabpanel">
+                            <div class="tab-pane" id="assigned-complaints" role="tabpanel">
+
                                 <div class="container-fluid">
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="card">
-                                                                    <div class="card-body">
-                                                                        <h4 class="card-title mb-4">New Complaints</h4>
-                                                                        <div class="table-responsive">
-                                                                            <table class="table align-middle table-nowrap mb-0">
-                                                                                <thead class="table-light">
-                                                                                    <tr>
-                                                                                        <th>Customer</th>
-
-                                                                                        <th>Contact No</th>
-                                                                                        <th>Email</th>
-                                                                                        <th>Customer Type</th>
-                                                                                        <th>Policy/Vehicle Number</th>
-                                                                                        <th>Complaint Date</th>
-
-
-                                                                                        <th>Action</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    @foreach($complaints as $complaint)
-                                                                                    @if($complaint->is_closed ==1)
-                                                                                    <tr>
-                                                                                        <td>{{ $complaint->name }}</td>
-
-                                                                                        <td>{{ $complaint->contact_no }}</td>
-                                                                                        <td>{{ $complaint->email }}</td>
-                                                                                        <td>{{ $complaint->customer_type }}</td>
-                                                                                        <td>{{ $complaint->policy_number }}</td>
-                                                                                        <td>{{ $complaint->complaint_date }}</td>
-
-
-                                                                                        <td>
-                                                                                            <!-- Button trigger modal -->
-                                                                                            <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light"
-                                                                                                data-bs-toggle="modal"
-                                                                                                data-bs-target="#transaction-detailModal"
-                                                                                                data-complaint='@json($complaint)'>
-                                                                                                View Details
-                                                                                            </button>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    @endif
-                                                                                    @endforeach
-                                                                                </tbody>
-                                                                            </table>
-
-                                                                        </div>
-                                                                        <!-- end table-responsive -->
-
-                                                                        <!-- Transaction Modal -->
-
-
-                                                                        <x-complaint-assign-modal :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
-
-                                                                        <!-- end modal -->
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            @if(count($assignedComplaints) > 0)
+                                            <x-complaint-view-table :complaints="$assignedComplaints" :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
+                                            @else
+                                            <div class="page-content">
+                                                <div class="p-4 bg-yellow-100 text-yellow-700 rounded-md">
+                                                    <p class="font-medium"><span><i class="bx bx-info-circle"></i></span> There are no assigned complaints left.</p>
                                                 </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
+                                            </div>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
 
-                            <!-- Member assigned complaints -->
-                            
-                            <div class="tab-pane" id="member-jobs" role="tabpanel">
-                                
-                                <x-member-assigned-table :complaints=$updatedComplaints />
-                            </div>
+                            <!-- Closed Complaints Table-->
+                            <div class="tab-pane" id="closed-complaints" role="tabpanel">
 
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            @if(count($closedComplaints) > 0)
+                                            <x-complaint-view-table :complaints="$closedComplaints" :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
+                                            @else
+                                            <div class="page-content">
+                                                <div class="p-4 bg-yellow-100 text-yellow-700 rounded-md">
+                                                    <p class="font-medium"><span><i class="bx bx-info-circle"></i></span> There are no closed complaints left.</p>
+                                                </div>
+                                            </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
                         </div>
+                        <!-- Member assigned complaints -->
+                        @if(Session('role') == 'member')
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    @if(count($receivedComplaints) > 0)
 
+                                    <x-complaint-view-table :complaints="$receivedComplaints" :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
+                                    @else
 
+                                    <div class="p-4 bg-yellow-100 text-yellow-700 rounded-md">
+                                        <p class="font-medium"><span><i class="bx bx-info-circle"></i></span> There are no received complaints left.</p>
+                                    </div>
+                                    @endif
+                                </div>
+                            </div>
+                            @endif
+                        </div>
                     </div>
-
+                    @endauth
                 </div>
-
-
-
-
-            </div>
-            @endauth
-
-
-        </div>
     </x-slot>
 </x-app-layout>

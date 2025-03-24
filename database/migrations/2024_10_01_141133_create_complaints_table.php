@@ -24,8 +24,12 @@ return new class extends Migration
             $table->date('complaint_date');
             $table->text('complaint_detail')->nullable();
             $table->string('attachment')->nullable();
+            $table->string('priority')->default('medium');
+            $table->string('department')->nullable();
+            $table->string('division')->nullable();
             $table->boolean('complaint_status')->default(0);
             $table->boolean('is_closed')->default(0);
+            $table->boolean('is_approved')->default(0);
             $table->string('logged_by')->nullable();
         });
     }

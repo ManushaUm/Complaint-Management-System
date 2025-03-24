@@ -14,9 +14,13 @@ class ComplaintLog extends Model
         'Department',
         'Sub_division',
         'Notes',
+        'Notes_by',
         'Assigned_to',
         'Status',
+        'is_action',
         'Priority',
         'Comment',
+        'Attachment',
     ];
+    public $timestamps = true;
 }

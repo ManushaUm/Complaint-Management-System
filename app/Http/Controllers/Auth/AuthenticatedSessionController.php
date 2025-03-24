@@ -32,6 +32,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->put('role', Auth::user()->role);
         // Store the authenticated user's department in the session
         $request->session()->put('department', Auth::user()->department);
+        $request->session()->put('division', Auth::user()->division);
         //check if the user is get the role
         $request->session()->put('emp_id', Auth::user()->emp_id);
         //dd($request->session()->all());

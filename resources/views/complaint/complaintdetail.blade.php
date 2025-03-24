@@ -17,7 +17,9 @@
                             </div>
                         </div>
                         <!-- end page title -->
+
                         @foreach ($prevData as $Initcomplaint)
+
                         <div class="row">
                             <div class="col-xl-3">
                                 <!--Complaint overview Card-->
@@ -44,7 +46,9 @@
                                                         <th scope="row">Status</th>
                                                         @if ($Initcomplaint->complaint_status == '1' && $Initcomplaint->is_closed == '0')
                                                         <td><span class="badge badge-soft-info">Assigned</span></td>
-                                                        @else
+                                                        @elseif ($Initcomplaint->complaint_status == '0' && $Initcomplaint->is_closed == '0')
+                                                        <td><span class="badge badge-soft-warning">Received</span></td>
+                                                        @elseif ($Initcomplaint->complaint_status == '0' && $Initcomplaint->is_closed == '1')
                                                         <td><span class="badge badge-soft-success">Closed</span></td>
                                                         @endif
                                                     </tr>
@@ -63,6 +67,7 @@
                                     </div>
                                 </div>
                                 <!--End Complaint overview Card-->
+
                                 <!--Complaint Brief Card-->
                                 <div class="card">
                                     <div class="card-body">
@@ -89,6 +94,7 @@
                                     </div>
                                 </div>
                                 <!--End Complaint Brief Card-->
+
                                 <!--Customer contact info Card-->
                                 <div class="card">
                                     <div class="card-body">
@@ -145,11 +151,16 @@
                                                 <h5 class="fw-semibold font-size-16">Complaint on Reference number <span><a href="#">{{$Initcomplaint->id}}</a></span> </h5>
                                                 <ul class="list-unstyled hstack gap-2 mb-0">
                                                     @php
+
                                                     $id = $prevData[0]->id;
-                                                    $loggedBy = $prevData[0]->logged_by;
+                                                    $loggedBy = $newData[0]->Notes_by;
+                                                    $is_approved = $prevData[0]->is_approved;
                                                     $priority = $newData[sizeof($newData)-1]->Priority;
+                                                    $currentStatus = $newData[sizeof($newData)-1]->Status;
                                                     $status = $prevData[0]->is_closed == '0' ? 'In-Progress' : 'Closed';
                                                     $assignedTo = $newData[sizeof($newData)-1]->Assigned_to;
+                                                    $latestComment = $newData[sizeof($newData)-1]->Comment_by;
+
                                                     if ($priority == 'HIGH') {
                                                     $className = "badge bg-danger";
                                                     } elseif ($priority == 'LOW') {
@@ -232,7 +243,7 @@
                                                         <p class="text-muted">{{$complaintLog->Notes}}</p>
                                                         <div>
                                                             <a href="javascript: void(0);" class="text-success px-2"><i class="mdi mdi-reply px-1"></i> Contact</a>
-                                                            <a href="javascript: void(0);" class="text-primary px-2"><i class="bx bxs-file px-1"></i> Attachments</a>
+                                                            <a href="{{ Storage::url($complaintLog->Attachment)}}" target="_blank" class="text-primary px-2"><i class="bx bxs-file px-1"></i> Attachments</a>
                                                         </div>
 
                                                     </div>
@@ -256,7 +267,7 @@
                                                         <p class="text-muted">{{$complaintLog->Comment}}</p>
                                                         <div>
                                                             <a href="javascript: void(0);" class="text-success px-2"><i class="mdi mdi-reply px-1"></i> Contact</a>
-                                                            <a href="javascript: void(0);" class="text-primary px-2"><i class="bx bxs-file px-1"></i> Attachments</a>
+                                                            <a href="{{ Storage::url($complaintLog->Attachment)}}" target="_blank" class="text-primary px-2"><i class="bx bxs-file px-1"></i> Attachments</a>
                                                         </div>
                                                     </div>
 
@@ -281,26 +292,57 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                             </div>
                                             @endif
-                                            @if ($assignedTo == 'NULL'){
-                                            <p class="text-muted">Please Take the job to start</p>
-                                            }
 
-                                            @elseif ( Auth::user()->emp_id == $assignedTo)
+                                            @if ($assignedTo == '')
+                                            <p class="text-muted">Please take the job to start</p>
+                                            @endif
 
-                                            @if ($complaintLog->Status !== 'Solved')
+                                            @if ( Auth::user()->emp_id == $assignedTo && ($currentStatus =='in-progress' || $currentStatus == 'In-Progress') && $latestComment == NULL)
+
                                             <!--Action Card-->
                                             <x-complaint-action-form id="{{$id}}" />
 
 
-                                            @elseif($complaintLog->Status == 'Solved' && $status == 'In-Progress')
+                                            @elseif($complaintLog->Status == 'Solved' && $is_approved == 0)
                                             <p class=" text-blue-500">Complaint was submitted for review by {{$complaintLog->Comment_by}} </p>
-                                            @elseif($complaintLog->Status == 'Solved' && $status == 'Closed')
-                                            <p class=" text-green-500"> Job Closed </p>
+
+                                            @elseif($complaintLog->Status == 'Closed' && $is_approved == 0)
+                                            <p class=" text-green-500"> Job Closed by <span><a href="#">{{$complaintLog->Assigned_to}}</a></span></p>
+
+                                            @elseif ( Auth::user()->emp_id !== $assignedTo && $assignedTo !== null && $is_approved == 0)
+                                            <p class="text-muted">This issue was assigned to <a href="#">{{$assignedTo}}</a></p>
+
+                                            @elseif($is_approved == 1)
+                                            <p class="text-muted">This issue was approved by the department head</p>
                                             @endif
 
-                                            @elseif ( Auth::user()->emp_id !== $assignedTo)
-                                            <p class="text-muted">This issue was already took by <a href="#">{{$assignedTo}}</a></p>
+                                            <!--HERE -->
+                                            @if ($currentStatus == 'Solved' && Auth::user()->role == 'head')
+
+                                            <div>
+                                                <div class="d-flex justify-content-end">
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#complaintAction">Close Job</button>
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#complaintOpen">Reopen Job</button>
+                                                </div>
+
+                                                <!-- Complaint Closing Model-->
+                                                <x-head-complaint-closing-modal :id="$id" :prevData="$prevData" :newData="$newData" />
+                                                <!-- /.modal -->
+                                                <!-- Complaint Reopen Model-->
+                                                <x-head-complaint-reopen-model :id="$id" :prevData="$prevData" :newData="$newData" />
+                                                <!-- /.modal -->
+                                            </div>
                                             @endif
+
+                                            @if ($currentStatus == 'Closed' && Auth::user()->role == 'd-head' && $is_approved == 0)
+                                            <div class="d-flex justify-content-end">
+                                                <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#complaintAction">Action</button>
+                                                <!-- Complaint Closing Model-->
+                                                <x-head-complaint-closing-modal :id="$id" :prevData="$prevData" :newData="$newData" />
+                                            </div>
+                                            @endif
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -310,12 +352,17 @@
                         @endforeach
                         <!--end row-->
 
+
+
                     </div>
                     <!-- container-fluid -->
                 </div>
                 <!-- End Page-content -->
 
             </div>
+
+
+
             <!-- JAVASCRIPT -->
             <script src="http://skote-v.laravel.themesbrand.com/assets/libs/jquery/jquery.min.js"></script>
             <script src="http://skote-v.laravel.themesbrand.com/assets/libs/bootstrap/bootstrap.min.js"></script>
@@ -361,11 +408,14 @@
                     });
                 });
             </script>
+            <script src="../../../assets/libs/dropzone/min/dropzone.min.js"></script>
 
-            <script src="http://skote-v.laravel.themesbrand.com/assets/js/app.min.js"></script>
+            <!-- jquery step -->
+            <script src="../../../assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
 
-            <!-- App js -->
-            <script src="http://skote-v.laravel.themesbrand.com/assets/js/app.min.js"></script>
+            <!-- form wizard init -->
+            <script src="../../../assets/js/pages/form-wizard.init.js"></script>
+            <script src="../../../assets/js/app.js"></script>
 
         </body>
     </x-slot>
