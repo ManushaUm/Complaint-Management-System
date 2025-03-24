@@ -136,19 +136,14 @@
 
                                 </div>
                             </div>
-
-
-
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xl-4">
-                            <a href="{{ route('memo.form') }}" class="btn btn-primary">Send a Memo</a>
-                        </div>
+                    <div class="col-md-6 col-lg-5 col-xl-4 mb-2 bg-white shadow rounded" style="max-height: 416px; ">
+                        @include('notifications.memo')
                     </div>
-
                 </div>
                 <!-- end row -->
+
 
             </div> <!-- container-fluid -->
         </div>
@@ -158,13 +153,6 @@
 
         <body data-sidebar="dark">
             <div class="main-content">
-
-
-
-
-
-
-
         </body>
     </div>
 </x-app-layout>
