@@ -21,22 +21,37 @@ class MemoController extends Controller
 
         if ($sendTo == 'specific' && $request->filled('specific_employee')) {
             // Search for a specific employee based on the name from the 'hr' table
-            $employee = DB::connection('mysql')->table('hr') // Assuming 'mysql' is the connection to your hr database
+            $employee = DB::connection('mysql')->table('hr')
                 ->where('full_name', 'like', '%' . $request->input('specific_employee') . '%')
                 ->first();
 
             if ($employee) {
-                // Send the memo to the specific employee
-                // Add your logic here to send the memo
+                // Saved the memo in the table
+                DB::table('memos')->insert([
+                    'title'       => $request->input('title'),
+                    'content'     => $request->input('content'),
+                    'send_to'     => $sendTo,
+                    'specific_employee' => $employee->Emp_Id,
+                ]);
             } else {
                 return redirect()->route('memo.form')->withErrors(['specific_employee' => 'Employee not found.']);
             }
         } elseif ($sendTo == 'heads') {
-            // Send memo to heads only (retrieve heads from the hr database or another table)
-            // Add your logic to send the memo to heads
+            // Save the memo in the table. send_to field is heads
+            DB::table('memos')->insert([
+                'title'       => $request->input('title'),
+                'content'     => $request->input('content'),
+                'send_to'     => $sendTo,
+                'specific_employee' => "null"
+            ]);
         } else {
-            // Send memo to all employees (retrieve all employees from the hr database)
-            // Add your logic to send the memo to all employees
+            // Save the memo in the table. send_to field is all
+            DB::table('memos')->insert([
+                'title'       => $request->input('title'),
+                'content'     => $request->input('content'),
+                'send_to'     => $sendTo,
+                'specific_employee' => "null"
+            ]);
         }
 
         return redirect()->route('memo.form')->with('success', 'Memo sent successfully!');
@@ -48,8 +63,8 @@ class MemoController extends Controller
         $name = $request->input('full_name');
 
         // Query the 'hr' table for employees where the name matches the search term
-        $employees = DB::table('hr') // Assuming 'hr' is the name of the table
-            ->where('full_name', 'like', '%' . $name . '%') // Adjust the column name to match your database
+        $employees = DB::table('hr')
+            ->where('full_name', 'like', '%' . $name . '%')
             ->get();
 
         // Return the employees as a JSON response
