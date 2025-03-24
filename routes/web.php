@@ -107,10 +107,6 @@ Route::put('/assign-complaint', [ComplaintController::class, 'assignComplaint'])
 Route::get('/hr', [HRController::class, 'index']);
 Route::get('/employee/search', [HRController::class, 'searchEmp'])->name('employee.search');
 
-Route::get('/memo', function () {
-    return view('notifications.memo');
-})->name('memo.form');
-
 Route::post('/memo', [MemoController::class, 'store'])->name('memo.store');
 
 // Add this route in your routes/web.php file
