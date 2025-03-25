@@ -9,6 +9,9 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HRController;
 use App\Http\Controllers\Usercontroller;
+use App\Http\Controllers\EmployeeController;
+
+Route::get('/employee', [EmployeeController::class, 'profileDetails'])->name('users');
 
 //auth routes
 Route::get('/departments', [DepartmentController::class, 'index2'])->middleware(['auth', 'verified'])->name('departments');
