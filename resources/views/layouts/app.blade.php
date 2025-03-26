@@ -54,7 +54,7 @@
 
         <!-- Fixed Topbar -->
         <header class="bg-gray-100 shadow fixed-top w-100">
-            <div class="mx-auto  sm:px-6 lg:px-8">
+            <div class="mx-auto sm:px-6 lg:px-8">
                 @include('layouts.topbar')
             </div>
         </header>
@@ -66,14 +66,29 @@
             </nav>
 
             <!-- Page Content -->
-            <main class="bg-gray-200 flex-grow-1" style="margin-left: 250px;">
+
+<main class="bg-gray-200 flex-grow-1" style="margin-left: 250px; padding: 108px 20px 20px 20px; position: relative;">
                 @isset($header)
                 <header class="bg-gray-100 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-2 sm:px-4 lg:px-6">
+                    <div class="px-2 py-6 mx-auto max-w-7xl sm:px-4 lg:px-6">
                         {{ $header }}
                     </div>
                 </header>
                 @endisset
+<!-- Add Breadcrumbs Section (Full Width) -->
+                <div class="page-title-box d-flex align-items-center justify-content-between" style="position: absolute; top: 75px; left: 0; right: 0; z-index: 10;">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body d-flex align-items-center justify-content-between">
+                            <!-- Optional: Page Title -->
+                            <h4 class="mb-0 font-size-18">{{ Route::current()->getName() }}</h4>
+                            @if (Breadcrumbs::exists(Route::current()->getName()))
+                                <nav aria-label="breadcrumb">
+                                    {{ Breadcrumbs::render() }}
+                                </nav>
+                            @endif
+                        </div>
+                    </div>
+                </div>
                 {{ $slot }}
 
             </main>

@@ -14,7 +14,7 @@ use App\Http\Controllers\Usercontroller;
 //Guest Routes
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 //Auth Routes
 Route::middleware(['auth', 'verified'])->group(function () {

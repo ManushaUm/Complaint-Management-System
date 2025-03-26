@@ -2,7 +2,7 @@
 <div class="navbar-header">
     <div class="d-flex align-items-center">
         <!-- LOGO -->
-        <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
+        <button type="button" class="px-3 btn btn-sm font-size-16 header-item waves-effect" id="vertical-menu-btn">
             <i class="fa fa-fw fa-bars"></i>
         </button>
 
@@ -27,7 +27,7 @@
                 <i class="bx bx-bell bx-tada"></i>
                 <span class="badge bg-danger rounded-pill">3</span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="notifications-dropdown">
+            <ul class="p-0 dropdown-menu dropdown-menu-end" aria-labelledby="notifications-dropdown">
                 <li><a class="dropdown-item text-reset" href="#">New Notification</a></li>
                 <li><a class="dropdown-item text-reset" href="#">Another Notification</a></li>
             </ul>
@@ -58,7 +58,18 @@
         </div>
     </div>
 </div>
-
+<!-- Add Breadcrumbs Section -->
+{{-- <div class="page-title-box d-flex align-items-center justify-content-between">
+    <div>
+        <!-- Optional: Page Title -->
+        <h4 class="mb-0 font-size-18">{{ Route::current()->getName() }}</h4>
+        @if (Breadcrumbs::exists(Route::current()->getName()))
+            <nav aria-label="breadcrumb">
+                {{ Breadcrumbs::render() }}
+            </nav>
+        @endif
+    </div>
+</div> --}}
 <!-- Include Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endauth
