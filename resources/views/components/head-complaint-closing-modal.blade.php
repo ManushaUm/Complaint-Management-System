@@ -9,7 +9,7 @@
 
             </div>
 
-            <form action="{{route('closeComplaint' , ['id' => $id])}}" method="POST">
+            <form action="{{route('closeComplaint' , ['id' => $id])}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -52,7 +52,7 @@
                         <label for="headNote" class="col-form-label">Notes</label>
                         <textarea class="form-control my-2" id="headNote" name="headNote"></textarea>
 
-                        <input class="form-control form-control-sm" id="formFileSm" type="file">
+                        <input class="form-control form-control-sm" name="formFileSm" id="formFileSm" type="file">
                     </div>
 
                 </div>

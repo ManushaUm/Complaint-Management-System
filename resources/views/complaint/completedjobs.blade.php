@@ -3,7 +3,7 @@
         <div class="page-content">
 
             @if(count($complaints) > 0)
-            <x-complaint-view-table :complaints="$complaints" :departmentNames="$departmentNames" :divisionNames="$divisionNames" />
+            <x-completed-table :complaints="$complaints" />
             @else
 
             <div class="p-4 bg-yellow-100 text-yellow-700 rounded-md">

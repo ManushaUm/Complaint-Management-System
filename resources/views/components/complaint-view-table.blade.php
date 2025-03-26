@@ -20,9 +20,9 @@
 
                         @foreach($complaints as $complaint)
 
-                        @if (Session('role') == 'head' || Session('role') == 'member')
+                        @if (Session('role') == 'head' || Session('role') == 'd-head' || Session('role') == 'member')
 
-                        @if( $complaint->division == Session('division'))
+
                         @php
                         $tableclass = $complaint->priority == 'high' ? 'table-danger' : 'table-light';
                         @endphp
@@ -49,7 +49,7 @@
                                 @endif
                             </td>
                         </tr>
-                        @endif
+
 
                         @else
                         <tr class="{{$tableclass}}">

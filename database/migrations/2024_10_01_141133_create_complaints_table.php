@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('division')->nullable();
             $table->boolean('complaint_status')->default(0);
             $table->boolean('is_closed')->default(0);
-            $table->boolean('is_approved')->default(0);
+            $table->tinyInteger('is_approved')->default(0);
             $table->string('logged_by')->nullable();
         });
     }

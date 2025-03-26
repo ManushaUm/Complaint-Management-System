@@ -71,8 +71,9 @@ class NewComplaintController extends Controller
         ]);
     }
 
-    public function lodgeNew()
+    public function lodgeNew($id)
     {
+
         $newComplaint = new complaintType();
         $getComplaintType = $newComplaint->getComplaintType();
         // dd($getComplaintType);
@@ -83,9 +84,8 @@ class NewComplaintController extends Controller
 
     public function store(Request $request)
     {
-        //check the input
-        //dd($request->input());
-        // Validate the request
+        //dd($request->all());
+
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -98,14 +98,11 @@ class NewComplaintController extends Controller
             'policy_number' => 'required|string|max:255',
             'complaint_date' => 'required|date',
             'complaint_detail' => 'required|string',
-            'attachment' => 'nullable|file|max:2048',
+
 
         ]);
 
-        // Handle file upload
-        $attachment = $request->file('attachment') ? $request->file('attachment')->store('attachments') : null;
-
-        $data = array(
+        $data = [
             'name' => $request->name,
             'insured' => $request->insured === 'Yes',
             'relation' => $request->insured === 'No' ? $request->relation : null,
@@ -116,10 +113,17 @@ class NewComplaintController extends Controller
             'policy_number' => $request->policy_number,
             'complaint_date' => $request->complaint_date,
             'complaint_detail' => $request->complaint_detail,
-            'attachment' => $attachment,
-        );
+
+        ];
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $Attachment = $file->store('uploads', 'public');
+            $data['Attachment'] = $Attachment;
+        }
 
         $id = DB::table('new_complaints')->insertGetId($data);
+
+
 
         if ($id) {
             return redirect()->back()->with('success', 'Complaint successfully logged');
@@ -138,18 +142,8 @@ class NewComplaintController extends Controller
             $complaints = DB::table('new_complaints')->get();
         } else {
 
-            $latestComplaints = DB::table('new_complaints as nc')
-                ->leftJoin(DB::raw('(
-                SELECT reference_number, MAX(updated_at) as latest_date
-                FROM complaint_logs
-                GROUP BY reference_number
-            ) as latest_logs'), 'nc.id', '=', 'latest_logs.reference_number')
-                ->leftJoin('complaint_logs as cl', function ($join) {
-                    $join->on('latest_logs.reference_number', '=', 'cl.reference_number')
-                        ->on('latest_logs.latest_date', '=', 'cl.updated_at');
-                })
-                ->select('nc.*', 'cl.*')
-                ->get();
+            $latestLogs = new NewComplaint();
+            $latestComplaints = $latestLogs->getLatestLogs();
             $complaints = DB::table('new_complaints')->where('department', $user->department)->get();
         }
         //dd($latestComplaints);
@@ -165,9 +159,9 @@ class NewComplaintController extends Controller
             ->get();
         //dd($updatedComplaints);
         $newComplaints = [];
-        $assignedComplaints = [];
+        $assignedComplaints = []; //assigned to department/division & started by employees
         $closedComplaints = [];
-        $receivedComplaints = [];
+        $receivedComplaints = []; //complaints assigned to relevent department but not started
         $solvedComplaints = [];
 
 
@@ -177,15 +171,37 @@ class NewComplaintController extends Controller
             }
         }
 
-        //dd($latestComplaints);
+        //dd($user->department);
+        //FIX HERE
         foreach ($latestComplaints as $complaint) {
-            if ($complaint->is_approved == 0 && ($complaint->complaint_status == 1 && $complaint->is_closed == 0) && ($complaint->Status == 'in-Progress' || $complaint->Status == 'Reopened')) {
-                $assignedComplaints[] = $complaint;
-            } else if ($complaint->complaint_status == 1 && $complaint->is_closed == 0 && $complaint->Status == 'Received' && $complaint->is_approved == 0) {
-                $receivedComplaints[] = $complaint;
-            } else if ($complaint->is_closed == 0 && $complaint->complaint_status == 1 && $complaint->Status == 'Solved' && $complaint->is_approved == 0) {
+            if ($complaint->is_approved == 0 && ($complaint->Status == 'in-progress' || $complaint->Status == 'Reopened') && $complaint->is_action == 0) {
+                if ($user->role == 'head') {
+                    if ($complaint->division == $user->division) {
+                        $assignedComplaints[] = $complaint;
+                    }
+                } elseif ($user->role == 'd-head') {
+                    if ($complaint->department == $user->department) {
+                        $assignedComplaints[] = $complaint;
+                    }
+                } else {
+                    $assignedComplaints[] = $complaint;
+                }
+            } elseif ($complaint->complaint_status == 1 && $complaint->is_closed == 0 && $complaint->Status == 'Received' && $complaint->is_approved == 0) {
+                if ($user->role == 'member' || $user->role == 'head') {
+                    if ($complaint->division == $user->division) {
+                        $receivedComplaints[] = $complaint;
+                    }
+                } elseif ($user->role == 'd-head') {
+                    if ($complaint->department == $user->department) {
+                        $receivedComplaints[] = $complaint;
+                    }
+                } else {
+                    $receivedComplaints[] = $complaint;
+                }
+                //complete up to here
+            } elseif ($complaint->is_closed == 0 && $complaint->complaint_status == 1 && $complaint->Status == 'Solved' && $complaint->is_approved == 0) {
                 $solvedComplaints[] = $complaint;
-            } else if ($complaint->is_closed == 1 && $complaint->complaint_status == 0 && $complaint->is_approved == 0) {
+            } elseif ($complaint->is_closed == 1 && $complaint->complaint_status == 0 && $complaint->is_approved == 0) {
                 $closedComplaints[] = $complaint;
             }
         }
@@ -209,8 +225,6 @@ class NewComplaintController extends Controller
 
     public function completedJobs()
     {
-        //dd('check');
-        //update the contents
 
         $latestComplaints = DB::table('new_complaints')
             ->leftJoin('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')
@@ -219,7 +233,7 @@ class NewComplaintController extends Controller
         //dd($latestComplaints);
         $complaints = [];
         foreach ($latestComplaints as $complaint) {
-            if ($complaint->Assigned_to == Auth::user()->emp_id && $complaint->Status == 'Solved') {
+            if ($complaint->Assigned_to == Auth::user()->emp_id && ($complaint->Status == 'Solved' || $complaint->Status == 'Closed')) {
                 $complaints[] = $complaint;
             }
         }

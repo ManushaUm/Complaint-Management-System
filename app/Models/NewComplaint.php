@@ -82,4 +82,14 @@ class NewComplaint extends Model
 
         return $latestLogs;
     }
+
+    public function getAllLogs()
+    {
+        $allLogs = DB::table('new_complaints')
+            ->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')
+            ->select('new_complaints.*', 'complaint_logs.*')
+            ->get();
+
+        return $allLogs;
+    }
 }

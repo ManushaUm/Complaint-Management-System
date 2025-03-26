@@ -142,10 +142,24 @@
 
                             </div>
                             <!--end col-->
+
                             <div class="col-xl-9">
+                                @if ( $Initcomplaint -> is_approved == 1)
+                                <div class="my-2 p-4 bg-green-400 text-white">
+                                    <p class="font-medium pt-2"><span><i class="bx bx-check-circle"></i></span> Complaint was approved by Department Head</p>
+                                </div>
+                                @elseif($Initcomplaint -> is_approved == 2)
+                                <div class="my-2 p-4 bg-yellow-200 text-yellow-700">
+                                    <p class="font-medium pt-2"><span><i class="bx bx-x-circle"></i></span> Complaint was rejected by Department Head</p>
+                                </div>
+                                @endif
                                 <div class="card">
+
                                     <div class="card-body border-bottom">
                                         <div class="d-flex">
+
+
+
 
                                             <div class="flex-grow-1 ms-3">
                                                 <h5 class="fw-semibold font-size-16">Complaint on Reference number <span><a href="#">{{$Initcomplaint->id}}</a></span> </h5>
@@ -160,6 +174,8 @@
                                                     $status = $prevData[0]->is_closed == '0' ? 'In-Progress' : 'Closed';
                                                     $assignedTo = $newData[sizeof($newData)-1]->Assigned_to;
                                                     $latestComment = $newData[sizeof($newData)-1]->Comment_by;
+                                                    $isClosed = $prevData[sizeof($prevData)-1]->is_closed;
+
 
                                                     if ($priority == 'HIGH') {
                                                     $className = "badge bg-danger";
@@ -317,8 +333,8 @@
                                             @endif
 
                                             <!--HERE -->
-                                            @if ($currentStatus == 'Solved' && Auth::user()->role == 'head')
-
+                                            @if (Auth::user()->role == 'head')
+                                            @if ($currentStatus == 'Solved' && $isClosed == 0 && $prevData[0]->complaint_status == 1)
                                             <div>
                                                 <div class="d-flex justify-content-end">
                                                     <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#complaintAction">Close Job</button>
@@ -334,14 +350,16 @@
                                             </div>
                                             @endif
 
-                                            @if ($currentStatus == 'Closed' && Auth::user()->role == 'd-head' && $is_approved == 0)
+                                            @elseif (Auth::user()->role == 'd-head')
+                                            @if ($is_approved == 0)
+
                                             <div class="d-flex justify-content-end">
                                                 <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#complaintAction">Action</button>
                                                 <!-- Complaint Closing Model-->
                                                 <x-head-complaint-closing-modal :id="$id" :prevData="$prevData" :newData="$newData" />
                                             </div>
                                             @endif
-
+                                            @endif
 
                                         </div>
                                     </div>
