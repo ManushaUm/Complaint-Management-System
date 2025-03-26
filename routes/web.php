@@ -107,10 +107,24 @@ Route::put('/assign-complaint', [ComplaintController::class, 'assignComplaint'])
 Route::get('/hr', [HRController::class, 'index']);
 Route::get('/employee/search', [HRController::class, 'searchEmp'])->name('employee.search');
 
+Route::get('/memo', function () {
+    return view('notifications.memo');
+})->name('memo.form');
+
 Route::post('/memo', [MemoController::class, 'store'])->name('memo.store');
 
-// Add this route in your routes/web.php file
 Route::get('/search-employees', [MemoController::class, 'searchEmployees'])->name('search.employees');
+
+Route::post('/memo/reply/{memo}', [MemoController::class, 'reply'])->name('memo.reply'); // Replying to a memo
+
+Route::get('/memos', [MemoController::class, 'getMemos'])->name('memo.getMemos');
+
+Route::get('/employee-memos', [MemoController::class, 'getEmployeeMemos']);
+Route::post('/memo/reply/{id}', [MemoController::class, 'replyMemo']);
+Route::post('/memo/read/{id}', [MemoController::class, 'markAsRead'])->name('memo.markAsRead');
+
+
+
 
 
 require __DIR__ . '/auth.php';
