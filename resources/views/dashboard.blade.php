@@ -138,11 +138,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-5 col-xl-4 mb-2 bg-white shadow rounded" style="max-height: 416px; ">
+                    @if(Session::get('role') != 'admin')
+                    <div class="col-md-6 col-lg-5 col-xl-4 mb-2 bg-white shadow rounded" style="max-height: 416px; overflow-y: auto ">
                         @include('notifications.memo')
                     </div>
+                    @endif
                 </div>
                 <!-- end row -->
+                @if(Session::get('role') == 'admin')
+                <div class="col-12 mb-2 bg-white shadow rounded" style="max-height: 416px; overflow-y: auto;">
+                    @include('notifications.memo')
+                </div>
+
+                @endif
 
 
             </div> <!-- container-fluid -->
