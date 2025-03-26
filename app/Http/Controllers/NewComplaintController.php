@@ -71,7 +71,7 @@ class NewComplaintController extends Controller
         ]);
     }
 
-    public function lodgeNew($id)
+    public function lodgeNew()
     {
 
         $newComplaint = new complaintType();
@@ -126,8 +126,10 @@ class NewComplaintController extends Controller
 
 
         if ($id) {
+            toastr()->success('Complaint successfully logged');
             return redirect()->back()->with('success', 'Complaint successfully logged');
         } else {
+            toastr()->error('Error in logging complaint');
             return redirect()->back()->with('error', 'Error logged');
         }
     }
@@ -135,18 +137,28 @@ class NewComplaintController extends Controller
 
     public function viewcomplaint()
     {
+        $newComplaints = [];
+        $assignedComplaints = []; //assigned to department/division & started by employees
+        $closedComplaints = [];
+        $receivedComplaints = []; //complaints assigned to relevent department but not started
+        $solvedComplaints = [];
+        $adminAssigned = []; //admin assignments
+        $adminOngoing = [];
 
         $latestComplaints = [];
         $user = Auth::user();
         if ($user->role === 'admin') {
             $complaints = DB::table('new_complaints')->get();
+            $alatestLogs = new NewComplaint();
+            $adminLatestComplaints = $alatestLogs->getLatestLogs();
         } else {
 
             $latestLogs = new NewComplaint();
             $latestComplaints = $latestLogs->getLatestLogs();
             $complaints = DB::table('new_complaints')->where('department', $user->department)->get();
+            $adminLatestComplaints = $latestLogs->getLatestLogs();
         }
-        //dd($latestComplaints);
+        //dd($adminLatestComplaints);
         $departments = new Department();
         $getDepartmentName = $departments->getDepartment();
         $getDivisionName = $departments->getDivision();
@@ -158,11 +170,7 @@ class NewComplaintController extends Controller
             ->select('new_complaints.*', 'complaint_logs.*')
             ->get();
         //dd($updatedComplaints);
-        $newComplaints = [];
-        $assignedComplaints = []; //assigned to department/division & started by employees
-        $closedComplaints = [];
-        $receivedComplaints = []; //complaints assigned to relevent department but not started
-        $solvedComplaints = [];
+
 
 
         foreach ($complaints as $complaint) {
@@ -170,9 +178,15 @@ class NewComplaintController extends Controller
                 $newComplaints[] = $complaint;
             }
         }
+        foreach ($adminLatestComplaints as $complaint) {
+            if ($complaint->is_approved == 0 && $complaint->Status == 'Received' && $complaint->is_closed == 0) {
+                $adminAssigned[] = $complaint;
+            } elseif ($complaint->is_approved == 0 && ($complaint->Status == 'in-progress' || $complaint->Status == 'Reopened') && $complaint->is_closed == 0) {
+                $adminOngoing[] = $complaint;
+            }
+        }
 
-        //dd($user->department);
-        //FIX HERE
+        //NO action on ADMIN HERE 
         foreach ($latestComplaints as $complaint) {
             if ($complaint->is_approved == 0 && ($complaint->Status == 'in-progress' || $complaint->Status == 'Reopened') && $complaint->is_action == 0) {
                 if ($user->role == 'head') {
@@ -187,7 +201,9 @@ class NewComplaintController extends Controller
                     $assignedComplaints[] = $complaint;
                 }
             } elseif ($complaint->complaint_status == 1 && $complaint->is_closed == 0 && $complaint->Status == 'Received' && $complaint->is_approved == 0) {
-                if ($user->role == 'member' || $user->role == 'head') {
+                if ($user->role == 'admin') {
+                    $receivedComplaints[] = $complaint;
+                } elseif ($user->role == 'member' || $user->role == 'head') {
                     if ($complaint->division == $user->division) {
                         $receivedComplaints[] = $complaint;
                     }
@@ -195,17 +211,18 @@ class NewComplaintController extends Controller
                     if ($complaint->department == $user->department) {
                         $receivedComplaints[] = $complaint;
                     }
-                } else {
-                    $receivedComplaints[] = $complaint;
                 }
-                //complete up to here
             } elseif ($complaint->is_closed == 0 && $complaint->complaint_status == 1 && $complaint->Status == 'Solved' && $complaint->is_approved == 0) {
                 $solvedComplaints[] = $complaint;
             } elseif ($complaint->is_closed == 1 && $complaint->complaint_status == 0 && $complaint->is_approved == 0) {
                 $closedComplaints[] = $complaint;
+            } elseif ($complaint->Status == 'Received') {
+                $adminAssigned[] = $complaint;
             }
         }
-        //dd($closedComplaints);
+
+
+        //dd($adminAssigned);
 
         return view('viewcomplaint', [
             'updatedComplaints' => $updatedComplaints,
@@ -217,11 +234,13 @@ class NewComplaintController extends Controller
             'complaints' => $complaints,
             'departmentNames' => $getDepartmentName,
             'divisionNames' => $getDivisionName,
-            'complaintLogs' => $complaintLogs
+            'complaintLogs' => $complaintLogs,
+            'adminAssigned' => $adminAssigned,
+            'adminOngoing' => $adminOngoing
         ]);
     }
 
-    public function complaintLogData() {}
+
 
     public function completedJobs()
     {

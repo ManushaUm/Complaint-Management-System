@@ -47,6 +47,8 @@
     <!-- App Css-->
     <link href="../../../assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
 </head>
 

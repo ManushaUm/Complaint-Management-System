@@ -1,19 +1,19 @@
 <x-app-layout>
     <x-slot name="slot">
-        <div class="py-12">
+        <div class="page-content">
             @auth
+
             @if(Session('role')=='admin')
-
-            <x-complaint-form :complaintTypes="$complaintTypes" />
-
+            <div class="row">
+                <div class="col-16">
+                    <div>
+                        <x-complaint-form :complaintTypes="$complaintTypes" />
+                    </div>
+                </div>
+            </div>
+            @endif
+            @endauth
 
         </div>
-        @endif
-        @endauth
-        </div>
-
     </x-slot>
-
-
-
 </x-app-layout>
