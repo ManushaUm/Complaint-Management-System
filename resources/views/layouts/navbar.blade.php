@@ -33,6 +33,9 @@
                         <li>
                             <a href="{{route('viewcomplaint')}}" key="t-horizontal">View Complaints</a>
                         </li>
+                        <li>
+                            <a href="{{route('closed-jobs')}}" key="t-horizontal">Closed Complaints</a>
+                        </li>
                     </ul>
                 </li>
 

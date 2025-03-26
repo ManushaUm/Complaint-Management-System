@@ -1,66 +1,69 @@
-<div class="container-fluid">
-    <div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-body">
+<div x-data="complaintFilter({{ json_encode($complaints) }})" class="bg-white shadow-md rounded-lg overflow-hidden">
+    <!-- Filter section remains the same -->
 
-                                        <div class="table-responsive">
-                                            <table class="table align-middle table-nowrap mb-0">
-                                                <thead class="bg-slate-700 text-slate-200">
-                                                    <tr>
-                                                        <th>Customer</th>
-                                                        <th>Contact No</th>
-                                                        <th>Email</th>
-                                                        <th>Customer Type</th>
-                                                        <th>Policy/Vehicle Number</th>
-                                                        <th>Complaint Date</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @php
-                                                    $user_id = Auth::user()->emp_id;
-                                                    @endphp
-
-                                                    @foreach($complaints as $complaint)
-                                                    @php
-                                                    $tableclass = $complaint->priority == 'high' ? 'table-danger' : 'table-light';
-                                                    @endphp
-                                                    <tr class="{{$tableclass}}">
-                                                        <td>{{ $complaint->name }}</td>
-                                                        <td>{{ $complaint->contact_no }}</td>
-                                                        <td>{{ $complaint->email }}</td>
-                                                        <td>{{ $complaint->customer_type }}</td>
-                                                        <td>{{ $complaint->policy_number }}</td>
-                                                        <td>{{ $complaint->complaint_date }}</td>
-                                                        <td>
-                                                            <!-- Button trigger modal -->
-                                                            <a href="{{route('viewcomplaintId' , ['id' => $complaint->Reference_number])}}" class="btn btn-primary btn-sm">View</a>
-                                                        </td>
-                                                    </tr>
-
-                                                    @endforeach
-                                                </tbody>
-
-                                            </table>
-
-                                        </div>
-                                        <!-- end table-responsive -->
-
-
-
-                                    </div>
-                                </div>
-                            </div>
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead class="bg-gray-100 border-b border-gray-200">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact No</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer Type</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Policy/Vehicle Number</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Complaint Date</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                @forelse($complaints as $complaint)
+                <tr class="hover:bg-gray-50 transition-colors duration-200 
+                        {{ $complaint->priority == 'high' ? 'bg-red-50' : '' }}">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">
+                            {{ $complaint->name ?? 'N/A' }}
                         </div>
-                    </div>
-                </div>
-            </div> <!-- end col -->
-        </div> <!-- end row -->
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-500">
+                            {{ $complaint->contact_no ?? 'N/A' }}
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                {{ $complaint->customer_type == 1 ? 'bg-green-100 text-green-800' : 
+                                   ($complaint->customer_type == 2 ? 'bg-yellow-100 text-yellow-800' : 
+                                   'bg-blue-100 text-blue-800') }}">
+                            {{ $complaint->customer_type ?? 'N/A' }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ $complaint->policy_number ?? 'N/A' }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-500">
+                            {{ $complaint->complaint_date ?? 'N/A' }}
+                        </div>
+                    </td>
+
+
+                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <a href="{{ route('viewcomplaintId', ['id' => $complaint->Reference_number]) }}"
+                            class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium 
+                                    rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 
+                                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 
+                                    transition-colors duration-200">
+                            View
+                        </a>
+                    </td>
+
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="6" class="text-center py-6 text-gray-500">
+                        No complaints found.
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
 </div>

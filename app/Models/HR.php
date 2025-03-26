@@ -12,6 +12,7 @@ class HR extends Model
     protected $table = 'hr';
 
     protected $fillable = [
+        'emp_id',
         'full_name',
         'email',
         'gender',

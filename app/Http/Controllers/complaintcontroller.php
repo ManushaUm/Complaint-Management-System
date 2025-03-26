@@ -238,11 +238,15 @@ class complaintcontroller extends Controller
 
         //For division heads - closed complaints
         if (Auth::user()->role == 'head') {
+            // dd($closedComplaints);
             foreach ($closedComplaints as $complaint) {
-                if ($complaint->Status == 'Solved' &&  $complaint->division == Auth::user()->division && $complaint->is_closed == 0) {
+                if ($complaint->Status == 'Solved' && $complaint->is_closed == 0 &&  $complaint->division == Auth::user()->division) {
                     $complaints[] = $complaint;
                 };
             }
+            //dd($complaints);
+            return view('complaint.closedjobs', compact('complaints'));
+            //dd($complaints);
         } elseif (Auth::user()->role == 'd-head') {
             foreach ($closedComplaints as $complaint) {
                 if ($complaint->is_closed == 1 && $complaint->is_approved == 0) {
@@ -251,11 +255,22 @@ class complaintcontroller extends Controller
                     $approvedJobs[] = $complaint;
                 }
             }
+            return view('complaint.closedjobs', compact('complaints', 'approvedJobs'));
+        } elseif (Auth::user()->role == 'admin') {
+            //dept head approved jobs
+            //get data from FinalLogs
+            $complaintLogs = new FinalLog();
+            $approvedFinalLogs = $complaintLogs->getComplaintDetails()->where('Status', 'Approved');
+            $rejectedFinalLogs = $complaintLogs->getComplaintDetails()->where('Status', 'Rejected');
+            $finalLogs = $complaintLogs->getComplaintDetails();
+
+            //dd($approvedFinalLogs, $finalLogs);
+            return view('complaint.closedjobs', compact('finalLogs', 'approvedFinalLogs', 'rejectedFinalLogs'));
         }
 
         // dd($complaints, Auth::user()->division);
 
-        return view('complaint.closedjobs', compact('complaints', 'approvedJobs'));
+
     }
 
     //Close Complaint

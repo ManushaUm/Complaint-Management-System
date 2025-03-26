@@ -203,7 +203,7 @@
                                                 </ul>
                                                 <ul class="list-unstyled hstack gap-2 mb-0">
                                                     <li>
-                                                        <i class="mdi mdi-account"></i> <span class="text-muted">Complaint logged by <span><a href="#">{{$loggedBy}}</a></span></span>
+                                                        <i class="mdi mdi-account"></i> <span class="text-muted">Complaint logged by <span><a href="{{ route('user', ['id' => $loggedBy]) }}">{{$loggedBy}}</a></span></span>
                                                     </li>
                                                 </ul>
 
@@ -233,7 +233,7 @@
                                                     @if ( Auth::user()->emp_id == $assignedTo)
                                                     Assigned to you</a>
                                                 @else
-                                                <a href="javascript:void(0)"></a>Assigned to {{$assignedTo}}</a>
+                                                <a href="{{ route('user', ['id' => $assignedTo]) }}"></a>Assigned to {{$assignedTo}}</a>
                                                 @endif
                                                 @endif
                                             </li>
@@ -255,7 +255,7 @@
                                                     </div>
 
                                                     <div class="flex-grow-1">
-                                                        <h5 class="font-size-14 mb-1"><span><a href="#">{{$complaintLog->Notes_by}}</a></span> <small class="text-muted float-end badge badge-soft-info">{{$complaintLog->Status}}</small></h5>
+                                                        <h5 class="font-size-14 mb-1"><span><a href="{{ route('user', ['id' => $complaintLog->Notes_by]) }}">{{$complaintLog->Notes_by}}</a></span> <small class="text-muted float-end badge badge-soft-info">{{$complaintLog->Status}}</small></h5>
                                                         <p class="text-muted">{{$complaintLog->Notes}}</p>
                                                         <div>
                                                             <a href="javascript: void(0);" class="text-success px-2"><i class="mdi mdi-reply px-1"></i> Contact</a>
@@ -279,7 +279,7 @@
                                                     </div>
 
                                                     <div class="flex-grow-1">
-                                                        <h5 class="font-size-14 mb-1"><span><a href="#">{{$complaintLog->Comment_by}}</a></span> <small class="text-muted float-end badge badge-soft-info">{{$complaintLog->Status}}</small></h5>
+                                                        <h5 class="font-size-14 mb-1"><span><a href="{{ route('user', ['id' => $complaintLog->Comment_by]) }}">{{$complaintLog->Comment_by}}</a></span> <small class="text-muted float-end badge badge-soft-info">{{$complaintLog->Status}}</small></h5>
                                                         <p class="text-muted">{{$complaintLog->Comment}}</p>
                                                         <div>
                                                             <a href="javascript: void(0);" class="text-success px-2"><i class="mdi mdi-reply px-1"></i> Contact</a>
@@ -351,13 +351,34 @@
                                             @endif
 
                                             @elseif (Auth::user()->role == 'd-head')
-                                            @if ($is_approved == 0)
+
+                                            @if ($is_approved == 0 && $currentStatus == 'Solved')
 
                                             <div class="d-flex justify-content-end">
                                                 <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#complaintAction">Action</button>
                                                 <!-- Complaint Closing Model-->
                                                 <x-head-complaint-closing-modal :id="$id" :prevData="$prevData" :newData="$newData" />
                                             </div>
+                                            @endif
+                                            @endif
+
+                                            @if (Auth::user()->role == 'admin')
+                                            @if ($is_approved == 1 || $is_approved ==2)
+                                            <!--Admin Reopen -->
+                                            <div>
+                                                <div class="d-flex justify-content-end">
+
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#complaintOpen">Reopen Job</button>
+                                                </div>
+
+                                                <!-- Complaint Closing Model-->
+                                                <x-head-complaint-closing-modal :id="$id" :prevData="$prevData" :newData="$newData" />
+                                                <!-- /.modal -->
+                                                <!-- Complaint Reopen Model-->
+                                                <x-head-complaint-reopen-model :id="$id" :prevData="$prevData" :newData="$newData" />
+                                                <!-- /.modal -->
+                                            </div>
+
                                             @endif
                                             @endif
 

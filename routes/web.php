@@ -9,12 +9,13 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HRController;
 use App\Http\Controllers\Usercontroller;
+use App\Http\Controllers\EmployeeController;
 
 
 //Guest Routes
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 //Auth Routes
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -84,6 +85,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/log-complaint/{id}', [complaintcontroller::class, 'reopenComplaint'])->name('logcomplaint');
     //complaint rejection by head
     Route::put('/reject-complaint/{id}', [complaintcontroller::class, 'rejectComplaint'])->name('rejectComplaint');
+
+    Route::get('/employee/{id}', [EmployeeController::class, 'profileDetails'])->name('user');
 });
 
 

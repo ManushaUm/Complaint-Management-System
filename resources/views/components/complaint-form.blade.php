@@ -1,145 +1,210 @@
 @auth
 @if(Session('role')=='admin')
-<form action="{{ route('complaints.store') }}" method="POST" enctype="multipart/form-data">
-    @csrf
+<div class="container mx-auto px-4 py-4">
+    <form action="{{ route('complaints.store') }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-lg rounded-lg p-6">
+        @csrf
+        <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">Lodge New Complaint</h2>
 
-
-
-    <div class="card px-8 mx-16">
-        <div class="card-body">
-            <p class="card-title-desc">Lodge new complaint</p>
-
-            <div class="mb-3 row">
-                <label for="name" class="col-md-2 col-form-label">Name<span class="text-red-500">*</span></label>
-                <div class="col-md-7">
-                    <input class="form-control @error('name') is-invalid @enderror" type="text" placeholder="User Name"
-                        id="name" name="name">
-                    @if ($errors->has('name'))
-                    <span class="text-red-500 text-xs">{{ $errors->first('name') }}</span>
-                    @endif
-                </div>
+        <div class="grid grid-cols-2 gap-4">
+            {{-- Name Field --}}
+            <div class="col-span-2">
+                <label for="name" class="block text-xs font-medium text-gray-700 mb-1">
+                    Name <span class="text-red-500">*</span>
+                </label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your full name"
+                    class="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 
+                    @error('name') border-red-500 @enderror">
+                @error('name')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-3 row">
-                <label class="col-md-2 col-form-label" id="insured">Insured?<span class="text-red-500">*</span></label>
-                <div class="col-md-2">
-                    <select class="form-select @error('insured') is-invalid @enderror" name="insured">
-                        <option value="" selected hidden>Select...</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                    @if ($errors->has('insured'))
-                    <span class="text-red-500 text-xs">{{ $errors->first('insured') }}</span>
-                    @endif
-                </div>
-
-                <label for="relation" class="col-md-1 col-form-label">Relation</label>
-                <div class="col-md-4">
-                    <input class="form-control @error('relation') is-invalid @enderror" type="text" placeholder="If No, enter the relation" id="relation" name="relation">
-                </div>
-                @if ($errors->has('relation'))
-                <span class="text-red-500 text-xs">{{ $errors->first('relation') }}</span>
-                @endif
+            {{-- Insured and Relation --}}
+            <div>
+                <label for="insured" class="block text-xs font-medium text-gray-700 mb-1">
+                    Insured? <span class="text-red-500">*</span>
+                </label>
+                <select
+                    name="insured"
+                    id="insured"
+                    class="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500
+                    @error('insured') border-red-500 @enderror">
+                    <option value="" selected hidden>Select...</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+                @error('insured')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-3 row">
-                <label for="address" class="col-md-2 col-form-label">Address<span class="text-red-500">*</span></label>
-                <div class="col-md-7">
-                    <input class="form-control @error('address') is-invalid @enderror" type="text" value="" placeholder="Enter address"
-                        id="address" name="address">
-                    @if ($errors->has('address'))
-                    <span class="text-red-500 text-xs">{{ $errors->first('address') }}</span>
-                    @endif
-                </div>
+            <div>
+                <label for="relation" class="block text-xs font-medium text-gray-700 mb-1">
+                    Relation (if not insured)
+                </label>
+                <input
+                    type="text"
+                    id="relation"
+                    name="relation"
+                    placeholder="Enter relation"
+                    class="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500
+                    @error('relation') border-red-500 @enderror">
+                @error('relation')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-3 row">
-                <label for="contact_no" class="col-md-2 col-form-label">Contact no<span class="text-red-500">*</span></label>
-                <div class="col-md-7">
-                    <input class="form-control @error('contact_no') is-invalid @enderror" type="tel" placeholder="Enter contact number"
-                        id="contact_no" name="contact_no">
-                </div>
-                @if ($errors->has('contact_no'))
-                <span class="text-red-500 text-xs">{{ $errors->first('contact_no') }}</span>
-                @endif
+            {{-- Contact and Email --}}
+            <div>
+                <label for="contact_no" class="block text-xs font-medium text-gray-700 mb-1">
+                    Contact Number <span class="text-red-500">*</span>
+                </label>
+                <input
+                    type="tel"
+                    id="contact_no"
+                    name="contact_no"
+                    placeholder="Enter contact number"
+                    class="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500
+                    @error('contact_no') border-red-500 @enderror">
+                @error('contact_no')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-3 row">
-                <label for="email" class="col-md-2 col-form-label">Email<span class="text-red-500">*</span></label>
-                <div class="col-md-7">
-                    <input class="form-control @error('email') is-invalid @enderror" type="email" value="" placeholder="Enter email"
-                        id="email" name="email">
-                    @if ($errors->has('email'))
-                    <span class="text-red-500 text-xs">{{ $errors->first('email') }}</span>
-                    @endif
-                </div>
+            <div>
+                <label for="email" class="block text-xs font-medium text-gray-700 mb-1">
+                    Email <span class="text-red-500">*</span>
+                </label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter email address"
+                    class="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500
+                    @error('email') border-red-500 @enderror">
+                @error('email')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-3 row">
-                <label class="col-md-2 col-form-label">Complaint type<span class="text-red-500">*</span></label>
-                <div class="col-md-3">
-                    <select class="form-select @error('customer_type') is-invalid @enderror" name="customer_type">
-                        <option value="" selected hidden>Select...</option>
-                        @foreach($complaintTypes as $complaint)
-                        <option value="{{$complaint->id}}">{{$complaint->complaint_type}}</option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('customer_type'))
-                    <span class="text-red-500 text-xs">{{ $errors->first('customer_type') }}</span>
-                    @endif
-                </div>
+            {{-- Address Field --}}
+            <div class="col-span-2">
+                <label for="address" class="block text-xs font-medium text-gray-700 mb-1">
+                    Address <span class="text-red-500">*</span>
+                </label>
+                <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    placeholder="Enter full address"
+                    class="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500
+                    @error('address') border-red-500 @enderror">
+                @error('address')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-3 row">
-                <label for="policy-number" class="col-md-2 col-form-label">Vehicle / Policy number<span class="text-red-500">*</span></label>
-                <div class="col-md-7">
-                    <input class="form-control @error('policy_number') is-invalid @enderror" type="text" value="" placeholder="Enter the Insurance policy number"
-                        id="policy-number" name="policy_number">
-                    @if ($errors->has('policy_number'))
-                    <span class="text-red-500 text-xs">{{ $errors->first('policy_number') }}</span>
-                    @endif
-                </div>
+            {{-- Complaint Type --}}
+            <div>
+                <label for="customer_type" class="block text-xs font-medium text-gray-700 mb-1">
+                    Complaint Type <span class="text-red-500">*</span>
+                </label>
+                <select
+                    name="customer_type"
+                    id="customer_type"
+                    class="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500
+                    @error('customer_type') border-red-500 @enderror">
+                    <option value="" selected hidden>Select Type...</option>
+                    @foreach($complaintTypes as $complaint)
+                    <option value="{{$complaint->id}}">{{$complaint->complaint_type}}</option>
+                    @endforeach
+                </select>
+                @error('customer_type')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-3 row">
-                <label for="complaint_date" class="col-md-2 col-form-label">Date of complaint<span class="text-red-500">*</span></label>
-                <div class="col-md-2">
-                    <input class="form-control @error('complaint_date') is-invalid @enderror" type="date"
-                        id="complaint_date" name="complaint_date">
-                    @if ($errors->has('complaint_date'))
-                    <span class="text-red-500 text-xs">{{ $errors->first('complaint_date') }}</span>
-                    @endif
-                </div>
+            {{-- Policy Number --}}
+            <div>
+                <label for="policy_number" class="block text-xs font-medium text-gray-700 mb-1">
+                    Policy Number <span class="text-red-500">*</span>
+                </label>
+                <input
+                    type="text"
+                    id="policy_number"
+                    name="policy_number"
+                    placeholder="Enter policy number"
+                    class="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500
+                    @error('policy_number') border-red-500 @enderror">
+                @error('policy_number')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-4 row">
-                <label for="complaint_detail" class="col-md-2 col-form-label">Detail of the complaint<span class="text-red-500">*</span></label>
-                <div class="col-md-7">
-                    <input class="form-control @error('complaint_detail') is-invalid @enderror" type="text" value="" placeholder="Enter the brief of the complaint"
-                        id="complaint_detail" rows="5" name="complaint_detail">
-                    @if ($errors->has('complaint_detail'))
-                    <span class="text-red-500 text-xs">{{ $errors->first('complaint_detail') }}</span>
-                    @endif
-                </div>
+            {{-- Complaint Date --}}
+            <div>
+                <label for="complaint_date" class="block text-xs font-medium text-gray-700 mb-1">
+                    Date of Complaint <span class="text-red-500">*</span>
+                </label>
+                <input
+                    type="date"
+                    id="complaint_date"
+                    name="complaint_date"
+                    class="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500
+                    @error('complaint_date') border-red-500 @enderror">
+                @error('complaint_date')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-3 row">
-                <div class="col-sm-6">
-                    <div class="mt-3">
-                        <label for="attachment" class="form-label">Attachments</label>
-                        <input class="form-control @error('attachment') is-invalid @enderror" type="file" id="attachment" name="attachment">
-                    </div>
-                </div>
+            {{-- Complaint Details --}}
+            <div class="col-span-2">
+                <label for="complaint_detail" class="block text-xs font-medium text-gray-700 mb-1">
+                    Complaint Details <span class="text-red-500">*</span>
+                </label>
+                <textarea
+                    id="complaint_detail"
+                    name="complaint_detail"
+                    rows="3"
+                    placeholder="Enter complaint details"
+                    class="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500
+                    @error('complaint_detail') border-red-500 @enderror"></textarea>
+                @error('complaint_detail')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class='col-sm-6'>
-                <div>
-                    <button type="submit" class="btn btn-primary w-md">Lodge</button>
-                </div>
+            {{-- Attachments --}}
+            <div class="col-span-2">
+                <label for="attachment" class="block text-xs font-medium text-gray-700 mb-1">
+                    Attachments
+                </label>
+                <input
+                    type="file"
+                    id="attachment"
+                    name="attachment"
+                    class="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500
+                    file:mr-2 file:px-2 file:py-1 file:text-xs file:rounded-md file:border-0 file:bg-blue-500 file:text-white
+                    @error('attachment') border-red-500 @enderror">
+                @error('attachment')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- Submit Button --}}
+            <div class="col-span-2 mt-2">
+                <button
+                    type="submit"
+                    class="w-full bg-blue-500 text-white py-2 text-sm rounded-md hover:bg-blue-600 transition duration-300 ease-in-out focus:outline-none focus:ring-1 focus:ring-blue-500">
+                    Lodge Complaint
+                </button>
             </div>
         </div>
-    </div>
-
-</form>
+    </form>
+</div>
 @endif
 @endauth
