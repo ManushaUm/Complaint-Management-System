@@ -55,62 +55,57 @@ class complaintcontroller extends Controller
 
     public function assignComplaint(Request $request)
     {
-        //dd($request->all()); //checked
         // Validate incoming request
-        $request->validate([
+        $validated = $request->validate([
             'modalComplaintId' => 'required|integer',
-            'dept_id' => 'required|string',
-            'div_name' => 'required|string',
-            'district' => 'required|string',
-            'branch' => 'required|string',
+            'department' => 'required|string',
+            'div' => 'required|string',
+            'priority' => 'required|string',
             'notes' => 'required|string',
         ]);
 
         // Find the complaint by ID
-        $complaint = NewComplaint::find($request->modalComplaintId);
-
-        //dd($complaint);
-        // Check if complaint exists
+        $complaint = NewComplaint::find($validated['modalComplaintId']);
         if (!$complaint) {
-            return redirect()->back()->with('error', 'Complaint not found.');
+            toastr()->error('Complaint not found.');
+            return redirect()->back();
         }
 
-        //create the data array for the complaint
-        $Logdata = array(
-            'Reference_number' => $request->modalComplaintId,
-            'Notes' => $request->notes,
+        // Prepare data for update and log
+        $Logdata = [
+            'Reference_number' => $validated['modalComplaintId'],
+            'Notes' => $validated['notes'],
+            'Notes_by' => Auth::user()->emp_id,
+        ];
 
-        );
+        $departmentData = [
+            'department' => $validated['department'],
+            'division' => $validated['div'],
+            'priority' => $validated['priority'],
+        ];
 
-        $departmentData = array(
-            'department' => $request->dept_id,
-            'division' => $request->div_name,
-        );
-
-        // Update the new_complaints table with the department data
+        // Update complaint department info
         DB::table('new_complaints')
-            ->where('id', $request->modalComplaintId)
+            ->where('id', $validated['modalComplaintId'])
             ->update($departmentData);
 
-        //dd('data array', $data); //checked
+        // Log the complaint assignment
+        $logId = DB::table('complaint_logs')->insertGetId($Logdata);
 
-        //store to log
-        $id = DB::table('complaint_logs')->insertGetId($Logdata);
-
-        // Update the department and status
-        $complaint->department = $request->dept_id;
-        $complaint->updateStatus($request->modalComplaintId);
-
-        // Save the changes
+        // Update and save status (assuming method exists in model)
+        $complaint->department = $validated['department']; // fixed wrong field used previously
+        $complaint->updateStatus($validated['modalComplaintId']);
         $complaint->save();
 
-        // Redirect with success message
-        if ($id) {
-            return redirect()->back()->with('success', 'Complaint assigned successfully.');
+        if ($logId) {
+            toastr()->success('Complaint assigned successfully');
         } else {
-            return redirect()->back()->with('error', 'Error assigning complaint');
+            toastr()->error('Failed to log complaint assignment');
         }
+
+        return redirect()->back();
     }
+
 
     public function getComplaintDetails($id)
     {
@@ -186,7 +181,7 @@ class complaintcontroller extends Controller
             }
 
 
-
+            toastr()->success('Complaint Log added successfully');
             return redirect()->back()->with('success', 'Comment added successfully.');
         } else {
             return redirect()->back()->with('error', 'Complaint not found.');
@@ -384,6 +379,7 @@ class complaintcontroller extends Controller
                         $complaint->complaint_status = 1;
                         $complaint->save();
                         ComplaintLog::create($data);
+                        toastr()->warning('Complaint opened successfully');
                         return redirect()->back()->with('success', 'Complaint Logged successfully.');
                     }
                 } catch (\Exception $e) {
@@ -421,7 +417,8 @@ class complaintcontroller extends Controller
                 }
             }
         } elseif (Auth::user()->role == 'head') {
-            //dd($request->all());
+            //dd(request()->all());
+            //dd($request->file('formFileSm'), $request->all());
             //validate the request
             $validated =  $request->validate([
                 'headNote' => 'required|string',
@@ -446,6 +443,7 @@ class complaintcontroller extends Controller
             //dd($data);
             $newId = ComplaintLog::create($data);
             if ($newId) {
+                toastr()->warning('Complaint opened successfully');
                 return redirect()->back()->with('success', 'Complaint Reopened successfully.');
             } else {
                 return redirect()->back()->with('error', 'Error Reopening.');

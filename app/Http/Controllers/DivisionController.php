@@ -45,4 +45,10 @@ class DivisionController extends Controller
         }
         return redirect()->route('users')->with('success', 'Divisions created successfully.');
     }
+
+    public function getDivisions($department_id)
+    {
+        $divisions = Division::where('department_code', $department_id)->get();
+        return response()->json($divisions);
+    }
 }

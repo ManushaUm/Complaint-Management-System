@@ -1,157 +1,157 @@
-<x-app-layout>
-    <x-slot name="slot">
-        <div class="page-content">
-            @auth
-            @if(Auth::user()->role == 'admin')
-            <div class="card mx-auto sm:px-6 lg:px-8">
-                <div class="card-body py-10">
-                    <ul class="nav nav-pills nav-justified" role="tablist">
-                        <li class="nav-item waves-effect waves-light">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#approved" role="tab">
-                                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+@extends('layouts.app')
 
-                                <span class="d-none d-sm-block">Approved</span>
+@section('content')
+<div>
+    @auth
+    @if(Auth::user()->role == 'admin')
+    <div class="card mx-auto sm:px-6 lg:px-8">
+        <div class="card-body py-10">
+            <ul class="nav nav-pills nav-justified" role="tablist">
+                <li class="nav-item waves-effect waves-light">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#approved" role="tab">
+                        <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
 
-                            </a>
-                        </li>
-                        <li class="nav-item waves-effect waves-light">
-                            <a class="nav-link" data-bs-toggle="tab" href="#rejected" role="tab">
-                                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                        <span class="d-none d-sm-block">Approved</span>
 
-                                <span class="d-none d-sm-block">Rejcected</span>
+                    </a>
+                </li>
+                <li class="nav-item waves-effect waves-light">
+                    <a class="nav-link" data-bs-toggle="tab" href="#rejected" role="tab">
+                        <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
 
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content p-1 text-muted">
-                        <div class="tab-pane active" id="approved" role="tabpanel">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-lg-12">
+                        <span class="d-none d-sm-block">Rejcected</span>
 
-                                        @if(count($approvedFinalLogs) > 0)
-                                        <x-member-assigned-table :complaints="$approvedFinalLogs" />
-                                        @else
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content p-1 text-muted">
+                <div class="tab-pane active" id="approved" role="tabpanel">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12">
 
-                                        <div class="my-2 p-4 bg-yellow-100 text-yellow-700 rounded-md">
-                                            <p class="font-medium"><span><i class="bx bx-info-circle"></i></span> There are no complaints left.</p>
-                                        </div>
+                                @if(count($approvedFinalLogs) > 0)
+                                <x-member-assigned-table :complaints="$approvedFinalLogs" />
+                                @else
 
-                                        @endif
+                                <div class="my-2 p-4 bg-yellow-100 text-yellow-700 rounded-md">
+                                    <p class="font-medium"><span><i class="bx bx-info-circle"></i></span> There are no complaints left.</p>
+                                </div>
+
+                                @endif
 
 
-                                    </div>
-                                </div> <!-- end row -->
                             </div>
-                        </div>
-                        <div class="tab-pane" id="rejected" role="tabpanel">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-lg-12">
-
-
-                                        @if(count($rejectedFinalLogs) > 0)
-                                        <x-completed-table :complaints="$rejectedFinalLogs" />
-                                        @else
-
-                                        <div class="my-2 p-4 bg-yellow-100 text-yellow-700 rounded-md">
-                                            <p class="font-medium"><span><i class="bx bx-info-circle"></i></span> There are no complaints left.</p>
-                                        </div>
-
-                                        @endif
-
-                                        <!-- End Table -->
-                                    </div>
-                                </div> <!-- end row -->
-                            </div>
-                        </div>
+                        </div> <!-- end row -->
                     </div>
+                </div>
+                <div class="tab-pane" id="rejected" role="tabpanel">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12">
 
 
+                                @if(count($rejectedFinalLogs) > 0)
+                                <x-completed-table :complaints="$rejectedFinalLogs" />
+                                @else
+
+                                <div class="my-2 p-4 bg-yellow-100 text-yellow-700 rounded-md">
+                                    <p class="font-medium"><span><i class="bx bx-info-circle"></i></span> There are no complaints left.</p>
+                                </div>
+
+                                @endif
+
+                                <!-- End Table -->
+                            </div>
+                        </div> <!-- end row -->
+                    </div>
                 </div>
             </div>
 
-            @else
 
-            <div class="card mx-auto sm:px-6 lg:px-8">
-                <div class="card-body py-10">
-                    <ul class="nav nav-pills nav-justified" role="tablist">
-                        <li class="nav-item waves-effect waves-light">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#pending" role="tab">
-                                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-
-                                <span class="d-none d-sm-block">Pending jobs</span>
-
-                            </a>
-                        </li>
-                        <li class="nav-item waves-effect waves-light">
-                            <a class="nav-link" data-bs-toggle="tab" href="#completed-complaints" role="tab">
-                                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-
-                                <span class="d-none d-sm-block">Approved/Rejcected</span>
-
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content p-1 text-muted">
-                        <div class="tab-pane active" id="pending" role="tabpanel">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-lg-12">
-
-                                        @if(count($complaints) > 0)
-                                        <x-member-assigned-table :complaints="$complaints" />
-                                        @else
-
-                                        <div class="my-2 p-4 bg-yellow-100 text-yellow-700 rounded-md">
-                                            <p class="font-medium"><span><i class="bx bx-info-circle"></i></span> There are no complaints left.</p>
-                                        </div>
-
-                                        @endif
-
-
-                                    </div>
-                                </div> <!-- end row -->
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="completed-complaints" role="tabpanel">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-lg-12">
-
-                                        @if(Auth::user()->role == 'd-head')
-                                        @if(!empty($approvedJobs))
-                                        <x-completed-table :complaints="$approvedJobs" />
-                                        @else
-                                        <div class="my-2 p-4 bg-yellow-100 text-yellow-700 rounded-md">
-                                            <p class="font-medium"><span><i class="bx bx-info-circle"></i></span> There are no complaints left.</p>
-                                        </div>
-                                        @endif
-
-                                        @elseif(Auth::user()->role == 'head')
-                                        @if(!empty($complaints))
-                                        <x-completed-table :complaints="$complaints" />
-                                        @else
-                                        <div class="my-2 p-4 bg-yellow-100 text-yellow-700 rounded-md">
-                                            <p class="font-medium"><span><i class="bx bx-info-circle"></i></span> There are no complaints left.</p>
-                                        </div>
-                                        @endif
-                                        @endif
-
-                                        <!-- End Table -->
-                                    </div>
-                                </div> <!-- end row -->
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-
-            @endif
-
-            @endauth
         </div>
-    </x-slot>
-</x-app-layout>
+    </div>
+
+    @else
+
+    <div class="card mx-auto sm:px-6 lg:px-8">
+        <div class="card-body py-10">
+            <ul class="nav nav-pills nav-justified" role="tablist">
+                <li class="nav-item waves-effect waves-light">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#pending" role="tab">
+                        <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+
+                        <span class="d-none d-sm-block">Pending jobs</span>
+
+                    </a>
+                </li>
+                <li class="nav-item waves-effect waves-light">
+                    <a class="nav-link" data-bs-toggle="tab" href="#completed-complaints" role="tab">
+                        <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+
+                        <span class="d-none d-sm-block">Approved/Rejcected</span>
+
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content p-1 text-muted">
+                <div class="tab-pane active" id="pending" role="tabpanel">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                @if(count($complaints) > 0)
+                                <x-member-assigned-table :complaints="$complaints" />
+                                @else
+
+                                <div class="my-2 p-4 bg-yellow-100 text-yellow-700 rounded-md">
+                                    <p class="font-medium"><span><i class="bx bx-info-circle"></i></span> There are no complaints left.</p>
+                                </div>
+
+                                @endif
+
+
+                            </div>
+                        </div> <!-- end row -->
+                    </div>
+                </div>
+                <div class="tab-pane" id="completed-complaints" role="tabpanel">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                @if(Auth::user()->role == 'd-head')
+                                @if(!empty($approvedJobs))
+                                <x-completed-table :complaints="$approvedJobs" />
+                                @else
+                                <div class="my-2 p-4 bg-yellow-100 text-yellow-700 rounded-md">
+                                    <p class="font-medium"><span><i class="bx bx-info-circle"></i></span> There are no complaints left.</p>
+                                </div>
+                                @endif
+
+                                @elseif(Auth::user()->role == 'head')
+                                @if(!empty($complaints))
+                                <x-completed-table :complaints="$complaints" />
+                                @else
+                                <div class="my-2 p-4 bg-yellow-100 text-yellow-700 rounded-md">
+                                    <p class="font-medium"><span><i class="bx bx-info-circle"></i></span> There are no complaints left.</p>
+                                </div>
+                                @endif
+                                @endif
+
+                                <!-- End Table -->
+                            </div>
+                        </div> <!-- end row -->
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    @endif
+
+    @endauth
+</div>
+@endsection

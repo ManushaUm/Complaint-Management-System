@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('customer_type')->nullable();
             $table->string('policy_number')->nullable();
+            $table->string('branch')->nullable();
             $table->date('complaint_date');
             $table->text('complaint_detail')->nullable();
             $table->string('attachment')->nullable();

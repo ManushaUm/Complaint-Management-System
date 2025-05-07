@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewComplaintController;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,6 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-
     Route::get('/viewcomplaints', function () {
         return view('viewcomplaint');
     })->name('viewcomplaint');
@@ -41,6 +41,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/employee', function () {
         return view('profile.information.employee');
     })->name('employee');
+
+    //get division data
+    Route::get('/get-divisions/{department_id}', [DivisionController::class, 'getDivisions'])->name('getDivisions');
 
     //Member Job view 
     Route::get('/my-jobs', [complaintcontroller::class, 'myJobs'])->name('my-jobs');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\complaintType;
 use App\Models\Department;
 use App\Models\NewComplaint;
@@ -75,9 +76,14 @@ class NewComplaintController extends Controller
     {
 
         $newComplaint = new complaintType();
-        $getComplaintType = $newComplaint->getComplaintType();
-        // dd($getComplaintType);
-        return view('newcomplaint', ['complaintTypes' => $getComplaintType]);
+        $complaintTypes = $newComplaint->getComplaintType();
+        $branch = new Branch();
+        $branchData = $branch->getBranchData();
+        //dd($branchData);
+        return view('newcomplaint', [
+            'branchData' => $branchData,
+            'complaintTypes' => $complaintTypes,
+        ]);
     }
 
 
