@@ -123,6 +123,8 @@ class NewComplaintController extends Controller
             'complaint_date' => $request->complaint_date,
             'complaint_detail' => $request->complaint_detail,
             'branch' => $request->customer_branch,
+            'logged_by' => Auth::user()->emp_id,
+
 
         ];
         if ($request->hasFile('attachment')) {

@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Branch;
+use App\Models\ComplaintLog;
 use App\Models\complaintType;
 use App\Models\NewComplaint;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Redis;
 
 class ReportController extends Controller
 {
@@ -192,5 +194,68 @@ class ReportController extends Controller
         //dd($latestLogs);
 
         return view('reports.complaints', compact('complaints', 'latestLogs', 'hrData'));
+    }
+
+    public function summaryComplaint()
+    {
+        return view('reports.complaintsummary');
+    }
+
+    public function searchPolicies(Request $request)
+    {
+        $searchTerm = $request->input('term');
+
+        $results = DB::table('new_complaints')
+            ->select(
+                'new_complaints.policy_number',
+                'new_complaints.name'
+            )
+            ->where('new_complaints.policy_number', 'like', '%' . $searchTerm . '%')
+            ->limit(10)
+            ->get();
+
+        return response()->json($results);
+    }
+
+    public function searchResults(Request $request)
+    {
+        //dd($request->all());
+
+        $request->validate([
+            'policySearch' => 'required|string|min:2'
+        ]);
+
+        $searchTerm = $request->input('policySearch');
+
+        // Search for complaints related to the policy number
+        $complaints = DB::table('new_complaints')
+            ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+            ->where('new_complaints.policy_number', 'like', '%' . $searchTerm . '%')
+            ->orWhere('new_complaints.name', 'like', '%' . $searchTerm . '%')
+            ->select(
+                'new_complaints.*',
+                'complaint_main.*'
+            )
+            ->get();
+
+        return view('reports.results', [
+            'complaints' => $complaints,
+            'searchTerm' => $searchTerm
+        ]);
+    }
+
+    public function downloadPDF($complaintId)
+    {
+        // Load the complaint with all related data
+        $complaints = DB::table('complaint_logs')->select('complaint_logs.*')->where('Reference_number', $complaintId)->get();
+        //dd($complaints);
+
+        // Generate the PDF
+        $pdf = Pdf::loadView('reports.pdf', compact('complaints'));
+
+        // display in browser:
+        return $pdf->stream();
+        // Download the PDF with a filename
+        return $pdf->download("complaint-{$complaints[0]->Reference_number}-report.pdf");
     }
 }

@@ -12,6 +12,8 @@ use App\Http\Controllers\HRController;
 use App\Http\Controllers\Usercontroller;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ReportController;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 //Guest Routes
 Route::get('/', function () {
@@ -96,12 +98,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/reports/create', [ReportController::class, 'generateReport'])->name('reports.create');
     Route::get('/reports/complaints', [ReportController::class, 'complaints'])->name('reports.complaints');
     Route::get('/reports/summary', [ReportController::class, 'summary'])->name('reports.summary');
-    //Route::get('/reports/download-pdf', [ReportController::class, 'downloadPDF'])->name('downloadPDF');
+    Route::get('reports/summary-complaint', [ReportController::class, 'summaryComplaint'])->name('reports.summary-complaint');
+    Route::get('/reports/{complaint}/download-pdf', [ReportController::class, 'downloadPDF'])->name('downloadPDF');
     //Route::get('/reports/download-excel', [ReportController::class, 'downloadExcel'])->name('downloadExcel');
     //Route::get('/reports/download-pdf-complaint', [ReportController::class, 'downloadPDFComplaint'])->name('downloadPDFComplaint');
     //Route::get('/reports/download-excel-complaint', [ReportController::class, 'downloadExcelComplaint'])->name('downloadExcelComplaint');
 });
 
+Route::get('/search-policies', [ReportController::class, 'searchPolicies'])->name('search.policies');
+Route::get('/search-results', [ReportController::class, 'searchResults'])->name('search.results');
 
 //test route >> can be removed when dev complete
 Route::get('/test-employee', function () {

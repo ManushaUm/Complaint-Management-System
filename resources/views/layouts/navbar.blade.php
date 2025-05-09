@@ -77,7 +77,7 @@
 
                         <div x-show="open && sidebarOpen" class="pl-12 pr-3 py-1 bg-gray-900 rounded-sm">
                             <a href="{{route('reports.summary')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">System Summary</a>
-                            <a href="{{route('reports.summary')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">Complaint Summary</a>
+                            <a href="{{route('reports.summary-complaint')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">Complaint Summary</a>
                             <a href="{{route('reports.complaints')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">On System</a>
                             <a href="{{route('reports.view')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">New Complaint Report</a>
                             <a href="{{route('closed-jobs')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">Analysis</a>
