@@ -63,6 +63,28 @@
                         </div>
                     </div>
 
+                    <!-- Reports -->
+                    <div x-data="{ open: true }">
+                        <button @click="open = !open" class="w-full flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors group">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 group-hover:text-blue-400" :class="{'mr-3': sidebarOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                            <span x-show="sidebarOpen">CFS Reports</span>
+                            <svg x-show="sidebarOpen" xmlns="http://www.w3.org/2000/svg" :class="{'rotate-180': open}" class="ml-auto h-4 w-4 transition-transform transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+
+                        <div x-show="open && sidebarOpen" class="pl-12 pr-3 py-1 bg-gray-900 rounded-sm">
+                            <a href="{{route('reports.summary')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">System Summary</a>
+                            <a href="{{route('reports.summary')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">Complaint Summary</a>
+                            <a href="{{route('reports.complaints')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">On System</a>
+                            <a href="{{route('reports.view')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">New Complaint Report</a>
+                            <a href="{{route('closed-jobs')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">Analysis</a>
+                            <a href="{{route('closed-jobs')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">Complaint feedbacks</a>
+                        </div>
+                    </div>
+
                     <!-- Search -->
                     <a href="{{route('search.complaints')}}" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors group">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 group-hover:text-blue-400" :class="{'mr-3': sidebarOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -122,8 +144,8 @@
 
                         <div x-show="open" class="pl-12 pr-3 py-1 bg-gray-900 rounded-sm">
                             <a href="{{route('viewcomplaint')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">View Complaints</a>
+                            <a href="{{route('closed-jobs')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">Approvals</a>
                             <a href="{{route('my-jobs')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">My Jobs</a>
-                            <a href="{{route('closed-jobs')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">Closed Jobs</a>
                         </div>
                     </div>
 

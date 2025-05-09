@@ -11,7 +11,7 @@ use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HRController;
 use App\Http\Controllers\Usercontroller;
 use App\Http\Controllers\EmployeeController;
-
+use App\Http\Controllers\ReportController;
 
 //Guest Routes
 Route::get('/', function () {
@@ -90,6 +90,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/reject-complaint/{id}', [complaintcontroller::class, 'rejectComplaint'])->name('rejectComplaint');
 
     Route::get('/employee/{id}', [EmployeeController::class, 'profileDetails'])->name('user');
+
+    //Report routes
+    Route::get('/reports/view', [ReportController::class, 'index'])->name('reports.view');
+    Route::post('/reports/create', [ReportController::class, 'generateReport'])->name('reports.create');
+    Route::get('/reports/complaints', [ReportController::class, 'complaints'])->name('reports.complaints');
+    Route::get('/reports/summary', [ReportController::class, 'summary'])->name('reports.summary');
+    //Route::get('/reports/download-pdf', [ReportController::class, 'downloadPDF'])->name('downloadPDF');
+    //Route::get('/reports/download-excel', [ReportController::class, 'downloadExcel'])->name('downloadExcel');
+    //Route::get('/reports/download-pdf-complaint', [ReportController::class, 'downloadPDFComplaint'])->name('downloadPDFComplaint');
+    //Route::get('/reports/download-excel-complaint', [ReportController::class, 'downloadExcelComplaint'])->name('downloadExcelComplaint');
 });
 
 

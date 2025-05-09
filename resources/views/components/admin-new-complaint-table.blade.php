@@ -25,9 +25,12 @@
                 x-model="customerTypeFilter"
                 class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-200 focus:outline-none">
                 <option value="">All Customer Types</option>
-                <option value="1">Type 1</option>
-                <option value="2">Type 2</option>
-                <option value="3">Type 3</option>
+                <option value="Branch">Branch</option>
+                <option value="Customer Hotline">Customer Hotline</option>
+                <option value="Direct Call">Direct Call</option>
+                <option value="Email/Letters">Email/Letters</option>
+                <option value="Walking Customer">Walking Customer</option>
+                <option value="Website">Website</option>
             </select>
 
             <!-- Date Range Filter -->

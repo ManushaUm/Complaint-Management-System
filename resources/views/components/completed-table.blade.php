@@ -44,43 +44,42 @@
                             {{ $complaint->complaint_date ?? 'N/A' }}
                         </div>
                     </td>
-                    @if(Auth::user()->role == 'd-head')
-                    @if( $complaint->is_closed == 1 && $complaint->is_approved == 1 )
 
+                    @if(Auth::user()->role == 'd-head' || Auth::user()->role == 'head')
+
+                    @if($complaint->is_closed == '1' && $complaint->is_approved == 1)
                     <td>
-
-                        <!-- Button trigger modal -->
-                        <a href="{{route('viewcomplaintId' , ['id' => $complaint->Reference_number])}}" class="w-8 h-8"><i class="bx bx-check-circle text-green-600"></i></a>
-
+                        <a href="{{ route('viewcomplaintId', ['id' => $complaint->Reference_number]) }}" class="w-8 h-8">
+                            <span class="flex justify-center"><i class="bx bx-check-circle text-green-600 text-xl"></i></span>
+                        </a>
                     </td>
-                    @elseif($complaint->is_closed == 1 && $complaint->is_approved == 2)
+                    @elseif($complaint->is_closed == '1' && $complaint->is_approved == 2)
                     <td>
-
-                        <!-- Button trigger modal -->
-                        <a href="{{route('viewcomplaintId' , ['id' => $complaint->Reference_number])}}" class="w-8 h-8"><i class="bx bx-x-circle text-red-600"></i></a>
-
-                    </td>
-                    @else
-                    <td>
-                        <!-- Button trigger modal -->
-                        <a href="{{route('viewcomplaintId' , ['id' => $complaint->Reference_number])}}" class="btn btn-primary btn-sm">View</a>
-                    </td>
-                    @endif
-                    @else
-                    @if( $complaint->is_closed == '1')
-                    <td>
-
-                        <!-- Button trigger modal -->
-                        <a href="{{route('viewcomplaintId' , ['id' => $complaint->Reference_number])}}" class="w-8 h-8"><i class="bx bx-check-circle text-green-600"></i></a>
-
+                        <a href="{{ route('viewcomplaintId', ['id' => $complaint->Reference_number]) }}" class="w-8 h-8">
+                            <span class="flex justify-center"> <i class="bx bx-x-circle text-red-600 text-xl"></i></span>
+                        </a>
                     </td>
                     @else
                     <td>
-                        <!-- Button trigger modal -->
-                        <a href="{{route('viewcomplaintId' , ['id' => $complaint->Reference_number])}}" class="btn btn-primary btn-sm">View</a>
+                        <span class="flex justify-center">
+                            <a href="{{ route('viewcomplaintId', ['id' => $complaint->Reference_number]) }}" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium 
+                                    rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 
+                                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 
+                                    transition-colors duration-200">View</a>
+                        </span>
                     </td>
                     @endif
+                    @else
+                    <td>
+                        <span class="flex justify-center">
+                            <a href="{{ route('viewcomplaintId', ['id' => $complaint->Reference_number]) }}" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium 
+                                    rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 
+                                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 
+                                    transition-colors duration-200">View</a>
+                        </span>
+                    </td>
                     @endif
+
 
 
 

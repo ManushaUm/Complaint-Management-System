@@ -140,6 +140,11 @@ class complaintcontroller extends Controller
             $Intialcomplaint->is_closed = 0;
             $Intialcomplaint->save();
 
+            //update the main table date and status
+            DB::table('complaint_main')
+                ->where('reference', $id)
+                ->update(['status' => 'in-progress', 'updated_at' => now()]);
+
             return redirect()->back()->with('success', 'Job assigned successfully.');
         } else {
             return redirect()->back()->with('error', 'Complaint not Found. Please contact your administrator');
@@ -165,7 +170,7 @@ class complaintcontroller extends Controller
                     $complaint->Status = 'Solved';
                 }
                 $complaint->save();
-            } elseif (Auth::user()->role == 'head' || Auth::user()->role == 'd-head') {
+            } elseif (Auth::user()->role == 'head') {
                 $complaint->Comment = $validated['commentmessage-input'];
                 $complaint->Comment_by = Auth::user()->emp_id;
                 $complaint->is_action = 1;
@@ -177,6 +182,25 @@ class complaintcontroller extends Controller
                     $IntialComplaint->is_closed = 1;
                     $IntialComplaint->save();
                 }
+                $complaint->save();
+            } elseif (Auth::user()->role == 'd-head') {
+                //dd('check');
+                $complaint->Comment = $validated['commentmessage-input'];
+                $complaint->Comment_by = Auth::user()->emp_id;
+                $complaint->is_action = 1;
+                if (isset($data['solved']) && $data['solved'] == 'on') {
+                    $complaint->Status = 'Solved';
+                    //update the newComplaint table
+                    $IntialComplaint = NewComplaint::find($id);
+                    $IntialComplaint->complaint_status = 0;
+                    $IntialComplaint->is_closed = 1;
+                    $IntialComplaint->is_approved = 1;
+                    $IntialComplaint->save();
+                }
+                //UPDATE THE main complaint TABLE
+                DB::table('complaint_main')
+                    ->where('reference', $id)
+                    ->update(['status' => 'Closed', 'updated_at' => now()]);
                 $complaint->save();
             }
 
@@ -205,7 +229,7 @@ class complaintcontroller extends Controller
 
         foreach ($updatedComplaints as $complaint) {
             if ($complaint->Assigned_to == Auth::user()->emp_id) {
-                if ($complaint->Status == 'in-progress' && $complaint->is_action == 0) {
+                if (($complaint->Status == 'in-progress' || $complaint->Status == 'Reopened') && $complaint->is_action == 0) {
                     $ongoingComplaints[] = $complaint;
                 }
             }
@@ -244,10 +268,10 @@ class complaintcontroller extends Controller
             //dd($complaints);
         } elseif (Auth::user()->role == 'd-head') {
             foreach ($closedComplaints as $complaint) {
-                if ($complaint->is_closed == 1 && $complaint->is_approved == 0) {
+                if ($complaint->is_closed == 1 && $complaint->is_approved == 0 && $complaint->complaint_status == 0) {
                     $complaints[] = $complaint;
                 } elseif ($complaint->is_closed == 1 && ($complaint->is_approved == 1 || $complaint->is_approved == 2)) {
-                    $approvedJobs[] = $complaint;
+                    $approvedJobs[] = $complaint; //this one neglects the closed jobs
                 }
             }
             return view('complaint.closedjobs', compact('complaints', 'approvedJobs'));
@@ -335,6 +359,10 @@ class complaintcontroller extends Controller
 
             try {
                 FinalLog::create($data);
+                //update the complaint_main table
+                DB::table('complaint_main')
+                    ->where('reference', $id)
+                    ->update(['status' => 'Closed', 'completed_date' => now()->toDateString()]);
                 NewComplaint::find($id)->update(['is_approved' => 1]);
 
 
@@ -349,6 +377,7 @@ class complaintcontroller extends Controller
     public function  reopenComplaint(Request $request, $id)
     {
         //Reopen the complaint -DEPARTMENT HEAD
+        //dd($request->all());
         if (Auth::user()->role == 'd-head') {
 
             $validated = $request->validate([
@@ -359,7 +388,7 @@ class complaintcontroller extends Controller
                     'Reference_number' => $id,
                     'Notes' => $validated['headNote'],
                     'Notes_by' => Auth::user()->emp_id,
-                    'Assigned_to' => $request->checkbox,
+                    'Assigned_to' => $request->userAssignment,
                     'Status' => 'Reopened',
                 ];
 
@@ -379,6 +408,7 @@ class complaintcontroller extends Controller
                         $complaint->complaint_status = 1;
                         $complaint->save();
                         ComplaintLog::create($data);
+
                         toastr()->warning('Complaint opened successfully');
                         return redirect()->back()->with('success', 'Complaint Logged successfully.');
                     }
@@ -448,6 +478,47 @@ class complaintcontroller extends Controller
             } else {
                 return redirect()->back()->with('error', 'Error Reopening.');
             }
+        } elseif (Auth::user()->role == 'admin') {
+            //dd(request()->all());
+            //validate the request
+            $validated =  $request->validate([
+                'headNote' => 'required|string',
+            ]);
+
+            $data = [
+                'Reference_number' => $id,
+                'Notes' => $validated['headNote'],
+                'Notes_by' => Auth::user()->emp_id,
+                'Status' => 'Reopened',
+                'Priority' => $request->priority,
+            ];
+            if ($request->hasFile('formFileSm')) {
+                $file = $request->file('formFileSm');
+                $Attachment = $file->store('uploads', 'public');
+                $data['Attachment'] = $Attachment;
+            }
+            if ($request->userAssignment !== null) {
+                $data['Assigned_to'] = $request->userAssignment;
+            }
+            //dd($data);
+            //IMPLEMENT ADMIN REOPEN 
+            try {
+                //new complaints table
+                NewComplaint::find($id)->update(['is_approved' => 0, 'is_closed' => 0, 'complaint_status' => 1]);
+                //add complaint log
+                ComplaintLog::create($data);
+
+                //update the complaint_main table
+                DB::table('complaint_main')
+                    ->where('reference', $id)
+                    ->update(['status' => 'in-progress', 'completed_date' => null]);
+
+                toastr()->warning('Complaint opened successfully');
+                return redirect()->back()->with('success', 'Successfully Reopened.');
+            } catch (\Exception $e) {
+                toastr()->error('Error Reopening.');
+                return redirect()->back()->with('error', 'Error Reopening.');
+            }
         }
     }
 
@@ -481,6 +552,10 @@ class complaintcontroller extends Controller
         //dd($data);
         //insert data into final_logs table and update new_complaints
         try {
+            //update the complaint_main table
+            DB::table('complaint_main')
+                ->where('reference', $id)
+                ->update(['status' => 'rejected', 'completed_date' => now()->toDateString()]);
             FinalLog::create($data);
             NewComplaint::find($id)->update(['is_approved' => 2]);
 

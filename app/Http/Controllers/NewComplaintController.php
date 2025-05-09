@@ -99,7 +99,9 @@ class NewComplaintController extends Controller
             'relation' => 'required_if:insured,No|max:255',
             'address' => 'required|string|max:255',
             'contact_no' => 'required|numeric',
+            'customer_branch' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'complaint_type' => 'required|string|max:255',
             'customer_type' => 'required|string|max:255',
             'policy_number' => 'required|string|max:255',
             'complaint_date' => 'required|date',
@@ -115,10 +117,12 @@ class NewComplaintController extends Controller
             'address' => $request->address,
             'contact_no' => $request->contact_no,
             'email' => $request->email,
+            'complaint_type' => $request->complaint_type,
             'customer_type' => $request->customer_type,
             'policy_number' => $request->policy_number,
             'complaint_date' => $request->complaint_date,
             'complaint_detail' => $request->complaint_detail,
+            'branch' => $request->customer_branch,
 
         ];
         if ($request->hasFile('attachment')) {
@@ -128,10 +132,14 @@ class NewComplaintController extends Controller
         }
 
         $id = DB::table('new_complaints')->insertGetId($data);
-
+        $dataMain = [
+            'reference' => $id,
+            'complaint_date' => $request->complaint_date,
+        ];
 
 
         if ($id) {
+            DB::table('complaint_main')->insert($dataMain);
             toastr()->success('Complaint successfully logged');
             return redirect()->back()->with('success', 'Complaint successfully logged');
         } else {
@@ -185,7 +193,7 @@ class NewComplaintController extends Controller
             }
         }
         foreach ($adminLatestComplaints as $complaint) {
-            if ($complaint->is_approved == 0 && $complaint->Status == 'Received' && $complaint->is_closed == 0) {
+            if ($complaint->is_approved == 0 && ($complaint->Status == 'Received' || $complaint->Status == 'Reopened') && $complaint->is_closed == 0 && $complaint->Assigned_to == NULL) {
                 $adminAssigned[] = $complaint;
             } elseif ($complaint->is_approved == 0 && ($complaint->Status == 'in-progress' || $complaint->Status == 'Reopened') && $complaint->is_closed == 0) {
                 $adminOngoing[] = $complaint;

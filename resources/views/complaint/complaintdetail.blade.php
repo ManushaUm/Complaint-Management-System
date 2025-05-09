@@ -97,6 +97,30 @@
         <!--end col-->
 
         <div class="col-xl-9">
+            <!--department head complaint closing note-->
+            @if(Auth::user()->role == 'd-head')
+            @if($Initcomplaint->is_closed == 0)
+            <div class="card">
+                <div class="card-body border-bottom">
+                    <div class="d-flex items justify-between ">
+                        <div>
+                            <h5 class="fw-semibold font-size-16">Close the Complaint {{$Initcomplaint->id}}</h5>
+                        </div>
+                        <div>
+                            <a href="#" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium 
+                                    rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 
+                                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 
+                                    transition-colors duration-200" data-bs-toggle="modal" data-bs-target="#complaintReject">
+                                Close
+                            </a>
+                            <x-d-head-complaint-reopen-modal :id="$prevData[0]->id" :prevData="$prevData" :newData="$newData" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            @endif
+            <!--Complaint Details Card-->
             @if ( $Initcomplaint -> is_approved == 1)
             <div class="my-2 p-4 bg-green-400 text-white">
                 <p class="font-medium pt-2"><span><i class="bx bx-check-circle"></i></span> Complaint was approved by Department Head</p>
@@ -107,13 +131,8 @@
             </div>
             @endif
             <div class="card">
-
                 <div class="card-body border-bottom">
                     <div class="d-flex">
-
-
-
-
                         <div class="flex-grow-1 ms-3">
                             <h5 class="fw-semibold font-size-16">Complaint on Reference number <span><a href="#">{{$Initcomplaint->id}}</a></span> </h5>
                             <ul class="list-unstyled hstack gap-2 mb-0">
@@ -246,7 +265,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                @if($complaintLog->Comment !== NULL)
                                 <div class="flex py-4">
                                     <div class="flex-shrink-0 mr-4">
                                         <div class="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center">
@@ -289,6 +308,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             </div>
                             @endforeach
                         </div>
@@ -313,7 +333,7 @@
                         <p class="text-muted">Please take the job to start</p>
                         @endif
 
-                        @if ( Auth::user()->emp_id == $assignedTo && ($currentStatus =='in-progress' || $currentStatus == 'In-Progress') && $latestComment == NULL)
+                        @if ( Auth::user()->emp_id == $assignedTo && ($currentStatus =='in-progress' || $currentStatus == 'In-Progress' || $currentStatus =='Reopened') && $latestComment == NULL)
 
                         <!--Action Card-->
                         <x-complaint-action-form id="{{$id}}" />
@@ -352,12 +372,18 @@
 
                         @elseif (Auth::user()->role == 'd-head')
 
-                        @if ($is_approved == 0 && $currentStatus == 'Solved')
+                        @if ($is_approved == 0 && $prevData[0]->is_closed == 1 && $prevData[0]->complaint_status == 0 )
 
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#complaintAction">Action</button>
+                            <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#complaintApprove">Approve</button>
+                            <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#complaintOpen">Reopen Job</button>
+                            <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#complaintReject">Reject</button>
+
                             <!-- Complaint Closing Model-->
-                            <x-head-complaint-closing-modal :id="$id" :prevData="$prevData" :newData="$newData" />
+                            <x-d-head-complaint-closing-modal :id="$id" :prevData="$prevData" :newData="$newData" />
+                            <x-d-head-complaint-reopen-modal :id="$id" :prevData="$prevData" :newData="$newData" />
+                            <x-head-complaint-reopen-model :id="$id" :prevData="$prevData" :newData="$newData" />
+
                         </div>
                         @endif
                         @endif

@@ -18,6 +18,7 @@ class NewComplaint extends Model
         'contact_no',
         'email',
         'customer_type',
+        'complaint_type',
         'policy_number',
         'branch',
         'complaint_date',

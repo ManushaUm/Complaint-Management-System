@@ -109,21 +109,21 @@
 
             {{-- Complaint Type --}}
             <div>
-                <label for="customer_type" class="block text-s font-medium text-gray-700 mb-1">
+                <label for="complaint_type" class="block text-s font-medium text-gray-700 mb-1">
                     Complaint Type <span class="text-red-500">*</span>
                 </label>
                 <select
-                    name="customer_type"
-                    id="customer_type"
+                    name="complaint_type"
+                    id="complaint_type"
                     class="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500
-                    @error('customer_type') border-red-500 @enderror">
+                    @error('complaint_type') border-red-500 @enderror">
                     <option value="" selected hidden>Select Type...</option>
                     @foreach($complaintTypes as $complaint)
-                    <option value="{{$complaint->id}}">{{$complaint->complaint_type}}</option>
+                    <option value="{{$complaint->complaint_type}}">{{$complaint->complaint_type}}</option>
                     @endforeach
                     <option value="other">Other</option>
                 </select>
-                @error('customer_type')
+                @error('complaint_type')
                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
