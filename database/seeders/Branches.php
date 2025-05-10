@@ -13,7 +13,7 @@ class Branches extends Seeder
      */
     public function run(): void
     {
-        DB::table('branches')->insert([
+        DB::table('branchs')->insert([
             [
                 'branch_name' => 'Colombo',
                 'branch_code' => 'CMB1',
