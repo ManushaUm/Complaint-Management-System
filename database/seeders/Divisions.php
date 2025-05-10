@@ -32,8 +32,8 @@ class Divisions extends Seeder
                 'department_code' => '00011',  // Claims
                 'division_head' => 'EMP013',
                 'status' => 1,
-                'created_at' => '0000-00-00 00:00:00',
-                'updated_at' => '0000-00-00 00:00:00',
+                'created_at' => null,
+                'updated_at' => null,
             ],
             [
                 'id' => 4,
@@ -62,8 +62,8 @@ class Divisions extends Seeder
                 'department_code' => '00014',  // Grievance Redressal
                 'division_head' => 'EMP020',
                 'status' => 1,
-                'created_at' => '2025-01-06 03:10:46',
-                'updated_at' => '2025-01-06 03:10:46',
+                'created_at' => null,
+                'updated_at' => null,
             ],
             [
                 'id' => 16,
@@ -72,8 +72,8 @@ class Divisions extends Seeder
                 'department_code' => '00013',  // Quality Assurance & Investigation
                 'division_head' => 'EMP021',
                 'status' => 1,
-                'created_at' => '2025-01-06 03:12:19',
-                'updated_at' => '2025-01-06 03:12:19',
+                'created_at' => null,
+                'updated_at' => null,
             ],
             [
                 'id' => 17,
@@ -82,8 +82,8 @@ class Divisions extends Seeder
                 'department_code' => '00013',  // Quality Assurance & Investigation
                 'division_head' => 'EMP013',
                 'status' => 1,
-                'created_at' => '2025-01-06 03:12:19',
-                'updated_at' => '2025-01-06 03:12:19',
+                'created_at' => null,
+                'updated_at' => null,
             ],
             [
                 'id' => 18,
@@ -92,8 +92,8 @@ class Divisions extends Seeder
                 'department_code' => '00010',  // Customer Service
                 'division_head' => 'EMP017',
                 'status' => 1,
-                'created_at' => '2025-01-06 04:38:00',
-                'updated_at' => '2025-01-06 04:38:00',
+                'created_at' => null,
+                'updated_at' => null,
             ],
         ];
 
