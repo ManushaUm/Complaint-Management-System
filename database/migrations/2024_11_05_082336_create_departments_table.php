@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('department_code')->unique();
             $table->string('department_head', 255); //emp_id
             $table->string('department_alter_head', 255);
-            $table->json('department_divisions');
+            $table->json('department_divisions')->nullable();
             $table->boolean('is active')->default(true);
             $table->timestamps();
             //$table->foreign('department_head')->references('emp_id')->on('hr')->onDelete('no action');
