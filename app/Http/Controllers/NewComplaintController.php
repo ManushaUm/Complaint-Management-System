@@ -129,8 +129,8 @@ class NewComplaintController extends Controller
         ];
         if ($request->hasFile('attachment')) {
             $file = $request->file('attachment');
-            $Attachment = $file->store('uploads', 'public');
-            $data['Attachment'] = $Attachment;
+            $attachment = $file->store('uploads', 'public');
+            $data['attachment'] = $attachment;
         }
 
         $id = DB::table('new_complaints')->insertGetId($data);
