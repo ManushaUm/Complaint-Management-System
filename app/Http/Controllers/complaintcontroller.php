@@ -143,7 +143,7 @@ class complaintcontroller extends Controller
             //update the main table date and status
             DB::table('complaint_main')
                 ->where('reference', $id)
-                ->update(['status' => 'in-progress', 'updated_at' => now()]);
+                ->update(['status' => 'in_progress', 'updated_at' => now()]);
 
             return redirect()->back()->with('success', 'Job assigned successfully.');
         } else {
@@ -511,7 +511,7 @@ class complaintcontroller extends Controller
                 //update the complaint_main table
                 DB::table('complaint_main')
                     ->where('reference', $id)
-                    ->update(['status' => 'in-progress', 'completed_date' => null]);
+                    ->update(['status' => 'in_progress', 'completed_date' => null]);
 
                 toastr()->warning('Complaint opened successfully');
                 return redirect()->back()->with('success', 'Successfully Reopened.');

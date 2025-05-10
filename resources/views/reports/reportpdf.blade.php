@@ -56,8 +56,9 @@
 </head>
 
 <body>
+    @if($reportType == "1")
     <div class="header">
-        <h1>Complaints Report</h1>
+        <h1>Full Complaints Report</h1>
         <p>Generated on: {{ now()->format('Y-m-d') }}</p>
     </div>
 
@@ -118,6 +119,260 @@
         <p>This report was generated automatically by CI Lanka CMS.</p>
         <p>© {{ date('Y') }} CI Lanka CMS. All rights reserved.</p>
     </div>
+    @endif
+
+    @if($reportType == "2")
+    <div class="header">
+        <h1>Pending Complaints Report</h1>
+        <p>Generated on: {{ now()->format('Y-m-d') }}</p>
+    </div>
+
+    <div class="filters">
+        <p><strong>Date Range:</strong>
+            {{ \Carbon\Carbon::parse($startDate)->format('Y-m-d') }} -
+            {{ \Carbon\Carbon::parse($endDate)->format('Y-m-d') }}
+        </p>
+        @if($complaintType !== 'all')
+        <p><strong>Complaint Type:</strong> {{ $complaintType }}</p>
+        @endif
+        @if($customerType !== 'all')
+        <p><strong>Customer Type:</strong> {{$customerType}}</p>
+        @endif
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ref Number</th>
+                <th>Policy No.</th>
+                <th>Customer</th>
+                <th>Customer info</th>
+                @if($complaintType == 'all')
+                <th>Complaint Type</th>
+                @endif
+                @if($customerType == 'all')
+                <th>Customer Type</th>
+                @endif
+                <th>Department</th>
+
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($complaints as $complaint)
+            <tr>
+                <td>{{ $complaint->id }}</td>
+                <td>{{ $complaint->policy_number ?? 'N/A' }}</td>
+                <td>{{ $complaint->name ?? 'N/A' }}</td>
+                <td>{{ $complaint->contact_no ?? 'N/A' }}</td>
+                @if($complaintType == 'all')
+                <td>{{ $complaint->complaint_type ?? 'N/A' }}</td>
+                @endif
+                @if($customerType == 'all')
+                <td>{{ $complaint->customer_type ?? 'N/A' }}</td>
+                @endif
+                <td>{{ $complaint->department ?? 'N/A' }}</td>
+
+                <td>{{ $complaint->complaint_date }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <div class="footer">
+        <p>This report was generated automatically by CI Lanka CMS.</p>
+        <p>© {{ date('Y') }} CI Lanka CMS. All rights reserved.</p>
+    </div>
+    @endif
+
+    @if($reportType == "3")
+    <div class="header">
+        <h1>Inprogress Complaints Report</h1>
+        <p>Generated on: {{ now()->format('Y-m-d') }}</p>
+    </div>
+
+    <div class="filters">
+        <p><strong>Date Range:</strong>
+            {{ \Carbon\Carbon::parse($startDate)->format('Y-m-d') }} -
+            {{ \Carbon\Carbon::parse($endDate)->format('Y-m-d') }}
+        </p>
+        @if($complaintType !== 'all')
+        <p><strong>Complaint Type:</strong> {{ $complaintType }}</p>
+        @endif
+        @if($customerType !== 'all')
+        <p><strong>Customer Type:</strong> {{$customerType}}</p>
+        @endif
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ref Number</th>
+                <th>Policy No.</th>
+                <th>Customer</th>
+                <th>Customer info</th>
+                @if($complaintType == 'all')
+                <th>Complaint Type</th>
+                @endif
+                @if($customerType == 'all')
+                <th>Customer Type</th>
+                @endif
+                <th>Department</th>
+
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($complaints as $complaint)
+            <tr>
+                <td>{{ $complaint->id }}</td>
+                <td>{{ $complaint->policy_number ?? 'N/A' }}</td>
+                <td>{{ $complaint->name ?? 'N/A' }}</td>
+                <td>{{ $complaint->contact_no ?? 'N/A' }}</td>
+                @if($complaintType == 'all')
+                <td>{{ $complaint->complaint_type ?? 'N/A' }}</td>
+                @endif
+                @if($customerType == 'all')
+                <td>{{ $complaint->customer_type ?? 'N/A' }}</td>
+                @endif
+                <td>{{ $complaint->department ?? 'N/A' }}</td>
+
+                <td>{{ $complaint->complaint_date }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <div class="footer">
+        <p>This report was generated automatically by CI Lanka CMS.</p>
+        <p>© {{ date('Y') }} CI Lanka CMS. All rights reserved.</p>
+    </div>
+    @endif
+
+    @if($reportType == "4")
+    <div class="header">
+        <h1>Declined Complaints Report</h1>
+        <p>Generated on: {{ now()->format('Y-m-d') }}</p>
+    </div>
+
+    <div class="filters">
+        <p><strong>Date Range:</strong>
+            {{ \Carbon\Carbon::parse($startDate)->format('Y-m-d') }} -
+            {{ \Carbon\Carbon::parse($endDate)->format('Y-m-d') }}
+        </p>
+        @if($complaintType !== 'all')
+        <p><strong>Complaint Type:</strong> {{ $complaintType }}</p>
+        @endif
+        @if($customerType !== 'all')
+        <p><strong>Customer Type:</strong> {{$customerType}}</p>
+        @endif
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ref Number</th>
+                <th>Policy No.</th>
+                <th>Customer</th>
+                <th>Customer info</th>
+                @if($complaintType == 'all')
+                <th>Complaint Type</th>
+                @endif
+                @if($customerType == 'all')
+                <th>Customer Type</th>
+                @endif
+                <th>Department</th>
+
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($complaints as $complaint)
+            <tr>
+                <td>{{ $complaint->id }}</td>
+                <td>{{ $complaint->policy_number ?? 'N/A' }}</td>
+                <td>{{ $complaint->name ?? 'N/A' }}</td>
+                <td>{{ $complaint->contact_no ?? 'N/A' }}</td>
+                @if($complaintType == 'all')
+                <td>{{ $complaint->complaint_type ?? 'N/A' }}</td>
+                @endif
+                @if($customerType == 'all')
+                <td>{{ $complaint->customer_type ?? 'N/A' }}</td>
+                @endif
+                <td>{{ $complaint->department ?? 'N/A' }}</td>
+
+                <td>{{ $complaint->complaint_date }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <div class="footer">
+        <p>This report was generated automatically by CI Lanka CMS.</p>
+        <p>© {{ date('Y') }} CI Lanka CMS. All rights reserved.</p>
+    </div>
+    @endif
+    @if($reportType == "5")
+    <div class="header">
+        <h1>Closed Complaints Report</h1>
+        <p>Generated on: {{ now()->format('Y-m-d') }}</p>
+    </div>
+
+    <div class="filters">
+        <p><strong>Date Range:</strong>
+            {{ \Carbon\Carbon::parse($startDate)->format('Y-m-d') }} -
+            {{ \Carbon\Carbon::parse($endDate)->format('Y-m-d') }}
+        </p>
+        @if($complaintType !== 'all')
+        <p><strong>Complaint Type:</strong> {{ $complaintType }}</p>
+        @endif
+        @if($customerType !== 'all')
+        <p><strong>Customer Type:</strong> {{$customerType}}</p>
+        @endif
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ref Number</th>
+                <th>Policy No.</th>
+                <th>Customer</th>
+                <th>Customer info</th>
+                @if($complaintType == 'all')
+                <th>Complaint Type</th>
+                @endif
+                @if($customerType == 'all')
+                <th>Customer Type</th>
+                @endif
+                <th>Department</th>
+
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($complaints as $complaint)
+            <tr>
+                <td>{{ $complaint->id }}</td>
+                <td>{{ $complaint->policy_number ?? 'N/A' }}</td>
+                <td>{{ $complaint->name ?? 'N/A' }}</td>
+                <td>{{ $complaint->contact_no ?? 'N/A' }}</td>
+                @if($complaintType == 'all')
+                <td>{{ $complaint->complaint_type ?? 'N/A' }}</td>
+                @endif
+                @if($customerType == 'all')
+                <td>{{ $complaint->customer_type ?? 'N/A' }}</td>
+                @endif
+                <td>{{ $complaint->department ?? 'N/A' }}</td>
+
+                <td>{{ $complaint->complaint_date }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <div class="footer">
+        <p>This report was generated automatically by CI Lanka CMS.</p>
+        <p>© {{ date('Y') }} CI Lanka CMS. All rights reserved.</p>
+    </div>
+    @endif
+
+
 </body>
 
 

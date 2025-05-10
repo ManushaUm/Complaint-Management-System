@@ -381,16 +381,323 @@ class ReportController extends Controller
                 ->get();
         }
 
+        if ($request->report_type == "2"  && $request->complaint_type == "all" && $request->customer_type == "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'pending')
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "2"  && $request->complaint_type != "all" && $request->customer_type == "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'pending')
+                ->where('new_complaints.complaint_type', $validated['complaint_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "2" && $request->complaint_type == "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'pending')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "2" && $request->complaint_type == "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'pending')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "2" && $request->complaint_type != "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'pending')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->where('new_complaints.complaint_type', $validated['complaint_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        }
+
+        if ($request->report_type == "3"  && $request->complaint_type == "all" && $request->customer_type == "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'in_progress')
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "3"  && $request->complaint_type != "all" && $request->customer_type == "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'in_progress')
+                ->where('new_complaints.complaint_type', $validated['complaint_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "3" && $request->complaint_type == "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'in_progress')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "3" && $request->complaint_type == "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'in_progress')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "3" && $request->complaint_type != "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'in_progress')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->where('new_complaints.complaint_type', $validated['complaint_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        }
+
+        if ($request->report_type == "4"  && $request->complaint_type == "all" && $request->customer_type == "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'rejected')
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "4"  && $request->complaint_type != "all" && $request->customer_type == "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'rejected')
+                ->where('new_complaints.complaint_type', $validated['complaint_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "4" && $request->complaint_type == "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'rejected')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "4" && $request->complaint_type == "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'rejected')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "4" && $request->complaint_type != "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'rejected')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->where('new_complaints.complaint_type', $validated['complaint_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        }
+
+        if ($request->report_type == "5"  && $request->complaint_type == "all" && $request->customer_type == "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'Closed')
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "5"  && $request->complaint_type != "all" && $request->customer_type == "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'Closed')
+                ->where('new_complaints.complaint_type', $validated['complaint_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "5" && $request->complaint_type == "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'Closed')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "5" && $request->complaint_type == "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'Closed')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        } else if ($request->report_type == "5" && $request->complaint_type != "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_main', 'new_complaints.id', '=', 'complaint_main.reference')
+                ->where('complaint_main.status', '=', 'Closed')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->where('new_complaints.complaint_type', $validated['complaint_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_main.*'
+                )
+                ->get();
+        }
         //dd($complaints);
 
         // Generate PDF
         return Pdf::loadView('reports.reportpdf', [
-            //'complaints' => $complaints,
+            'reportType' => $validated['report_type'],
             'startDate' => $validated['start_date'],
             'endDate' => $validated['end_date'],
             'complaintType' => $validated['complaint_type'],
             'customerType' => $validated['customer_type'],
             'complaints' => $complaints,
-        ])->download('complaints-report-' . now()->format('Y-m-d') . '.pdf');
+        ])->stream();
     }
 }
