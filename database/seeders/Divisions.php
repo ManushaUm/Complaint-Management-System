@@ -89,7 +89,7 @@ class Divisions extends Seeder
                 'id' => 18,
                 'division_name' => 'Service Delivery',  // For Customer Service (Dep 1-d)
                 'division_code' => '00010d',
-                'department_code' => '00010',  // Customer Service
+                'department_code' => '00010',
                 'division_head' => 'EMP017',
                 'status' => 1,
                 'created_at' => null,
