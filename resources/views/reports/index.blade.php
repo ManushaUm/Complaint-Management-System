@@ -8,7 +8,7 @@
             <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium">Admin Console</span>
         </div>
 
-        <form id="reportGenerationForm" method="post" action="{{ route('reports.create') }}">
+        <form id="reportGenerationForm" method="post" action="{{ route('reports.downloadpdf') }}">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Report Type -->
@@ -83,17 +83,6 @@
                     </div>
                 </div>
 
-                <!-- Branch Selection -->
-                <div>
-                    <label for="branchSelection" class="block text-sm font-medium text-gray-700 mb-1">
-                        Brand/Branch
-                    </label>
-                    <select id="branchSelection" name="branch_selection"
-                        class="mt-1 block w-full pl-3 pr-10 py-2.5 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option value="all" selected>All Branches</option>
-                        <option value="multiple">Select Specific Branches</option>
-                    </select>
-                </div>
 
                 <!-- 4. Complaint Type -->
                 <div>

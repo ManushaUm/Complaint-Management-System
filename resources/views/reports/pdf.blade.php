@@ -175,8 +175,8 @@
     </div>
 
     <div class="footer">
-        <p>This report was generated automatically by {{ config('app.name') }}.</p>
-        <p>© {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
+        <p>This report was generated automatically by CI Lanka CMS.</p>
+        <p>© {{ date('Y') }} CI Lanka CMS. All rights reserved.</p>
     </div>
     @endforeach
 </body>

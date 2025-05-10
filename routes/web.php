@@ -100,6 +100,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/reports/summary', [ReportController::class, 'summary'])->name('reports.summary');
     Route::get('reports/summary-complaint', [ReportController::class, 'summaryComplaint'])->name('reports.summary-complaint');
     Route::get('/reports/{complaint}/download-pdf', [ReportController::class, 'downloadPDF'])->name('downloadPDF');
+    Route::post('/reports/export-report', [ReportController::class, 'reportPdf'])->name('reports.downloadpdf');
     //Route::get('/reports/download-excel', [ReportController::class, 'downloadExcel'])->name('downloadExcel');
     //Route::get('/reports/download-pdf-complaint', [ReportController::class, 'downloadPDFComplaint'])->name('downloadPDFComplaint');
     //Route::get('/reports/download-excel-complaint', [ReportController::class, 'downloadExcelComplaint'])->name('downloadExcelComplaint');

@@ -258,4 +258,139 @@ class ReportController extends Controller
         // Download the PDF with a filename
         return $pdf->download("complaint-{$complaints[0]->Reference_number}-report.pdf");
     }
+    public function reportPdf(Request $request)
+    {
+        //dd($request->all());
+        // Validate inputs
+        $validated = $request->validate([
+            'report_type' => 'required|string|in:1,2,3,4,5', // assuming these are your valid report types
+            'date_range_preset' => 'required|string|in:custom,7,30,today', // make required and specify allowed values
+            'start_date' => [
+                'required_if:date_range_preset,custom',
+                'date',
+                'nullable'
+            ],
+            'end_date' => [
+                'required_if:date_range_preset,custom',
+                'date',
+                'after_or_equal:start_date',
+                'nullable'
+            ],
+            'complaint_type' => 'required|string',
+            'customer_type' => 'required|string',
+        ]);
+
+        // Handle date ranges
+        switch ($validated['date_range_preset']) {
+            case 'custom':
+                $validated['start_date'] = Carbon::parse($validated['start_date'])->startOfDay();
+                $validated['end_date'] = Carbon::parse($validated['end_date'])->endOfDay();
+                break;
+
+            case '7':
+                $validated['start_date'] = Carbon::now()->subDays(7)->startOfDay();
+                $validated['end_date'] = Carbon::now()->endOfDay();
+                break;
+
+            case '30':
+                $validated['start_date'] = Carbon::now()->subDays(30)->startOfDay();
+                $validated['end_date'] = Carbon::now()->endOfDay();
+                break;
+
+            case 'today':
+                $validated['start_date'] = Carbon::today()->startOfDay();
+                $validated['end_date'] = Carbon::today()->endOfDay();
+                break;
+        }
+
+        // Format dates consistently (optional)
+        $validated['start_date'] = $validated['start_date']->format('Y-m-d H:i:s');
+        $validated['end_date'] = $validated['end_date']->format('Y-m-d H:i:s');
+
+
+        // Get filtered complaints
+        if ($request->report_type == "1"  && $request->complaint_type == "all" && $request->customer_type == "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_logs.*'
+                )
+                ->get();
+        } else if ($request->report_type == "1"  && $request->complaint_type != "all" && $request->customer_type == "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')
+                ->where('new_complaints.complaint_type', $validated['complaint_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_logs.*'
+                )
+                ->get();
+        } else if ($request->report_type == "1" && $request->complaint_type == "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_logs.*'
+                )
+                ->get();
+        } else if ($request->report_type == "1" && $request->complaint_type == "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_logs.*'
+                )
+                ->get();
+        } else if ($request->report_type == "1" && $request->complaint_type != "all" && $request->customer_type != "all") {
+            //dd($validated);
+            $complaints = DB::table('new_complaints')
+                ->join('complaint_logs', 'new_complaints.id', '=', 'complaint_logs.Reference_number')
+                ->where('new_complaints.customer_type', $validated['customer_type'])
+                ->where('new_complaints.complaint_type', $validated['complaint_type'])
+                ->whereBetween('new_complaints.complaint_date', [
+                    $validated['start_date'],
+                    $validated['end_date']
+                ])
+                ->select(
+                    'new_complaints.*',
+                    'complaint_logs.*'
+                )
+                ->get();
+        }
+
+        //dd($complaints);
+
+        // Generate PDF
+        return Pdf::loadView('reports.reportpdf', [
+            //'complaints' => $complaints,
+            'startDate' => $validated['start_date'],
+            'endDate' => $validated['end_date'],
+            'complaintType' => $validated['complaint_type'],
+            'customerType' => $validated['customer_type'],
+            'complaints' => $complaints,
+        ])->download('complaints-report-' . now()->format('Y-m-d') . '.pdf');
+    }
 }
