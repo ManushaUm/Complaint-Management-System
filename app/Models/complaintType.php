@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\DB;
 class complaintType extends Model
 {
     use HasFactory;
+    protected $table = 'complaint_types';
+    protected $fillable = [
+        'complaint_type',
+        'status',
+        'created_at',
+        'updated_at'
+    ];
     public function getComplaintType()
     {
         $data = DB::table('complaint_types')
