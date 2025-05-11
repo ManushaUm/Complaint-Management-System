@@ -80,19 +80,10 @@
                             <a href="{{route('reports.summary-complaint')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">Complaint Summary</a>
                             <a href="{{route('reports.complaints')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">On System</a>
                             <a href="{{route('reports.view')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">New Complaint Report</a>
-                            <a href="{{route('closed-jobs')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">Analysis</a>
-                            <a href="{{route('closed-jobs')}}" class="block py-2 text-sm text-gray-400 hover:text-white transition-colors">Complaint feedbacks</a>
                         </div>
                     </div>
 
-                    <!-- Search -->
-                    <a href="{{route('search.complaints')}}" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors group">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 group-hover:text-blue-400" :class="{'mr-3': sidebarOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                        <span x-show="sidebarOpen">Search</span>
-                        <span x-show="sidebarOpen" class="ml-auto bg-green-500 text-xs font-medium px-2 py-0.5 rounded-full text-white">New</span>
-                    </a>
+
 
                     <!-- Internal Services Dropdown -->
                     <div x-data="{ open: false }">
@@ -150,13 +141,7 @@
                     </div>
 
                     <!-- Search -->
-                    <a href="{{route('search.complaints')}}" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors group">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-400 group-hover:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                        <span>Search</span>
-                        <span class="ml-auto bg-green-500 text-xs font-medium px-2 py-0.5 rounded-full text-white">New</span>
-                    </a>
+
                 </div>
             </div>
             @endif
@@ -196,13 +181,7 @@
                     </div>
 
                     <!-- Search -->
-                    <a href="{{route('search.complaints')}}" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors group">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-400 group-hover:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                        <span>Search</span>
-                        <span class="ml-auto bg-green-500 text-xs font-medium px-2 py-0.5 rounded-full text-white">New</span>
-                    </a>
+
                 </div>
             </div>
             @endif

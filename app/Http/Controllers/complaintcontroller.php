@@ -109,18 +109,38 @@ class complaintcontroller extends Controller
 
     public function getComplaintDetails($id)
     {
-        //get the initalization data of the complaint
+        // Get the initialization data of the complaint
         $prevData = DB::table('new_complaints')
             ->select('*')
             ->where('id', $id)
             ->get();
 
+        // Get all HR data and create a mapping of emp_id to full_name
+        $hrData = DB::table('hr')->select('emp_id', 'full_name')->get();
+        $hrMap = [];
+        foreach ($hrData as $hr) {
+            $hrMap[$hr->emp_id] = $hr->full_name;
+        }
 
-        $newData = DB::table('complaint_logs')->select('*')->where('Reference_number', $id)->get();
-        if ($newData) {
+        // Get the complaint logs
+        $newData = DB::table('complaint_logs')
+            ->select('*')
+            ->where('Reference_number', $id)
+            ->get();
+
+        // Replace emp_ids with full_names in newData
+        foreach ($newData as $log) {
+            if (isset($log->Notes_by) && isset($hrMap[$log->Notes_by])) {
+                $log->Notes_by = $hrMap[$log->Notes_by];
+            }
+            if (isset($log->Assigned_to) && isset($hrMap[$log->Assigned_to])) {
+                $log->Assigned_to = $hrMap[$log->Assigned_to];
+            }
+        }
+
+        if ($prevData->isNotEmpty() || $newData->isNotEmpty()) {
             return view('complaint.complaintdetail', compact('prevData', 'newData'));
         } else {
-
             return redirect()->back()->with('error', 'Complaint not found.');
         }
     }

@@ -19,17 +19,7 @@
             </button>
         </div>
 
-        <!-- Notification Dropdown -->
-        <div class="dropdown d-inline-block position-relative">
-            <button class="btn header-item noti-icon waves-effect" id="notifications-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bx bx-bell bx-tada"></i>
-                <span class="badge bg-danger rounded-pill">3</span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="notifications-dropdown">
-                <li><a class="dropdown-item text-reset" href="#">New Notification</a></li>
-                <li><a class="dropdown-item text-reset" href="#">Another Notification</a></li>
-            </ul>
-        </div>
+
 
         <!-- User Profile Dropdown -->
         <div class="dropdown d-inline-block position-relative">
@@ -39,8 +29,8 @@
                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-dropdown">
-                <li><a class="dropdown-item" href="#"><i class="bx bx-user me-2"></i> Profile</a></li>
-                <li><a class="dropdown-item" href="#"><i class="bx bx-cog me-2"></i> Settings</a></li>
+                <li><a class="dropdown-item" href="/profile"><i class="bx bx-user me-2"></i> Profile</a></li>
+                <li><a class="dropdown-item" href="/settings"><i class="bx bx-cog me-2"></i> Settings</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
